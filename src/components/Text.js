@@ -5,7 +5,7 @@ import { COLORS } from '../assets/Theme';
 const TextCSS = styled.span`
   font-size: ${props => props.fontSize}px;
   color: ${props => (props.color ? props.color : 'white')};
-  font-family: 'Interop-Medium';
+  font-family: 'NanumSquare', sans-serif;
   font-weight: ${props => props.weight};
 `;
 
