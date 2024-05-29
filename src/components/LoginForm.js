@@ -69,7 +69,7 @@ function useLogin() {
         setLoginStatus(true);
         const jsonUserInfo = JSON.stringify(fetchData.token);
         localStorage.setItem('user_token', jsonUserInfo);
-        navigate('/admin'); // navigate to admin page or user page
+        navigate('/admin'); // Redirect to admin page or user page
       }
     } catch (err) {
       console.log(err);
@@ -105,14 +105,14 @@ export default function LoginForm() {
   return (
     <LoginInputContainer>
       <LoginInput
-        placeholder="이름"
+        placeholder="전화번호"
         keyboardType="default"
         value={phoneId}
         onChangeText={onChangePhoneId}
         maxLength={13}
       />
       <LoginInput
-        placeholder="전화번호"
+        placeholder="비밀번호"
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
