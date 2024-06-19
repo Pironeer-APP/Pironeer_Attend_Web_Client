@@ -37,50 +37,44 @@ function LoginInput(props) {
 }
 
 // useLogin Hook
-export const autoHyphen = (value) => {
-    const newValue = value
-      .replace(/[^0-9]/g, '')
-      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
-    return newValue;
-}
-
 function useLogin() {
-  const [phoneId, setPhoneId] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginStatus, setLoginStatus] = useState(true);
 
-  const onChangePhoneId = (value) => {
-    value = autoHyphen(value);
-    setPhoneId(value);
+  const onChangeUsername = (value) => {
+    setUsername(value);
   };
 
   const onPressLogin = async (navigate) => {
-    const url = '/auth/login';
-    const body = {
-      phone: phoneId,
-      password: password,
-    };
     try {
-      const fetchData = await client.post(url, body);
-      console.log('info...', fetchData.token); // If login info don't match => {token: false}
-      if (fetchData.token === false) {
-        setLoginStatus(false);
+      const response = await client.post('/login', {
+        username,
+        password,
+      });
+
+      // Assuming the response contains the token
+      const { token,isAdmin } = response.data;
+      localStorage.setItem('token', token);
+      localStorage.setItem('isAdmin', isAdmin);
+      
+      if (isAdmin) {
+        navigate('/admin');
       } else {
-        setLoginStatus(true);
-        const jsonUserInfo = JSON.stringify(fetchData.token);
-        localStorage.setItem('user_token', jsonUserInfo);
-        navigate('/admin'); // Redirect to admin page or user page
+        navigate('/user');
       }
-    } catch (err) {
-      console.log(err);
+
+    } catch (error) {
+      console.error(error);
+      setLoginStatus(false);
     }
   };
 
   return {
-    phoneId,
+    username,
     password,
     loginStatus,
-    onChangePhoneId,
+    onChangeUsername,
     setPassword,
     onPressLogin,
   };
@@ -90,26 +84,22 @@ function useLogin() {
 export default function LoginForm() {
   const navigate = useNavigate();
   const {
-    phoneId,
+    username,
     password,
     loginStatus,
-    onChangePhoneId,
+    onChangeUsername,
     setPassword,
     onPressLogin,
   } = useLogin();
 
-  const onPressFindAccount = () => {
-    navigate('/find-account'); // 비미번호 찾기 추후 구현
-  };
-
   return (
     <LoginInputContainer>
       <LoginInput
-        placeholder="전화번호"
+        placeholder="이름"
         keyboardType="default"
-        value={phoneId}
-        onChangeText={onChangePhoneId}
-        maxLength={13}
+        value={username}
+        onChangeText={onChangeUsername}
+        maxLength={50}
       />
       <LoginInput
         placeholder="비밀번호"
@@ -119,9 +109,6 @@ export default function LoginForm() {
       />
       <StyledLoginButton onClick={() => onPressLogin(navigate)}>로그인</StyledLoginButton>
       {!loginStatus && <StyledWarning>일치하는 회원 정보가 없습니다.</StyledWarning>}
-      <FindAccountButton onClick={onPressFindAccount}>
-        <StyledText content="비밀번호 찾기" fontSize={15} />
-      </FindAccountButton>
     </LoginInputContainer>
   );
 }

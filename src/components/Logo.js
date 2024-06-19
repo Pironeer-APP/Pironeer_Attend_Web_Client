@@ -1,7 +1,7 @@
 // src/components/Header.js
 import React from 'react';
 import styled from 'styled-components';
-import LogoImg from '../assets/Logo.png'; // Adjust the path as necessary
+import LogoImg from '../assets/Logo.png'; 
 
 
 
