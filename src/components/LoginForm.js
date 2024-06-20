@@ -5,7 +5,7 @@ import { FontStyledText, StyledText } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { client } from "../utils/client";
-import base64 from "base-64";
+import { jwtDecode } from "jwt-decode";
 
 // LoginInput component
 const StyledTextInput = styled.input`
@@ -57,17 +57,19 @@ function useLogin() {
       console.log(response);
 
       // Assuming the response contains the token
-      const { token, isAdmin } = response.data;
-      localStorage.setItem(
-        "token",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjczZTNkMDY5OGU2ZmEzMWUwNzBjMmUiLCJfaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcxODg3MTIwNiwiZXhwIjoxNzE4ODc0ODA2fQ.siBH0LMn1o_i0DmN-hr4uhzhoofDWg-2j4YBqi1ntS4"
-      );
-      localStorage.setItem("isAdmin", isAdmin);
+      const token = response.token;
+      const decodedToken = jwtDecode(token);
+      const isAdmin = decodedToken._isAdmin;
+      console.log(decodedToken);
 
-      if (isAdmin) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("id", decodedToken._id);
+      localStorage.setItem("isAdmin", decodedToken._isAdmin);
+
+      if (isAdmin === "true") {
         navigate("/admin");
       } else {
-        navigate("/user");
+        navigate("/userCheck");
       }
     } catch (error) {
       console.error(error);

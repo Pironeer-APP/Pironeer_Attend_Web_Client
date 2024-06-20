@@ -13,12 +13,12 @@ function checkUserState(navigate) {
   const isAdmin = localStorage.getItem("isAdmin");
 
   // 인증 정보가 없을 경우 로그인 페이지로 이동
-  // if (!token || !isAdmin) {
-  //   navigate("/login");
-  // }
+  if (!token || !isAdmin) {
+    navigate("/login");
+  }
 
   // 운영진이라면 어드민 페이지로 이동
-  if (isAdmin) {
+  if (isAdmin == "true") {
     navigate("/admin");
   }
 }
@@ -52,10 +52,10 @@ export default function UserCheckPage() {
   // 출석 체크가 시작되었고, 현재 유저가 출석하지 않았다면 출석 창 보여주기
   // 출석 완료되었다면 완료 창 보여주기
   // 출석 기간이 아니면 Attend List만
-  // useEffect(() => {
-  //   checkUserState(navigate);
-  //   checkAttendStart(setIsStart);
-  // }, []);
+  useEffect(() => {
+    checkUserState(navigate);
+    checkAttendStart(setIsStart);
+  }, []);
 
   return (
     <Container>
