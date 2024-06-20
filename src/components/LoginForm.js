@@ -72,7 +72,7 @@ function useLogin() {
       if (isAdmin) {
         navigate("/admin");
       } else {
-        navigate("/user");
+        navigate("/userCheck");
       }
     } catch (error) {
       console.error(error);
