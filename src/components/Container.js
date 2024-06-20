@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { COLORS } from '../assets/Theme';
+import styled from "styled-components";
+import { COLORS } from "../utils/theme";
 
 const Container = styled.div`
   background-color: ${COLORS.bg_black};

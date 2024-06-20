@@ -1,15 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FontStyledText, StyledText } from './Text';
-import { COLORS } from '../assets/Theme';
+import React from "react";
+import styled from "styled-components";
+import { FontStyledText, StyledText } from "./Text";
+import { COLORS } from "../utils/theme";
 
 const ButtonContainerStyled = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${props => `${props.paddingV}px ${props.paddingH}px`};
-  background-color: ${props => (props.outline ? 'transparent' : COLORS.green)};
-  border: ${props => (props.outline ? `3px solid ${COLORS.green}` : 'none')};
+  padding: ${(props) => `${props.paddingV}px ${props.paddingH}px`};
+  background-color: ${(props) =>
+    props.outline ? "transparent" : COLORS.green};
+  border: ${(props) => (props.outline ? `3px solid ${COLORS.green}` : "none")};
   border-radius: 15px;
   margin-bottom: 20px;
   cursor: pointer;
@@ -39,20 +40,25 @@ const MainButtonStyled = styled(ButtonContainerStyled)`
   padding: 15px 20px;
   background-color: ${COLORS.green};
   border-radius: 15px;
-  margin-bottom: ${props => props.marginBottom}px;
+  margin-bottom: ${(props) => props.marginBottom}px;
 `;
 
 const MainButton = ({ content, onPress, fontSize = 22, marginBottom = 0 }) => {
   return (
     <MainButtonStyled marginBottom={marginBottom} onClick={onPress}>
-      <StyledText content={content} fontSize={fontSize} color={COLORS.bg_black} />
+      <StyledText
+        content={content}
+        fontSize={fontSize}
+        color={COLORS.bg_black}
+      />
     </MainButtonStyled>
   );
 };
 
 const MiniButtonStyled = styled(ButtonContainerStyled)`
   height: 50px;
-  background-color: ${props => (props.outline ? 'transparent' : COLORS.green)};
+  background-color: ${(props) =>
+    props.outline ? "transparent" : COLORS.green};
   border-color: ${COLORS.green};
   border-width: 3px;
 `;
@@ -60,7 +66,9 @@ const MiniButtonStyled = styled(ButtonContainerStyled)`
 const MiniButton = ({ outline, onPress, children }) => {
   return (
     <MiniButtonStyled outline={outline} onClick={onPress}>
-      <FontStyledText style={{ color: outline ? 'white' : '#000000', fontSize: 18 }}>
+      <FontStyledText
+        style={{ color: outline ? "white" : "#000000", fontSize: 18 }}
+      >
         {children}
       </FontStyledText>
     </MiniButtonStyled>
@@ -76,7 +84,9 @@ const LoginButtonStyled = styled(ButtonContainerStyled)`
 const LoginButton = ({ onPress, children }) => {
   return (
     <LoginButtonStyled onClick={onPress}>
-      <FontStyledText style={{ fontSize: 20, textAlign: 'center', color: '#000000' }}>
+      <FontStyledText
+        style={{ fontSize: 20, textAlign: "center", color: "#000000" }}
+      >
         {children}
       </FontStyledText>
     </LoginButtonStyled>
@@ -95,9 +105,13 @@ const LeftArrowBtn = ({ onPress, size = 20, color }) => {
   return (
     <ArrowButtonStyled onClick={onPress}>
       <img
-        src={color === 'white' ? '/path/to/left-arrow-white.png' : '/path/to/left-arrow.png'}
+        src={
+          color === "white"
+            ? "/path/to/left-arrow-white.png"
+            : "/path/to/left-arrow.png"
+        }
         alt="Left Arrow"
-        style={{ width: size, height: 'auto' }}
+        style={{ width: size, height: "auto" }}
       />
     </ArrowButtonStyled>
   );
@@ -109,14 +123,18 @@ const RightArrowBtn = ({ onPress, size = 10 }) => {
       <img
         src="/path/to/right-arrow.png"
         alt="Right Arrow"
-        style={{ width: size, height: 'auto' }}
+        style={{ width: size, height: "auto" }}
       />
     </ArrowButtonStyled>
   );
 };
 
 const UnTouchableRightArrow = ({ size = 10 }) => (
-  <img src="/path/to/right-arrow.png" alt="Right Arrow" style={{ width: size, height: 'auto' }} />
+  <img
+    src="/path/to/right-arrow.png"
+    alt="Right Arrow"
+    style={{ width: size, height: "auto" }}
+  />
 );
 
 const CouponButtonStyled = styled(ButtonContainerStyled)`
@@ -144,7 +162,9 @@ const ConfirmSmallBtnStyled = styled(ButtonContainerStyled)`
 const ConfirmSmallBtn = ({ content }) => {
   return (
     <ConfirmSmallBtnStyled>
-      <FontStyledText style={{ color: COLORS.bg_black, fontSize: 16, textAlign: 'center' }}>
+      <FontStyledText
+        style={{ color: COLORS.bg_black, fontSize: 16, textAlign: "center" }}
+      >
         {content}
       </FontStyledText>
     </ConfirmSmallBtnStyled>

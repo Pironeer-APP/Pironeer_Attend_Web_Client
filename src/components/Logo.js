@@ -1,9 +1,6 @@
 // src/components/Header.js
-import React from 'react';
-import styled from 'styled-components';
-import LogoImg from '../assets/Logo.png'; 
-
-
+import React from "react";
+import styled from "styled-components";
 
 const ImageContainer = styled.div`
   display: flex;
@@ -17,13 +14,12 @@ const StyledImage = styled.img`
   height: 100px;
 `;
 
-
-const Logo =  () => {
+const Logo = () => {
   return (
     <ImageContainer>
-      <StyledImage src={LogoImg} alt=" Logo" />
+      <StyledImage src="/images/logo.png" alt=" Logo" />
     </ImageContainer>
   );
-}
+};
 
 export default Logo;

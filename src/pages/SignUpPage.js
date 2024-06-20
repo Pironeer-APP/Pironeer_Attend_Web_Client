@@ -1,23 +1,21 @@
 // src/components/LoginPage.js
-import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../assets/Theme';
-import Logo from '../components/Logo';
-import Container from '../components/Container';
-import SignupForm from '../components/SignupForm';
-
+import React from "react";
+import styled from "styled-components";
+import { COLORS } from "../utils/theme";
+import Logo from "../components/Logo";
+import Container from "../components/Container";
+import SignupForm from "../components/SignupForm";
 
 export default function SignupPage() {
   return (
     <Container>
-        <LoginScreenContainer>
-          <Logo />
-          <SignupForm />
-        </LoginScreenContainer>
+      <LoginScreenContainer>
+        <Logo />
+        <SignupForm />
+      </LoginScreenContainer>
     </Container>
   );
 }
-
 
 const LoginScreenContainer = styled.div`
   display: flex;

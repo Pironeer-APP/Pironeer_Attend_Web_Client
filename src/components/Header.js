@@ -1,9 +1,8 @@
 // Header.js
 
-import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../assets/Theme';
-
+import React from "react";
+import styled from "styled-components";
+import { COLORS } from "../utils/theme";
 
 const HeaderContainer = styled.div`
   background-color: ${COLORS.bg_black};
@@ -17,7 +16,7 @@ const HeaderText = styled.h1`
   margin: 0;
 `;
 
-const Header = ({text}) => {
+const Header = ({ text }) => {
   return (
     <HeaderContainer>
       <HeaderText>{text}</HeaderText>

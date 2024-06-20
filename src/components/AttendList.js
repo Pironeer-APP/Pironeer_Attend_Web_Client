@@ -1,4 +1,4 @@
-import { COLORS } from "../assets/Theme";
+import { COLORS } from "../utils/theme";
 import { FontStyledText, StyledText } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";

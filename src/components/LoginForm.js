@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { COLORS } from "../assets/Theme";
+import { COLORS } from "../utils/theme";
 import { FontStyledText, StyledText } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -49,14 +49,18 @@ function useLogin() {
 
   const onPressLogin = async (navigate) => {
     try {
-      const response = await client.post("/login", {
+      const response = await client.post("/user/login", {
         username,
         password,
       });
+      console.log(response);
 
       // Assuming the response contains the token
       const { token, isAdmin } = response.data;
-      localStorage.setItem("token", token);
+      localStorage.setItem(
+        "token",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjczZTNkMDY5OGU2ZmEzMWUwNzBjMmUiLCJfaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcxODg3MTIwNiwiZXhwIjoxNzE4ODc0ODA2fQ.siBH0LMn1o_i0DmN-hr4uhzhoofDWg-2j4YBqi1ntS4"
+      );
       localStorage.setItem("isAdmin", isAdmin);
 
       if (isAdmin) {

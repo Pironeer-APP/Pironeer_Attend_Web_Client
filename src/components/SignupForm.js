@@ -1,15 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../assets/Theme';
-import { FontStyledText, StyledText } from '../components/Text';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { client } from '../utils/client';;
+import React from "react";
+import styled from "styled-components";
+import { COLORS } from "../utils/theme";
+import { FontStyledText, StyledText } from "../components/Text";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { client } from "../utils/client";
 
 function useSignup() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [signupStatus, setSignupStatus] = useState(true);
 
   const onChangeUsername = (value) => {
@@ -26,14 +26,16 @@ function useSignup() {
 
   const onPressSignup = async (navigate) => {
     try {
-      const response = await client.post('/signup', {
+      const response = await client.post("/user/signup", {
         username,
         password,
         email,
       });
+      console.log(`username: ${username}`);
+      console.log(`password: ${password}`);
+      console.log(`email: ${email}`);
 
-      navigate('/login');
-
+      navigate("/login");
     } catch (error) {
       console.error(error);
       setSignupStatus(false);
@@ -52,14 +54,13 @@ function useSignup() {
   };
 }
 
-
 // SignupInput component
 const StyledTextInput = styled.input`
-  height: 5rem; 
+  height: 5rem;
   margin-bottom: 2.5rem;
   font-size: 2rem;
   padding: 1rem 2rem;
-  border-radius: 1rem; 
+  border-radius: 1rem;
   background-color: ${COLORS.gray};
   color: white;
   width: 100%;
@@ -73,12 +74,12 @@ const StyledTextInput = styled.input`
 function SignupInput(props) {
   return (
     <StyledTextInput
-      type={props.secureTextEntry ? 'password' : 'text'}
+      type={props.secureTextEntry ? "password" : "text"}
       placeholder={props.placeholder}
       value={props.value}
-      onChange={e => props.onChangeText(e.target.value)}
+      onChange={(e) => props.onChangeText(e.target.value)}
       maxLength={props.maxLength}
-      {...(props.keyboardType === 'numeric' ? { pattern: '[0-9]*' } : {})}
+      {...(props.keyboardType === "numeric" ? { pattern: "[0-9]*" } : {})}
     />
   );
 }
@@ -119,8 +120,14 @@ export default function SignupForm() {
         onChangeText={onChangePassword}
         secureTextEntry={true}
       />
-      <StyledSignupButton onClick={() => onPressSignup(navigate)}>회원 가입</StyledSignupButton>
-      {!signupStatus && <StyledWarning>회원 가입에 실패했습니다. 다시 시도해주세요.</StyledWarning>}
+      <StyledSignupButton onClick={() => onPressSignup(navigate)}>
+        회원 가입
+      </StyledSignupButton>
+      {!signupStatus && (
+        <StyledWarning>
+          회원 가입에 실패했습니다. 다시 시도해주세요.
+        </StyledWarning>
+      )}
     </SignupInputContainer>
   );
 }
@@ -128,11 +135,11 @@ export default function SignupForm() {
 const SignupInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%; 
-  max-width: 50rem; 
-  margin: 0 auto; 
-  padding: 10rem; 
-  align-items: center; 
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 10rem;
+  align-items: center;
 `;
 
 const StyledWarning = styled(FontStyledText)`
@@ -141,14 +148,14 @@ const StyledWarning = styled(FontStyledText)`
 `;
 
 const StyledSignupButton = styled.button`
-  height: 5rem; 
+  height: 5rem;
   margin-top: 2.5rem;
   font-size: 2rem;
   padding: 1rem 2rem;
-  border-radius: 1rem; 
+  border-radius: 1rem;
   background-color: ${COLORS.green};
   color: white;
-  width: 100%; 
+  width: 100%;
   border: none;
   cursor: pointer;
   text-align: center;
