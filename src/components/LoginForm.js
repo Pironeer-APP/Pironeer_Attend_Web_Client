@@ -5,6 +5,7 @@ import { FontStyledText, StyledText } from "../components/Text";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { client } from "../utils/client";
+import base64 from "base-64";
 
 // LoginInput component
 const StyledTextInput = styled.input`
