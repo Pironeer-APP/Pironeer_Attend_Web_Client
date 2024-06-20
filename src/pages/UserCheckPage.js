@@ -12,10 +12,10 @@ function checkUserState(navigate) {
   const token = localStorage.getItem("token");
   const isAdmin = localStorage.getItem("isAdmin");
 
-  //   // 인증 정보가 없을 경우
-  //   if (!token || !isAdmin) {
-  //     navigate("/");
-  //   }
+  // 인증 정보가 없을 경우
+  if (!token || !isAdmin) {
+    navigate("/");
+  }
 
   // 운영진이라면 어드민 페이지로 이동
   if (isAdmin) {
@@ -38,7 +38,7 @@ async function checkAttendStart(setIsStart) {
 
 export default function UserCheckPage() {
   const navigate = useNavigate();
-  const [isStart, setIsStart] = useState(false);
+  const [isStart, setIsStart] = useState(true);
 
   useEffect(() => {
     checkUserState(navigate);
