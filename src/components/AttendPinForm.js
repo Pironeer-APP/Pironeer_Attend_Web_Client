@@ -28,7 +28,7 @@ function useAttend() {
     setPin(value);
   };
 
-  const onPressAttend = async (navigate, setIsAttend) => {
+  const onPressAttend = async (navigate, setIsAttend, setMsg) => {
     const token = localStorage.getItem("token");
     console.log(pin);
 
@@ -50,15 +50,19 @@ function useAttend() {
     // 서버에 출석 정보 전달
     try {
       const response = await client.post(`/checkAttend/${token}`, {
-        pin,
+        code: pin,
       });
-      const { isAttend } = response.data;
-      setIsAttend(setIsAttend);
-      setPin("");
+      const { msg } = response.data;
+      // 240620 연우: response code 확인 어떻게 하는지는 서버 복구되면 체크
+      if (response.status === 200) {
+        setIsAttend(true);
+      }
+      setWarning(msg);
     } catch (error) {
-      console.error(error);
-      setIsAttend("오류");
+      console.log("server error!");
+      setWarning("서버 오류로 인해 출석 체크에 실패했습니다.");
     }
+    setPin("");
   };
 
   return {
@@ -69,42 +73,14 @@ function useAttend() {
   };
 }
 
-function AttendResult(props) {
-  const isAttend = props.isAttend;
-  let result = "";
-  let image = "";
-
-  // 출석 상태에 따라 팝업 등장
-  switch (isAttend) {
-    case "출석":
-      result = "출석 인증되었습니다!";
-      image = "";
-      break;
-    case "지각":
-      result = "지각 처리되었습니다.";
-      image = "";
-      break;
-    case "결석":
-      result = "결석 처리되었습니다.";
-      image = "";
-      break;
-    default:
-      result = "서버 오류로 출석에 실패했습니다. 잠시만 기다려 주세요.";
-      image = "";
-      break;
-  }
-  return (
-    <div>
-      <span>{result}</span>
-      <img scr={image} />
-    </div>
-  );
+function AttendResult() {
+  return <div></div>;
 }
 
-export default function AttendPinForm() {
+export default function AttendPinForm(props) {
   const navigate = useNavigate();
-  const [isAttend, setIsAttend] = useState();
   const { pin, warning, onChangePin, onPressAttend } = useAttend();
+  const setIsAttend = props.setIsAttend;
 
   return (
     <div>
@@ -119,7 +95,6 @@ export default function AttendPinForm() {
         출석하기
       </StyledLoginButton>
       {warning && <StyledWarning>{warning}</StyledWarning>}
-      {isAttend && <AttendResult isAttend={isAttend} />}
     </div>
   );
 }
