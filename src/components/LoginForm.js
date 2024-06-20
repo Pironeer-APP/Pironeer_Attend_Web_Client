@@ -1,18 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../assets/Theme';
-import { FontStyledText, StyledText } from '../components/Text';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { client } from '../utils/client';
+import React from "react";
+import styled from "styled-components";
+import { COLORS } from "../assets/Theme";
+import { FontStyledText, StyledText } from "../components/Text";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { client } from "../utils/client";
+import base64 from "base-64";
 
 // LoginInput component
 const StyledTextInput = styled.input`
-  height: 5rem; 
+  height: 5rem;
   margin-bottom: 2.5rem;
   font-size: 2rem;
   padding: 1rem 2rem;
-  border-radius: 1rem; 
+  border-radius: 1rem;
   background-color: ${COLORS.gray};
   color: white;
   width: 100%;
@@ -26,20 +27,20 @@ const StyledTextInput = styled.input`
 function LoginInput(props) {
   return (
     <StyledTextInput
-      type={props.secureTextEntry ? 'password' : 'text'}
+      type={props.secureTextEntry ? "password" : "text"}
       placeholder={props.placeholder}
       value={props.value}
-      onChange={e => props.onChangeText(e.target.value)}
+      onChange={(e) => props.onChangeText(e.target.value)}
       maxLength={props.maxLength}
-      {...(props.keyboardType === 'numeric' ? { pattern: '[0-9]*' } : {})}
+      {...(props.keyboardType === "numeric" ? { pattern: "[0-9]*" } : {})}
     />
   );
 }
 
 // useLogin Hook
 function useLogin() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(true);
 
   const onChangeUsername = (value) => {
@@ -48,22 +49,31 @@ function useLogin() {
 
   const onPressLogin = async (navigate) => {
     try {
-      const response = await client.post('/login', {
+      const response = await client.post("/login", {
         username,
         password,
       });
 
       // Assuming the response contains the token
-      const { token,isAdmin } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('isAdmin', isAdmin);
-      
-      if (isAdmin) {
-        navigate('/admin');
-      } else {
-        navigate('/user');
-      }
+      const { token } = response.data;
+      const payload = token.substring(
+        token.indexOf(".") + 1,
+        token.lastIndexOf(".")
+      );
+      const decodedPayload = base64.decode(payload);
+      const userId = decodedPayload._id;
+      // 240620 연우: 아직 isAdmin 부분 어떻게 받는지 확정하지 않음. 추후 수정
+      const isAdmin = decodedPayload._isAdmin;
 
+      localStorage.setItem("token", token);
+      localStorage.setItem("isAdmin", isAdmin);
+      localStorage.setItem("userId", userId);
+
+      if (isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
     } catch (error) {
       console.error(error);
       setLoginStatus(false);
@@ -107,8 +117,12 @@ export default function LoginForm() {
         onChangeText={setPassword}
         secureTextEntry={true}
       />
-      <StyledLoginButton onClick={() => onPressLogin(navigate)}>로그인</StyledLoginButton>
-      {!loginStatus && <StyledWarning>일치하는 회원 정보가 없습니다.</StyledWarning>}
+      <StyledLoginButton onClick={() => onPressLogin(navigate)}>
+        로그인
+      </StyledLoginButton>
+      {!loginStatus && (
+        <StyledWarning>일치하는 회원 정보가 없습니다.</StyledWarning>
+      )}
     </LoginInputContainer>
   );
 }
@@ -116,11 +130,11 @@ export default function LoginForm() {
 const LoginInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%; 
-  max-width: 50rem; 
-  margin: 0 auto; 
-  padding: 10rem; 
-  align-items: center; 
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 10rem;
+  align-items: center;
 `;
 
 const StyledWarning = styled(FontStyledText)`
@@ -137,14 +151,14 @@ const FindAccountButton = styled.button`
 `;
 
 const StyledLoginButton = styled.button`
-  height: 5rem; 
+  height: 5rem;
   margin-top: 2.5rem;
   font-size: 2rem;
   padding: 1rem 2rem;
-  border-radius: 1rem; 
+  border-radius: 1rem;
   background-color: ${COLORS.green};
   color: white;
-  width: 100%; 
+  width: 100%;
   border: none;
   cursor: pointer;
   text-align: center;
