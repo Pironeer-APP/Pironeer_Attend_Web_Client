@@ -1,22 +1,19 @@
-
-
-
 export async function client(endpoint, { body, ...customConfig } = {}) {
-  const SERVER_URL = 'http://localhost:3000';
-  const headers = { 'Content-Type': 'application/json' };
+  const SERVER_URL = "http://http://3.38.96.3:3000";
+  const headers = { "Content-Type": "application/json" };
 
   const config = {
-    method: body ? 'POST' : 'GET',
+    method: body ? "POST" : "GET",
     ...customConfig,
     headers: {
       ...headers,
       ...customConfig.headers,
     },
-  }
+  };
 
   if (body) {
-    const userToken = localStorage.getItem('user_token'); // Use local storage
-    if(userToken && !Object.keys(body).includes("userToken")) {
+    const userToken = localStorage.getItem("user_token"); // Use local storage
+    if (userToken && !Object.keys(body).includes("userToken")) {
       body.userToken = userToken;
     }
     config.body = JSON.stringify(body);
@@ -36,9 +33,9 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
 }
 
 client.get = function (endpoint, customConfig = {}) {
-  return client(endpoint, { ...customConfig, method: 'GET' });
-}
+  return client(endpoint, { ...customConfig, method: "GET" });
+};
 
 client.post = function (endpoint, body, customConfig = {}) {
   return client(endpoint, { ...customConfig, body });
-}
+};
