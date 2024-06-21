@@ -1,4 +1,4 @@
-// Theme.js
+// ../assets/Theme.js
 export const COLORS = {
   green: '#0BEC12',
   bg_black: '#000000',
@@ -14,6 +14,7 @@ export const COLORS = {
   blood_red: '#C54422',
 };
 
+// Theme settings
 export const darkTheme = {
   backgroundColor: '#000000',
   gray: '#1C1C1D',

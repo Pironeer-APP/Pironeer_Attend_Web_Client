@@ -19,6 +19,17 @@ const router = createBrowserRouter([
     path: "/",
     element: <UserCheckPage />,
   },
+  {
+    path: '/userStatus',
+    element: (
+    <>
+      <Header text={"님 반가워요"}/>
+      <Container>
+        <UserStatusPage />
+      </Container>
+    </>
+    )
+  },
 ]);
 
 function App() {
