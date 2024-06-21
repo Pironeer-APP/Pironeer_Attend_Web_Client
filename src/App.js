@@ -1,11 +1,12 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Container from "./components/Container";
+import {Container} from "./components/common/Container";
 import Logo from "./components/common/Logo";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import UserCheckPage from "./pages/UserCheckPage";
-
+import { Header } from "./components/common/Header";
+import UserStatusPage from "./pages/UserStatusPage";
 const router = createBrowserRouter([
   {
     path: "/signup",
@@ -23,10 +24,7 @@ const router = createBrowserRouter([
     path: '/userStatus',
     element: (
     <>
-      <Header text={"님 반가워요"}/>
-      <Container>
         <UserStatusPage />
-      </Container>
     </>
     )
   },

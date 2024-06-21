@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS } from '../utils/theme';
+import { COLORS } from '../../utils/theme';
 
 const StyledBox = styled.div`
   background-color: ${COLORS.gray};

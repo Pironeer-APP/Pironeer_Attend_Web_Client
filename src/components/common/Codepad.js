@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS } from '../utils/theme';
+import { COLORS } from '../../utils/theme';
 
 // Styled components
 const StyledText = styled.span`

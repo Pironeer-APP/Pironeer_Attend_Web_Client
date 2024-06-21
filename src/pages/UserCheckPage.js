@@ -7,7 +7,7 @@ import Logo from "../components/common/Logo";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
 import { Container } from "../components/common/Container";
-import Header from "../components/common/Header";
+import {Header} from "../components/common/Header";
 
 function checkUserState(navigate) {
   const token = localStorage.getItem("token");

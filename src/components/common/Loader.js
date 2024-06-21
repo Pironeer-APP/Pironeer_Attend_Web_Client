@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ClipLoader } from 'react-spinners';
-import { COLORS } from '../utils/theme'; // Assuming COLORS is exported from Theme
+import { COLORS } from '../../utils/theme'; // Assuming COLORS is exported from Theme
 
 const TinyLoaderContainer = styled.div`
   display: flex;

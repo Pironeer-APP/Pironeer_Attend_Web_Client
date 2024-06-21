@@ -5,7 +5,7 @@ const COLORS = {
   green: '#00FF00',
 };
 
-const IsFaceBoxContainer = styled.div<{ bgColor: string }>`
+const IsFaceBoxContainer = styled.div`
   width: 77px;
   height: 25px;
   border-radius: 6px;
@@ -20,11 +20,7 @@ const IsFaceText = styled.span`
   font-size: 16px;
 `;
 
-interface IsFaceBoxProps {
-  isFace: number;
-}
-
-const IsFaceBox: React.FC<IsFaceBoxProps> = (props) => {
+const IsFaceBox = (props) => {
   const getBackgroundColor = () => {
     if (props.isFace === 0) {
       return COLORS.green;

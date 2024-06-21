@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
-import { COLORS } from '../utils/theme';
+import { COLORS } from '../../utils/theme';
 
 const OnAirCircleContainer = styled(motion.div)`
   display: flex;

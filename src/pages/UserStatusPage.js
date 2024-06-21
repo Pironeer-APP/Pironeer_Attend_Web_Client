@@ -1,50 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import StyledContainer from '../components/Container';
-import { HeaderDetail } from '../components/Header';
+import {Container} from '../components/common/Container';
+import { HeaderDetail } from '../components/common/Header';
 import { findNextSession } from '../utils';
-import { Box } from '../components/Box';
-import { StyledSubText, StyledText } from '../components/Text';
+import { Box } from '../components/common/Box';
+import { StyledSubText, StyledText } from '../components/common/Text';
 import { COLORS } from '../utils/theme';
-import Gap, { GapH } from '../components/Gap';
-import { MainButton } from '../components/Button';
-import IsFaceBox from '../components/IsFaceBox';
+import Gap, { GapH } from '../components/common/Gap';
+import { MainButton } from '../components/common/Button';
+import IsFaceBox from '../components/common/IsFaceBox';
 import Modal from 'react-modal';
-import Codepad from '../components/Codepad';
-import { MediumLoader } from '../components/Loader';
-import OnAirCircle from '../components/OnAirCircle';
-import StatusCircle from '../components/StatusCircle';
+import Codepad from '../components/common/Codepad';
+import { MediumLoader } from '../components/common/Loader';
+import OnAirCircle from '../components/common/OnAirCircle';
 import { client } from '../utils/client';
 import useClientTime from '../utils/clientTime';
 import { getData } from '../utils';
 
-export const RowView = styled.div`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+// Styled Components
+const StatusCircleContainer = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: ${COLORS.light_gray};
+  border-radius: 50%;
+  border: 0.8px solid ${COLORS.textColor};
 `;
-export const AsgContainer = styled.div`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const AttendStatusCircle = ({ type = null }) => {
-  let imageSource;
-  if (type === '결석') {
-    imageSource = `/images/icons/circle_ex.png`;
-  } else if (type === '출석') {
-    imageSource = `/images/icons/circle_donggrami.png`;
-  } else if (type === '지각') {
-    imageSource = `/images/icons/circle_semo.png`;
-  } else {
-    imageSource = `/images/icons/circle_none.png`;
-  }
-  return (
-    <div>
-      <img source={imageSource} style={{ width: 30, height: 30 }} />
-    </div>
-  );
-};
 
 const StatusLine = styled.div`
   background-color: ${COLORS.icon_gray};
@@ -52,30 +32,91 @@ const StatusLine = styled.div`
   flex: 1;
 `;
 
+const AsgContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+`;
 
+const RowView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ModalContainer = styled.div`
+  background-color: ${COLORS.gray};
+  padding: 16px;
+  min-height: 500px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  padding-horizontal: 30px;
+`;
+
+const CenteredView = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalView = styled.div`
+  background-color: ${COLORS.gray};
+  width: 300px;
+  border-radius: 20px;
+  padding: 35px;
+  align-items: center;
+  gap: 20px;
+`;
+
+const AttendStatusCircle = ({ type = null }) => {
+  let imageSource;
+  switch (type) {
+    case '결석':
+      imageSource = '/assets/icons/circle_ex.png';
+      break;
+    case '출석':
+      imageSource = '/assets/icons/circle_donggrami.png';
+      break;
+    case '지각':
+      imageSource = '/assets/icons/circle_semo.png';
+      break;
+    default:
+      imageSource = '/assets/icons/circle_none.png';
+      break;
+  }
+  return (
+    <StatusCircleContainer>
+      <img src={imageSource} alt={type} style={{ width: 30, height: 30 }} />
+    </StatusCircleContainer>
+  );
+};
 
 const InProgressAttendBox = (props) => {
   const {
-    renderYear,
     renderMonth,
     renderDate,
     renderDay,
     renderHour,
     renderMinute,
-    renderMillisec,
   } = useClientTime(props.date);
+
   return (
-    <AsgContainer style={{ gap: 20 }}>
-      <ColumnCenter>
-        <ColumnCenterInner>
+    <AsgContainer>
+      <div style={{ flexDirection: 'column', alignItems: 'center', display: 'flex' }}>
+        <div style={{ flex: 1, justifyContent: 'center', alignItems: 'center', width: 50, display: 'flex' }}>
           <StatusLine />
-          {props.nextSession.cnt === props.cnt ? <OnAirCircle /> : <StatusCircle />}
+          {props.nextSession.cnt === props.cnt ? <OnAirCircle /> : <StatusCircleContainer />}
           <StatusLine />
-        </ColumnCenterInner>
-      </ColumnCenter>
-      <ContentColumn>
+        </div>
+      </div>
+      <div style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', marginVertical: 10, display: 'flex' }}>
         <Box>
-          <PaddingView>
+          <div style={{ paddingHorizontal: 17, paddingVertical: 10 }}>
             <RowView style={{ marginBottom: 10 }}>
               <StyledSubText content={`${renderMonth}.${renderDate} ${renderDay}`} />
               <IsFaceBox isFace={props.isFace} />
@@ -84,58 +125,55 @@ const InProgressAttendBox = (props) => {
             <Gap height={14} />
             {props.isFace === 1 && (
               <>
-                <IconRow>
-                  <img source='/images/location_icon.png' style={{ width: 15, height: 15 }} resizeMode="contain" />
+                <div style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 30, display: 'flex' }}>
+                  <img src="/assets/images/location_icon.png" alt="location" style={{ width: 15, height: 15 }} />
                   <GapH width={9} />
                   <StyledSubText content={props.location} />
-                </IconRow>
+                </div>
                 <Gap height={5} />
               </>
             )}
-            <IconRow>
-              <img source='/images/time_icon.png' style={{ width: 15, height: 15 }} resizeMode="contain" />
+            <div style={{ flexDirection: 'row', alignItems: 'center', display: 'flex' }}>
+              <img src="/assets/images/time_icon.png" alt="time" style={{ width: 15, height: 15 }} />
               <GapH width={9} />
               <StyledSubText content={`${renderHour}:${renderMinute}`} />
-            </IconRow>
-          </PaddingView>
+            </div>
+          </div>
         </Box>
-      </ContentColumn>
+      </div>
     </AsgContainer>
   );
 };
 
 const DoneAttendBox = (props) => {
   const {
-    renderYear,
     renderMonth,
     renderDate,
     renderDay,
-    renderHour,
-    renderMinute,
-    renderMillisec,
   } = useClientTime(props.date);
+
   return (
     <AsgContainer>
-      <Column>
-        <ColumnCenterInner>
+      <div style={{ flexDirection: 'column', display: 'flex' }}>
+        <div style={{ flex: 1, justifyContent: 'center', alignItems: 'center', width: 50, display: 'flex' }}>
           <StatusLine />
           <AttendStatusCircle type={props.attenType} />
           <StatusLine />
-        </ColumnCenterInner>
-      </Column>
-      <ContentColumn>
-        <PaddingView>
+        </div>
+      </div>
+      <div style={{ flexDirection: 'column', flex: 1, justifyContent: 'center', display: 'flex' }}>
+        <div style={{ padding: 20 }}>
           <RowView style={{ marginVertical: 10 }}>
-            <AlignCenter>
+            <div style={{ alignItems: 'center', display: 'flex' }}>
               <StyledSubText content={`${renderMonth}.${renderDate}`} fontSize={20} />
               <StyledSubText content={renderDay} fontSize={20} />
-            </AlignCenter>
-            <TitleContainer>
+            </div>
+            <div style={{ flex: 1, marginLeft: 20 }}>
               <StyledText content={props.title} fontSize={18} />
-            </TitleContainer>
+            </div>
           </RowView>
-        </PaddingView>
-      </ContentColumn>
+        </div>
+      </div>
     </AsgContainer>
   );
 };
@@ -149,12 +187,11 @@ const AttendanceScreen = () => {
   const [codeConfirmed, setCodeConfirmed] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [nextSession, setNextSession] = useState(null);
+  const [codes, setCodes] = useState('');
 
   const toggleBottomSheet = () => {
     setBottomSheetVisible(!isBottomSheetVisible);
   };
-
-  
 
   const userSessionInfo = async () => {
     setRefreshing(true);
@@ -181,10 +218,7 @@ const AttendanceScreen = () => {
 
     const userToken = await getData('user_token');
     for (let i = 0; i < attendance.length; i++) {
-      const sessionAttendsLen = await client.post('/attend/getSessionAttend', {
-        userToken,
-        session_id: attendance[i].session_id,
-      });
+      const sessionAttendsLen = await client.post('/attend/getSessionAttend', { userToken, session_id: attendance[i].session_id });
       if (sessionAttendsLen.len === 0) {
         const now = new Date();
         const standard = new Date(attendance[i].date);
@@ -201,26 +235,27 @@ const AttendanceScreen = () => {
     return () => clearInterval(intervalId);
   }, [attendance]);
 
-  const renderAttendItem = (item) => (
-    <>
-      {nextSession?.cnt <= item.cnt ? (
-        <InProgressAttendBox
-          status={item.attend_id}
-          title={item.title}
-          date={item.date}
-          location={item.location}
-          isFace={item.is_face}
-          attenType={item.type}
-          cnt={item.cnt}
-          nextSession={nextSession}
-        />
-      ) : (
-        <DoneAttendBox status={item.attend_id} title={item.title} date={item.date} attenType={item.type} />
-      )}
-    </>
-  );
-
-  const [codes, setCodes] = useState('');
+  const renderAttendItem = (item) => {
+    return nextSession?.cnt <= item.cnt ? (
+      <InProgressAttendBox
+        status={item.attend_id}
+        title={item.title}
+        date={item.date}
+        location={item.location}
+        isFace={item.is_face}
+        attenType={item.type}
+        cnt={item.cnt}
+        nextSession={nextSession}
+      />
+    ) : (
+      <DoneAttendBox
+        status={item.attend_id}
+        title={item.title}
+        date={item.date}
+        attenType={item.type}
+      />
+    );
+  };
 
   const confirmCode = async () => {
     const userToken = await getData('user_token');
@@ -232,135 +267,109 @@ const AttendanceScreen = () => {
     const attenResult = await client.post(url, body);
     setCodeConfirmed(attenResult.result);
     setBottomSheetVisible(!isBottomSheetVisible);
-    setTimeout(() => setModalVisible(true), 1000);
-    setTimeout(() => setModalVisible(false), 3000);
+    setTimeout(() => {
+      setModalVisible(true);
+    }, 1000);
+    setTimeout(() => {
+      setModalVisible(false);
+    }, 3000);
     setCodes('');
   };
 
   return (
-    <StyledContainer>
-      <HeaderDetail title="출석" />
+    <Container>
+      <HeaderDetail title={'출석'} />
       {isLoading ? (
         <MediumLoader />
       ) : (
-        <FlexContainer>
-          <ul style={{ paddingRight: 20, paddingLeft: 10 }}>
-            {attendance.map((item) => (
-              <li key={item.session_id}>{renderAttendItem(item)}</li>
-            ))}
-          </ul>
-          {isTodaySession && (
-            <ButtonContainer>
-              <MainButton height={60} content="출석하기" onPress={toggleBottomSheet} marginBottom={0} />
-            </ButtonContainer>
-          )}
-          <Modal isVisible={isBottomSheetVisible} onBackdropPress={toggleBottomSheet} style={{ justifyContent: 'flex-end', margin: 0 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ paddingRight: 20, paddingLeft: 10 }}>
+              {attendance.map((item) => (
+                renderAttendItem(item)
+              ))}
+            </div>
+            {isTodaySession && (
+              <div style={{ paddingHorizontal: 20 }}>
+                <MainButton
+                  height={60}
+                  content={'출석하기'}
+                  onClick={toggleBottomSheet}
+                  marginBottom={0}
+                />
+              </div>
+            )}
+          </div>
+          <Modal
+            isOpen={isBottomSheetVisible}
+            onRequestClose={toggleBottomSheet}
+            style={{
+              content: {
+                justifyContent: 'flex-end',
+                margin: 0,
+                padding: 0,
+              },
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              },
+            }}
+          >
             <ModalContainer>
-              <Codepad confirmCode={confirmCode} codes={codes} setCodes={setCodes} />
+              <Codepad
+                confirmCode={confirmCode}
+                codes={codes}
+                setCodes={setCodes}
+              />
             </ModalContainer>
           </Modal>
           <Modal
-            isVisible={isModalVisible}
-            animationIn="fadeIn"
-            animationOut="fadeOut"
-            style={{ justifyContent: 'center', alignItems: 'center', marginTop: 22 }}
+            isOpen={isModalVisible}
+            style={{
+              content: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              },
+            }}
           >
-            <CenteredView>
+            <ModalView>
               {codeConfirmed === false ? (
                 <>
-                  <img source='/images/attend_failed.png' resizeMode="contain" style={{ width: 120, height: 120 }} />
-                  <StyledText content="출석 실패" fontSize={25} />
+                  <img
+                    src="/assets/images/attend_failed.png"
+                    alt="Attend Failed"
+                    style={{ width: 120, height: 120 }}
+                  />
+                  <StyledText content={'출석 실패'} fontSize={25} />
                 </>
               ) : codeConfirmed === 'exist' ? (
                 <>
-                  <img source='/images/attend_success.png' resizeMode="contain" style={{ width: 120, height: 120 }} />
-                  <StyledText content="출석 정보 존재" fontSize={25} />
+                  <img
+                    src="/assets/images/attend_success.png"
+                    alt="Attend Success"
+                    style={{ width: 120, height: 120 }}
+                  />
+                  <StyledText content={'출석 정보 존재'} fontSize={25} />
                 </>
               ) : (
                 <>
-                  <img source='/images/attend_success.png' resizeMode="contain" style={{ width: 120, height: 120 }} />
-                  <StyledText content="출석 성공" fontSize={25} />
+                  <img
+                    src="/assets/images/attend_success.png"
+                    alt="Attend Success"
+                    style={{ width: 120, height: 120 }}
+                  />
+                  <StyledText content={'출석 성공'} fontSize={25} />
                 </>
               )}
-            </CenteredView>
+            </ModalView>
           </Modal>
-        </FlexContainer>
+        </div>
       )}
-    </StyledContainer>
+    </Container>
   );
 };
 
 export default AttendanceScreen;
-
-const FlexContainer = styled.div`
-  flex: 1;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ColumnCenter = styled(Column)`
-  align-items: center;
-`;
-
-const ColumnCenterInner = styled(ColumnCenter)`
-  flex: 1;
-  justify-content: center;
-  width: 50px;
-`;
-
-const ContentColumn = styled(Column)`
-  flex: 1;
-  justify-content: center;
-  margin-vertical: 10px;
-`;
-
-const PaddingView = styled.div`
-  padding-horizontal: 17px;
-  padding-vertical: 10px;
-`;
-
-const IconRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-right: 30px;
-`;
-
-const AlignCenter = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const TitleContainer = styled.div`
-  flex: 1;
-  margin-left: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  padding-horizontal: 20px;
-`;
-
-const ModalContainer = styled.div`
-  background-color: ${COLORS.gray};
-  padding: 16px;
-  min-height: 500px;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  padding-horizontal: 30px;
-`;
-
-const CenteredView = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  background-color: ${COLORS.gray};
-  border-radius: 20px;
-  padding: 35px;
-  gap: 20px;
-  position: absolute;
-`;
-

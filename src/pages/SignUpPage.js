@@ -5,7 +5,7 @@ import { COLORS } from "../utils/theme";
 import Logo from "../components/common/Logo";
 import { Container, ScreenContainer } from "../components/common/Container";
 import SignupForm from "../components/SignupForm";
-import Header from "../components/common/Header";
+import {Header} from "../components/common/Header";
 
 export default function SignupPage() {
   return (

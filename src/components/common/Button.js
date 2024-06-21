@@ -108,8 +108,8 @@ const LeftArrowBtn = ({ onPress, size = 20, color }) => {
       <img
         src={
           color === "white"
-            ? "/path/to/left-arrow-white.png"
-            : "/path/to/left-arrow.png"
+            ? "/images/icons/left-arrow-white.png"
+            : "/images/icons/left-arrow.png"
         }
         alt="Left Arrow"
         style={{ width: size, height: "auto" }}
@@ -122,7 +122,7 @@ const RightArrowBtn = ({ onPress, size = 10 }) => {
   return (
     <ArrowButtonStyled onClick={onPress}>
       <img
-        src="/path/to/right-arrow.png"
+        src="/images/icons/right-arrow.png"
         alt="Right Arrow"
         style={{ width: size, height: "auto" }}
       />
@@ -132,7 +132,7 @@ const RightArrowBtn = ({ onPress, size = 10 }) => {
 
 const UnTouchableRightArrow = ({ size = 10 }) => (
   <img
-    src="/path/to/right-arrow.png"
+    src="/images/icons/right-arrow.png"
     alt="Right Arrow"
     style={{ width: size, height: "auto" }}
   />
