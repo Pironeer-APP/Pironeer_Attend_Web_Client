@@ -69,7 +69,7 @@ function useLogin() {
       if (isAdmin === "true") {
         navigate("/admin");
       } else {
-        navigate("/userCheck");
+        navigate("/");
       }
     } catch (error) {
       console.error(error);
@@ -100,7 +100,7 @@ export default function LoginForm() {
   } = useLogin();
 
   return (
-    <LoginInputContainer>
+    <InputContainer>
       <LoginInput
         placeholder="이름"
         keyboardType="default"
@@ -120,11 +120,11 @@ export default function LoginForm() {
       {!loginStatus && (
         <StyledWarning>일치하는 회원 정보가 없습니다.</StyledWarning>
       )}
-    </LoginInputContainer>
+    </InputContainer>
   );
 }
 
-const LoginInputContainer = styled.div`
+const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

@@ -6,12 +6,12 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  height: 8rem;
 `;
 
 const StyledImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 4rem;
+  height: 4rem;
 `;
 
 const Logo = () => {

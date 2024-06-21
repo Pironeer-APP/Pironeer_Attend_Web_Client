@@ -35,6 +35,7 @@ function useSignup() {
       console.log(`password: ${password}`);
       console.log(`email: ${email}`);
 
+      // 240621 연우: 회원가입하면 바로 로그인할 수 있도록 수정해도 좋을 것 같습니다.
       navigate("/login");
     } catch (error) {
       console.error(error);
@@ -99,7 +100,7 @@ export default function SignupForm() {
   } = useSignup();
 
   return (
-    <SignupInputContainer>
+    <InputContainer>
       <SignupInput
         placeholder="이름"
         keyboardType="default"
@@ -128,11 +129,11 @@ export default function SignupForm() {
           회원 가입에 실패했습니다. 다시 시도해주세요.
         </StyledWarning>
       )}
-    </SignupInputContainer>
+    </InputContainer>
   );
 }
 
-const SignupInputContainer = styled.div`
+const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

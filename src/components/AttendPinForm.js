@@ -73,17 +73,13 @@ function useAttend() {
   };
 }
 
-function AttendResult() {
-  return <div></div>;
-}
-
 export default function AttendPinForm(props) {
   const navigate = useNavigate();
   const { pin, warning, onChangePin, onPressAttend } = useAttend();
   const setIsAttend = props.setIsAttend;
 
   return (
-    <div>
+    <InputContainer>
       <AttendInput
         placeholder="출석코드"
         keyboardType="numeric"
@@ -95,9 +91,19 @@ export default function AttendPinForm(props) {
         출석하기
       </StyledLoginButton>
       {warning && <StyledWarning>{warning}</StyledWarning>}
-    </div>
+    </InputContainer>
   );
 }
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 10rem;
+  align-items: center;
+`;
 
 const StyledLoginButton = styled.button`
   height: 5rem;

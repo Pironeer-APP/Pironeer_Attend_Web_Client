@@ -5,19 +5,21 @@ import { COLORS } from "../utils/theme";
 import Logo from "../components/Logo";
 import LoginForm from "../components/LoginForm";
 import Container from "../components/Container";
+import Header from "../components/Header";
 
 export default function LoginPage() {
   return (
     <Container>
-      <LoginScreenContainer>
+      <ScreenContainer>
         <Logo />
+        <Header text={"피로그래밍 출석"} />
         <LoginForm />
-      </LoginScreenContainer>
+      </ScreenContainer>
     </Container>
   );
 }
 
-const LoginScreenContainer = styled.div`
+const ScreenContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
