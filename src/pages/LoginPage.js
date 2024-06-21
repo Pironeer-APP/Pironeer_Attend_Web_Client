@@ -2,10 +2,10 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
-import Logo from "../components/Logo";
+import Logo from "../components/common/Logo";
 import LoginForm from "../components/LoginForm";
-import Container from "../components/Container";
-import Header from "../components/Header";
+import { Container, ScreenContainer } from "../components/common/Container";
+import Header from "../components/common/Header";
 
 export default function LoginPage() {
   return (
@@ -18,10 +18,3 @@ export default function LoginPage() {
     </Container>
   );
 }
-
-const ScreenContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 2rem;
-`;

@@ -10,8 +10,8 @@ const ImageContainer = styled.div`
 `;
 
 const StyledImage = styled.img`
-  width: 4rem;
-  height: 4rem;
+  width: 3.2rem;
+  height: 3.2rem;
 `;
 
 const Logo = () => {

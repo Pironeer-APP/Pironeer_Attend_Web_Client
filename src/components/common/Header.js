@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { COLORS } from "../utils/theme";
+import { COLORS } from "../../utils/theme";
 
 const HeaderContainer = styled.div`
   background-color: ${COLORS.bg_black};
@@ -12,7 +12,7 @@ const HeaderContainer = styled.div`
 
 const HeaderText = styled.h1`
   color: white;
-  font-size: 2.4rem;
+  font-size: 3.2rem;
   margin: 0;
 `;
 

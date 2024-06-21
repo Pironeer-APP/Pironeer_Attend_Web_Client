@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
-import { FontStyledText, StyledText } from "../components/Text";
+import { FontStyledText, StyledText } from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { client } from "../utils/client";
+import { InputContainer } from "./common/Container";
+import StyledInput from "./common/Input";
+import { MainButton } from "./common/Button";
 
 function useSignup() {
   const [username, setUsername] = useState("");
@@ -55,36 +58,6 @@ function useSignup() {
   };
 }
 
-// SignupInput component
-const StyledTextInput = styled.input`
-  height: 5rem;
-  margin-bottom: 2.5rem;
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  background-color: ${COLORS.gray};
-  color: white;
-  width: 100%;
-  border: none;
-
-  &::placeholder {
-    color: ${COLORS.light_gray};
-  }
-`;
-
-function SignupInput(props) {
-  return (
-    <StyledTextInput
-      type={props.secureTextEntry ? "password" : "text"}
-      placeholder={props.placeholder}
-      value={props.value}
-      onChange={(e) => props.onChangeText(e.target.value)}
-      maxLength={props.maxLength}
-      {...(props.keyboardType === "numeric" ? { pattern: "[0-9]*" } : {})}
-    />
-  );
-}
-
 // SignupForm component
 export default function SignupForm() {
   const navigate = useNavigate();
@@ -101,63 +74,37 @@ export default function SignupForm() {
 
   return (
     <InputContainer>
-      <SignupInput
+      <StyledInput
         placeholder="이름"
         keyboardType="default"
         value={username}
         onChangeText={onChangeUsername}
         maxLength={50}
       />
-      <SignupInput
+      <StyledInput
         placeholder="이메일"
         keyboardType="default"
         value={email}
         onChangeText={onChangeEmail}
         maxLength={50}
       />
-      <SignupInput
+      <StyledInput
         placeholder="비밀번호"
         value={password}
         onChangeText={onChangePassword}
         secureTextEntry={true}
       />
-      <StyledSignupButton onClick={() => onPressSignup(navigate)}>
-        회원 가입
-      </StyledSignupButton>
+      <MainButton
+        content={"회원가입"}
+        onPress={() => onPressSignup(navigate)}
+      />
       {!signupStatus && (
-        <StyledWarning>
-          회원 가입에 실패했습니다. 다시 시도해주세요.
-        </StyledWarning>
+        <StyledText
+          content={"회원 가입에 실패했습니다. 다시 시도해주세요."}
+          fontSize={"1rem"}
+          color={COLORS.green}
+        />
       )}
     </InputContainer>
   );
 }
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 50rem;
-  margin: 0 auto;
-  padding: 10rem;
-  align-items: center;
-`;
-
-const StyledWarning = styled(FontStyledText)`
-  color: red;
-  margin: 0.5rem;
-`;
-
-const StyledSignupButton = styled.button`
-  height: 5rem;
-  margin-top: 2.5rem;
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  background-color: ${COLORS.green};
-  color: white;
-  width: 100%;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-`;

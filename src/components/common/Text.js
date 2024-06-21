@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { COLORS } from "../utils/theme";
+import { COLORS } from "../../utils/theme";
 
 const TextCSS = styled.span`
   font-size: ${(props) => props.fontSize}px;
@@ -33,8 +33,8 @@ const FontStyledTextCSS = styled.span`
   font-family: "Interop-Medium";
 `;
 
-const FontStyledText = ({ style, children }) => (
-  <FontStyledTextCSS style={style}>{children}</FontStyledTextCSS>
+const FontStyledText = ({ style, content }) => (
+  <FontStyledTextCSS style={style}>{content}</FontStyledTextCSS>
 );
 
 export { StyledText, StyledSubText, FontStyledText };

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FontStyledText, StyledText } from "./Text";
-import { COLORS } from "../utils/theme";
+import { COLORS } from "../../utils/theme";
 
 const ButtonContainerStyled = styled.button`
   display: flex;
@@ -40,6 +40,7 @@ const MainButtonStyled = styled(ButtonContainerStyled)`
   padding: 15px 20px;
   background-color: ${COLORS.green};
   border-radius: 15px;
+  margin-top: 2.5rem;
   margin-bottom: ${(props) => props.marginBottom}px;
 `;
 

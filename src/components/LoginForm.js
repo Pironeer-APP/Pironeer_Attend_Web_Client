@@ -1,42 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
-import { FontStyledText, StyledText } from "../components/Text";
+import { FontStyledText, StyledText } from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { client } from "../utils/client";
 import { jwtDecode } from "jwt-decode";
-
-// LoginInput component
-const StyledTextInput = styled.input`
-  height: 5rem;
-  margin-bottom: 2.5rem;
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  background-color: ${COLORS.gray};
-  color: white;
-  width: 100%;
-  border: none;
-
-  &::placeholder {
-    color: ${COLORS.light_gray};
-  }
-`;
-
-// 240620 연우: 이 input은 공용으로 빼도 좋을 거 같아요.
-function LoginInput(props) {
-  return (
-    <StyledTextInput
-      type={props.secureTextEntry ? "password" : "text"}
-      placeholder={props.placeholder}
-      value={props.value}
-      onChange={(e) => props.onChangeText(e.target.value)}
-      maxLength={props.maxLength}
-      {...(props.keyboardType === "numeric" ? { pattern: "[0-9]*" } : {})}
-    />
-  );
-}
+import { InputContainer } from "./common/Container";
+import StyledInput from "./common/Input";
+import { MainButton } from "./common/Button";
 
 // useLogin Hook
 function useLogin() {
@@ -101,62 +73,27 @@ export default function LoginForm() {
 
   return (
     <InputContainer>
-      <LoginInput
+      <StyledInput
         placeholder="이름"
         keyboardType="default"
         value={username}
         onChangeText={onChangeUsername}
         maxLength={50}
       />
-      <LoginInput
+      <StyledInput
         placeholder="비밀번호"
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
       />
-      <StyledLoginButton onClick={() => onPressLogin(navigate)}>
-        로그인
-      </StyledLoginButton>
+      <MainButton content={"로그인"} onPress={() => onPressLogin(navigate)} />
       {!loginStatus && (
-        <StyledWarning>일치하는 회원 정보가 없습니다.</StyledWarning>
+        <StyledText
+          content={"일치하는 회원 정보가 없습니다."}
+          fontSize={"1rem"}
+          color={COLORS.green}
+        />
       )}
     </InputContainer>
   );
 }
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 50rem;
-  margin: 0 auto;
-  padding: 10rem;
-  align-items: center;
-`;
-
-const StyledWarning = styled(FontStyledText)`
-  color: red;
-  margin: 0.5rem;
-`;
-
-const FindAccountButton = styled.button`
-  align-self: center;
-  padding: 2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
-const StyledLoginButton = styled.button`
-  height: 5rem;
-  margin-top: 2.5rem;
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  background-color: ${COLORS.green};
-  color: white;
-  width: 100%;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-`;

@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
-import { FontStyledText, StyledText } from "../components/Text";
+import { FontStyledText, StyledText } from "./common/Text";
 import { useNavigate } from "react-router-dom";
-
+import { InputContainer } from "./common/Container";
+import StyledInput from "./common/Input";
 import { client } from "../utils/client";
-
-function AttendInput(props) {
-  return (
-    <StyledTextInput
-      type={props.secureTextEntry ? "password" : "text"}
-      placeholder={props.placeholder}
-      value={props.value}
-      onChange={(e) => props.onChangeText(e.target.value)}
-      maxLength={props.maxLength}
-      {...(props.keyboardType === "numeric" ? { pattern: "[0-9]*" } : {})}
-    />
-  );
-}
+import { MainButton } from "./common/Button";
 
 // useAttend Hook
 function useAttend() {
@@ -80,62 +69,25 @@ export default function AttendPinForm(props) {
 
   return (
     <InputContainer>
-      <AttendInput
+      <StyledInput
         placeholder="출석코드"
         keyboardType="numeric"
         value={pin}
         onChangeText={onChangePin}
         maxLength={4}
       />
-      <StyledLoginButton onClick={() => onPressAttend(navigate, setIsAttend)}>
-        출석하기
-      </StyledLoginButton>
-      {warning && <StyledWarning>{warning}</StyledWarning>}
+      <MainButton
+        content={"출석하기"}
+        onPress={() => onPressAttend(navigate, setIsAttend)}
+      />
+      {warning && (
+        <StyledText content={warning} fontSize={"1rem"} color={COLORS.green} />
+      )}
     </InputContainer>
   );
 }
 
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 50rem;
-  margin: 0 auto;
-  padding: 10rem;
-  align-items: center;
-`;
-
-const StyledLoginButton = styled.button`
-  height: 5rem;
-  margin-top: 2.5rem;
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  background-color: ${COLORS.green};
-  color: white;
-  width: 100%;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-`;
-
-const StyledTextInput = styled.input`
-  height: 5rem;
-  margin-bottom: 2.5rem;
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  background-color: ${COLORS.gray};
-  color: white;
-  width: 100%;
-  border: none;
-
-  &::placeholder {
-    color: ${COLORS.light_gray};
-  }
-`;
-
 const StyledWarning = styled(FontStyledText)`
-  color: red;
+  color: ${COLORS.blood_red};
   margin: 0.5rem;
 `;

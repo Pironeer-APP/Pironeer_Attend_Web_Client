@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import { client } from "../utils/client";
-import Logo from "../components/Logo";
-import Container from "../components/Container";
+import Logo from "../components/common/Logo";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
+import { Container } from "../components/common/Container";
+import Header from "../components/common/Header";
 
 function checkUserState(navigate) {
   const token = localStorage.getItem("token");
@@ -59,19 +60,11 @@ export default function UserCheckPage() {
 
   return (
     <Container>
-      <ScreenContainer>
-        <Logo />
-        {isStart && !isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
-        {isStart && isAttend && <AttendSuccess />}
-        <AttendList />
-      </ScreenContainer>
+      <Logo />
+      <Header text={`반가워요, 000님!`} />
+      {isStart && !isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
+      {isStart && isAttend && <AttendSuccess />}
+      <AttendList />
     </Container>
   );
 }
-
-const ScreenContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 2rem;
-`;
