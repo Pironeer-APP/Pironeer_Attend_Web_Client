@@ -3,39 +3,12 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import { client } from "../utils/client";
+import { checkUserState, checkAttendStart } from "../utils/stateCheck";
 import Logo from "../components/common/Logo";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
 import { Container } from "../components/common/Container";
 import Header from "../components/common/Header";
-
-function checkUserState(navigate) {
-  const token = localStorage.getItem("token");
-  const isAdmin = localStorage.getItem("isAdmin");
-
-  // 인증 정보가 없을 경우 로그인 페이지로 이동
-  if (!token || !isAdmin) {
-    navigate("/login");
-  }
-
-  // 운영진이라면 어드민 페이지로 이동
-  if (isAdmin == "true") {
-    navigate("/admin");
-  }
-}
-
-async function checkAttendStart(setIsStart) {
-  try {
-    // 240620 연우: 출석 체크 API 아직 미완 -> 추후 수정하기
-    const response = await client.get("/checkTime");
-    if (response.isStart !== undefined) {
-      setIsStart(response.isStart);
-    }
-  } catch (err) {
-    console.log(err);
-    setIsStart(false);
-  }
-}
 
 function AttendSuccess() {
   return (
