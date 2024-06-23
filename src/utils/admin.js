@@ -16,10 +16,20 @@ export const createSession = async (sessionName, date) => {
 export const getSessions = async () => {
     try {
       const response = await client.get('/session/sessions');
-      console.log("sessions fetched");
-      return response.data;
+  
+      if (Array.isArray(response)) {
+        console.log("sessions fetched:", response); 
+        return response;
+      } else {
+        console.error('Unexpected response format:', response);
+        return [];
+      }
     } catch (error) {
       console.error('Error fetching sessions:', error);
       throw error;
     }
   };
+  
+  
+  
+  

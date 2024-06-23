@@ -23,11 +23,13 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
   let data;
   try {
     const response = await fetch(SERVER_URL + endpoint, config);
+
     if (response.ok) {
       data = await response.json();
       return data;
+    } else {
+      throw new Error(response.statusText);
     }
-    throw new Error(response.statusText);
   } catch (err) {
     return Promise.reject(err.message ? err.message : data);
   }

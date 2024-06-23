@@ -22,7 +22,7 @@ function UserInfoContainer(props) {
   return (
     <div>
       {filteredProps.map((content, key) => {
-        return <StyledText conten={content} />;
+        return <StyledText content={content} />;
       })}
       <div>
         <MainButton />
