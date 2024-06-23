@@ -8,7 +8,7 @@ import Logo from "../components/common/Logo";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
 import { Container } from "../components/common/Container";
-import {Header} from "../components/common/Header";
+import { Header } from "../components/common/Header";
 
 function AttendSuccess() {
   return (
@@ -22,10 +22,12 @@ export default function UserCheckPage() {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(true);
   const [isAttend, setIsAttend] = useState(false);
-  const userId = localStorage.getItem('id'); 
+  const userId = localStorage.getItem("id");
+  const username = localStorage.getItem("username"); 
+
   useEffect(() => {
     if (!userId) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [userId, navigate]);
 
@@ -34,20 +36,20 @@ export default function UserCheckPage() {
   // 출석 기간이 아니면 Attend List만
   useEffect(() => {
     checkUserState(navigate);
-    //checkAttendStart(setIsStart);
+    checkAttendStart(setIsStart);
   }, []);
 
   return (
     <Container>
       <Logo />
-      <Header text={`반가워요, 000님!`} />
+      <Header text={`반가워요, ${username}님!`} /> 
       {isStart ? (
         <>
           {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
-          {isAttend && <AttendList userId={userId} />}
+          {isAttend && <AttendSuccess/>}
         </>
       ) : (
-        <AttendList userId={userId} />
+        <AttendSuccess />
       )}
     </Container>
   );

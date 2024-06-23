@@ -16,13 +16,21 @@ function checkUserState(navigate) {
 
 async function checkAttendStart(setIsStart) {
   try {
-    // 240620 연우: 출석 체크 API 아직 미완 -> 추후 수정하기
-    // 240622 연우: 출석 체크 API 반영, 아직 테스트 안함. 어드민 페이지에서 세션 생성이 가능해지면 테스트하기
     const response = await client.get("/session/isCheckAttend");
-    setIsStart(response.isChecked || false);
+    console.log("Response object: ", response);
+    if (response.status === 200) {
+      setIsStart(true);
+      console.log("출석 시작");
+    } else if (response.status === 404) {
+      setIsStart(false);
+    }
   } catch (err) {
-    console.log(err);
-    setIsStart(false);
+    if (err.includes('Error 404')) {
+      setIsStart(false);
+    } else {
+      console.error("출석 확인 중 오류가 발생했습니다", err);
+      setIsStart(false);
+    }
   }
 }
 

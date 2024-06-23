@@ -37,6 +37,7 @@ function useLogin() {
       localStorage.setItem("token", token);
       localStorage.setItem("id", decodedToken._id);
       localStorage.setItem("isAdmin", decodedToken._isAdmin);
+      localStorage.setItem("username", username);
 
       if (isAdmin === "true") {
         navigate("/admin");
