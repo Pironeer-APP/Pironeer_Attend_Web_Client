@@ -9,12 +9,12 @@ function useCreateSession() {
   const [date, setDate] = useState('');
   const [message, setMessage] = useState('');
 
-  const onChangeSessionName = (e) => {
-    setSessionName(e.target.value);
+  const onChangeSessionName = (value) => {
+    setSessionName(value);
   };
 
-  const onChangeDate = (e) => {
-    setDate(e.target.value);
+  const onChangeDate = (value) => {
+    setDate(value);
   };
 
   const onPressCreateSession = async () => {
@@ -53,14 +53,14 @@ const CreateSessionForm = () => {
         placeholder="세션 이름"
         keyboardType="default"
         value={sessionName}
-        onChange={onChangeSessionName} 
+        onChangeText={onChangeSessionName} 
         maxLength={50}
       />
       <StyledInput
         type="date"
         placeholder="세션 날짜(YYYY-MM-DD)"
         value={date}
-        onChange={onChangeDate} 
+        onChangeText={onChangeDate} 
       />
       <MainButton content="세션 생성" onClick={onPressCreateSession} />
       {message && <p>{message}</p>}

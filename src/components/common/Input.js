@@ -23,7 +23,7 @@ function StyledInput(props) {
       type={props.secureTextEntry ? "password" : "text"}
       placeholder={props.placeholder}
       value={props.value}
-      onChange={props.onChange} 
+      onChange={(e) => props.onChangeText(e.target.value)}
       maxLength={props.maxLength}
       {...(props.keyboardType === "numeric" ? { pattern: "[0-9]*" } : {})}
     />
