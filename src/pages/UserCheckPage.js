@@ -49,6 +49,12 @@ export default function UserCheckPage() {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(true);
   const [isAttend, setIsAttend] = useState(false);
+  const userId = localStorage.getItem('id'); 
+  useEffect(() => {
+    if (!userId) {
+      navigate('/login');
+    }
+  }, [userId, navigate]);
 
   // 출석 체크가 시작되었고, 현재 유저가 출석하지 않았다면 출석 창 보여주기
   // 출석 완료되었다면 완료 창 보여주기
@@ -64,7 +70,7 @@ export default function UserCheckPage() {
       <Header text={`반가워요, 000님!`} />
       {isStart && !isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
       {isStart && isAttend && <AttendSuccess />}
-      <AttendList />
+      <AttendList userId={userId} />
     </Container>
   );
 }

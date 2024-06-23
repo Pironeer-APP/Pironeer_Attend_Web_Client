@@ -1,6 +1,7 @@
 // ../assets/Theme.js
 export const COLORS = {
   green: '#0BEC12',
+  orange: '#FF9900',
   bg_black: '#000000',
   light_gray: '#6D6D6D',
   icon_gray: '#4B4B4B',
@@ -11,7 +12,7 @@ export const COLORS = {
   badge_skyblue: '#2188B6',
   deposit_header_blue: '#3C64BC',
   lightTheme_btn: '#E6E6E6',
-  blood_red: '#C54422',
+  red: '#FF0035',
 };
 
 // Theme settings

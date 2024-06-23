@@ -16,8 +16,8 @@ const Shadow = styled.div`
 `;
 
 const OnAirCircleBack = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background-color: ${(props) => props.color};
   border-radius: 50%;
   display: flex;
@@ -33,7 +33,7 @@ const OnAirCircleInner = styled(motion.div)`
   border: 1px solid ${COLORS.textColor};
 `;
 
-const OnAirCircle = ({ color = COLORS.green }) => {
+const OnAirCircle = ({ color }) => {
   const scaleControls = useAnimation();
   const unscaleControls = useAnimation();
 
