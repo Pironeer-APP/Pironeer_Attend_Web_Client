@@ -34,7 +34,7 @@ export default function UserCheckPage() {
   // 출석 기간이 아니면 Attend List만
   useEffect(() => {
     checkUserState(navigate);
-    checkAttendStart(setIsStart);
+    //checkAttendStart(setIsStart);
   }, []);
 
   return (

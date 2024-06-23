@@ -7,7 +7,6 @@ import { createSession } from '../../utils/admin';
 function useCreateSession() {
   const [sessionName, setSessionName] = useState('');
   const [date, setDate] = useState('');
-  const [message, setMessage] = useState('');
 
   const onChangeSessionName = (value) => {
     setSessionName(value);
@@ -20,17 +19,16 @@ function useCreateSession() {
   const onPressCreateSession = async () => {
     try {
       const formattedDate = new Date(date).toISOString();
+      console.log('Formatted Date:', formattedDate); // Log the formatted date
       const response = await createSession(sessionName, formattedDate);
-      setMessage(response.message);
     } catch (error) {
-      setMessage('세션 생성에 실패했습니다.');
+      console.error('Failed to create session:', error); // Log the error
     }
   };
 
   return {
     sessionName,
     date,
-    message,
     onChangeSessionName,
     onChangeDate,
     onPressCreateSession,
@@ -53,17 +51,16 @@ const CreateSessionForm = () => {
         placeholder="세션 이름"
         keyboardType="default"
         value={sessionName}
-        onChangeText={onChangeSessionName} 
+        onChangeText={onChangeSessionName}
         maxLength={50}
       />
       <StyledInput
         type="date"
         placeholder="세션 날짜(YYYY-MM-DD)"
         value={date}
-        onChangeText={onChangeDate} 
+        onChangeText={onChangeDate}
       />
-      <MainButton content="세션 생성" onClick={onPressCreateSession} />
-      {message && <p>{message}</p>}
+      <MainButton content="세션 생성" onPress={onPressCreateSession} />
     </InputContainer>
   );
 };
