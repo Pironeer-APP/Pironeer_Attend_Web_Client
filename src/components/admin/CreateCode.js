@@ -22,6 +22,7 @@ const CreateCode = () => {
         setCode(response.code);
         localStorage.setItem('attendanceCode', response.code);
         alert(`Code: ${response.code}`);
+        setIsStart(true);
       } else {
         console.error('No code returned from startAttendCheck');
       }

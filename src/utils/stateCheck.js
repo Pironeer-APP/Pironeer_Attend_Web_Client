@@ -21,8 +21,6 @@ async function checkAttendStart(setIsStart) {
     if (response.status === 200) {
       setIsStart(true);
       console.log("출석 시작");
-    } else if (response.status === 404) {
-      setIsStart(false);
     }
   } catch (err) {
     if (err.includes('Error 404')) {

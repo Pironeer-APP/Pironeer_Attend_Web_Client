@@ -9,7 +9,7 @@ import { StyledText, StyledSubText, FontStyledText } from '../common/Text';
 import { formatDate } from '../../utils';
 
 const Container = styled.div`
-  padding: 50px;
+  padding: 100px;
 `;
 
 const SessionItem = styled.div`
@@ -30,6 +30,15 @@ const DeleteButton = styled.button`
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+`;
+
+const SessionDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const SessionName = styled.div`
+  margin-bottom: 10px;
 `;
 
 const SessionListPage = () => {
@@ -81,10 +90,12 @@ const SessionListPage = () => {
       <Header text={`세션 리스트`} />
       {sessions.map((session) => (
         <SessionItem key={session._id}>
-          <div onClick={() => handleSessionClick(session._id)}>
-            <StyledText content={session.name} fontSize={15} />
+          <SessionDetails onClick={() => handleSessionClick(session._id)}>
+            <SessionName>
+              <StyledText content={session.name} fontSize={15} />
+            </SessionName>
             <StyledText content={formatDate(session.date)} fontSize={15} />
-          </div>
+          </SessionDetails>
           <DeleteButton onClick={() => handleDeleteClick(session._id)}>삭제</DeleteButton>
         </SessionItem>
       ))}

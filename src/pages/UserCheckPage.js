@@ -32,6 +32,12 @@ export default function UserCheckPage() {
     checkUserState(navigate);
     checkAttendStart(setIsStart);
   }, []);
+  useEffect(() => {
+    if (isAttend) {
+      alert("출석에 성공하였습니다!");
+    }
+  }, [isAttend]);
+
 
   return (
     <Container>
@@ -40,8 +46,8 @@ export default function UserCheckPage() {
       {isStart ? (
         <>
           {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
-          {isAttend &&  <Header text={`출석에 성공하였습니다!`} />
-}
+          <AttendList userId={userId} />
+          
         </>
       ) : (
         <AttendList userId={userId} />
