@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import UserCheckPage from "./pages/UserCheckPage";
 import AdminPage from "./pages/AdminPage";
+import SessionList from "./components/admin/SessionList";
 const router = createBrowserRouter([
   {
     path: "/signup",
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <AdminPage />,
   },
+  {
+    path: "/sessions",
+    element: <SessionList />,
+  }
 ]);
 
 function App() {
