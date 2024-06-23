@@ -9,7 +9,7 @@ const ButtonContainerStyled = styled.button`
   align-items: center;
   padding: ${(props) => `${props.paddingV}px ${props.paddingH}px`};
   background-color: ${(props) =>
-    props.outline ? "transparent" : COLORS.green};
+    props.outline ? "transparent" : props.backgroundColor || COLORS.green};
   border: ${(props) => (props.outline ? `3px solid ${COLORS.green}` : "none")};
   border-radius: 15px;
   margin-bottom: 20px;
@@ -22,6 +22,7 @@ const ButtonContainer = ({
   paddingV = 15,
   onPress,
   children,
+  backgroundColor,
 }) => {
   return (
     <ButtonContainerStyled
@@ -29,6 +30,7 @@ const ButtonContainer = ({
       paddingH={paddingH}
       paddingV={paddingV}
       onClick={onPress}
+      backgroundColor={backgroundColor}
     >
       {children}
     </ButtonContainerStyled>
@@ -38,15 +40,25 @@ const ButtonContainer = ({
 const MainButtonStyled = styled(ButtonContainerStyled)`
   width: 100%;
   padding: 15px 20px;
-  background-color: ${COLORS.green};
+  background-color: ${(props) => props.backgroundColor || COLORS.green};
   border-radius: 15px;
   margin-top: 2.5rem;
   margin-bottom: ${(props) => props.marginBottom}px;
 `;
 
-const MainButton = ({ content, onPress, fontSize = 22, marginBottom = 0 }) => {
+const MainButton = ({
+  content,
+  onPress,
+  fontSize = 22,
+  marginBottom = 0,
+  backgroundColor,
+}) => {
   return (
-    <MainButtonStyled marginBottom={marginBottom} onClick={onPress}>
+    <MainButtonStyled
+      marginBottom={marginBottom}
+      onClick={onPress}
+      backgroundColor={backgroundColor}
+    >
       <StyledText
         content={content}
         fontSize={fontSize}
@@ -183,3 +195,4 @@ export {
   CouponButton,
   ConfirmSmallBtn,
 };
+

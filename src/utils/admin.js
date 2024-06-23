@@ -30,6 +30,25 @@ export const getSessions = async () => {
     }
   };
   
+  export const startAttendCheck = async (sessionId) => {
+    try {
+      console.log(`Starting attendance check for session ID: ${sessionId}`); 
+      const response = await client.post(`/session/startAttendCheck/${sessionId}`);
+      
+      return response;
+    } catch (error) {
+      console.error('Error starting attendance check:', error);
+      throw error;
+    }
+  };
   
-  
+  export const endAttendCheck = async () => {
+    try {
+      const response = await client.delete('/session/endAttendCheck');
+      return response;
+    } catch (error) {
+      console.error('Error ending attendance check:', error);
+      throw error;
+    }
+  };
   

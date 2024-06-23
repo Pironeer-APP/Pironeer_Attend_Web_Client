@@ -20,15 +20,18 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
     config.body = JSON.stringify(body);
   }
 
+  console.log(`Making request to ${SERVER_URL + endpoint} with config:`, config); // Log request details
+
   let data;
   try {
     const response = await fetch(SERVER_URL + endpoint, config);
+    console.log("Full response object:", response); 
 
     if (response.ok) {
       data = await response.json();
       return data;
     } else {
-      throw new Error(response.statusText);
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
   } catch (err) {
     return Promise.reject(err.message ? err.message : data);
@@ -40,5 +43,8 @@ client.get = function (endpoint, customConfig = {}) {
 };
 
 client.post = function (endpoint, body, customConfig = {}) {
-  return client(endpoint, { ...customConfig, body });
+  return client(endpoint, { ...customConfig, body, method: "POST" }); 
+};
+client.delete = function (endpoint, customConfig = {}) {
+  return client(endpoint, { ...customConfig, method: "DELETE" });
 };

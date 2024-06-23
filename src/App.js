@@ -7,6 +7,7 @@ import SignupPage from "./pages/SignUpPage";
 import UserCheckPage from "./pages/UserCheckPage";
 import AdminPage from "./pages/AdminPage";
 import SessionList from "./components/admin/SessionList";
+import CreateCode from "./components/admin/CreateCode";
 const router = createBrowserRouter([
   {
     path: "/signup",
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/sessions",
     element: <SessionList />,
+  },
+  {
+    path: "/createCode/:sessionId",
+    element: <CreateCode />,
   }
 ]);
 
