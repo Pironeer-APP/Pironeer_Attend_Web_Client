@@ -1,3 +1,4 @@
+import { client } from "./client";
 function checkUserState(navigate) {
   const token = localStorage.getItem("token");
   const isAdmin = localStorage.getItem("isAdmin");

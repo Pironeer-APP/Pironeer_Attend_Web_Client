@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import Logo from "../components/common/Logo";
 import { Container } from "../components/common/Container";
-import Header from "../components/common/Header";
+import {Header} from "../components/common/Header";
 
 export default function AdminPage() {
   return (
