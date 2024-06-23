@@ -45,8 +45,8 @@ function useAttend() {
         setIsAttend(true);
       }
       setWarning(response.message);
-    } catch (error) {
-      setWarning("서버 오류로 인해 출석 체크에 실패했습니다.");
+    }  catch (error) {
+      setWarning(error);
     }
     setPin("");
   };

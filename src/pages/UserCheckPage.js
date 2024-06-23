@@ -10,17 +10,11 @@ import AttendList from "../components/AttendList";
 import { Container } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 
-function AttendSuccess() {
-  return (
-    <div>
-      <span>출석에 성공하였습니다!</span>
-    </div>
-  );
-}
+
 
 export default function UserCheckPage() {
   const navigate = useNavigate();
-  const [isStart, setIsStart] = useState(true);
+  const [isStart, setIsStart] = useState(false);
   const [isAttend, setIsAttend] = useState(false);
   const userId = localStorage.getItem("id");
   const username = localStorage.getItem("username"); 
@@ -46,7 +40,8 @@ export default function UserCheckPage() {
       {isStart ? (
         <>
           {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
-          {isAttend && <AttendSuccess/>}
+          {isAttend &&  <Header text={`출석에 성공하였습니다!`} />
+}
         </>
       ) : (
         <AttendList userId={userId} />

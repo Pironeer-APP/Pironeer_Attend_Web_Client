@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {Container} from "./components/common/Container";
+import { Container } from "./components/common/Container";
 import Logo from "./components/common/Logo";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
@@ -32,7 +32,8 @@ const router = createBrowserRouter([
   {
     path: "/createCode",
     element: <CreateCode />,
-  }
+  },
+
 ]);
 
 function App() {

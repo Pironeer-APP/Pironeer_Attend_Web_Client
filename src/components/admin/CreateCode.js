@@ -1,46 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MainButton } from '../common/Button';
 import { Container } from '../common/Container';
 import Logo from '../common/Logo';
 import { Header } from '../common/Header';
 import { startAttendCheck, endAttendCheck } from '../../utils/admin';
-import { useState } from 'react';
 import { COLORS } from '../../utils/theme';
+import { checkAttendStart } from "../../utils/stateCheck";
 
 const CreateCode = () => {
   const location = useLocation();
   const { sessionId } = location.state;
-  const [code, setCode] = useState(null);
+  const [code, setCode] = useState(localStorage.getItem('attendanceCode') || null);
+  const [isStart, setIsStart] = useState(false);
 
   const createCode = async () => {
     try {
       const response = await startAttendCheck(sessionId);
-      setCode(response.code);
-      alert(`Code: ${response.code}`);
+      console.log('Response from startAttendCheck:', response);
+      if (response && response.code) {
+        setCode(response.code);
+        localStorage.setItem('attendanceCode', response.code);
+        alert(`Code: ${response.code}`);
+      } else {
+        console.error('No code returned from startAttendCheck');
+      }
     } catch (error) {
-      console.error('Failed to create code:', error);
+      alert(error);
     }
   };
 
   const endCode = async () => {
     try {
-      const response = await endAttendCheck();
+      await endAttendCheck();
       setCode(null);
+      localStorage.removeItem('attendanceCode');
+      setIsStart(false);
     } catch (error) {
-      console.error('Failed to end attendance check:', error);
+      alert(error);
+
     }
   };
+
+  useEffect(() => {
+    checkAttendStart(setIsStart);
+  }, []);
 
   return (
     <Container>
       <Logo />
       <Header text={`반가워요, 어드민님!`} />
-      {code ? (
+      {isStart ? (
         <>
-          <Header text={`현재 생성된 코드는 ${code} 입니다.`} />
-          <MainButton content={"강제 종료"} onPress={endCode} backgroundColor={COLORS.red} />
-        </>
+        <Header text={`현재 생성된 코드는 ${ code } 입니다.`} />
+        <MainButton content={"강제 종료"} onPress={endCode} backgroundColor={COLORS.red} />
+      </>
       ) : (
         <MainButton content={"코드 생성"} onPress={createCode} />
       )}

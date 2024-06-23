@@ -28,13 +28,15 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
     console.log("Full response object:", response);
 
     if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
+      const errorData = await response.json();
+      throw new Error(errorData.message);
     }
 
     data = await response.json();
     return { status: response.status, data }; 
   } catch (err) {
-    return Promise.reject(err.message ? err.message : { status: response.status, data });
+    console.error('Error in client function:', err.message);
+    return Promise.reject(err.message ? err.message : 'An error occurred');
   }
 }
 
