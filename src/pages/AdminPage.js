@@ -3,8 +3,7 @@ import styled from "styled-components";
 import Logo from "../components/common/Logo";
 import {Container} from "../components/common/Container"; // Ensure this is the correct export
 import {Header} from "../components/common/Header"; // Ensure this is the correct export
-import CreateSessionForm from "../components/admin/CreatSession";
-import AdminShow from "../components/admin/AdminShow";
+import CreateSessionForm from "../components/admin/CreateSession";
 import { checkAttendStart } from "../utils/stateCheck";
 import { MainButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
