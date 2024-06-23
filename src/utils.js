@@ -157,4 +157,3 @@ export const convertTime = (timeLimitSec) => {
   }
 }
 
-export const checkAttendance = (userid) => client.get(`/checkAttendance/${userid}`);
