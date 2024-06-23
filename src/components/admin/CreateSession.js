@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { MainButton } from '../common/Button';
 import { InputContainer } from '../common/Container';
 import StyledInput from '../common/Input';
 import { createSession } from '../../utils/admin';
+import { checkAttendStart } from "../../utils/stateCheck";
+import Logo from '../common/Logo';
+import { Header } from '../common/Header';
+import { useNavigate } from "react-router-dom";
 
-function useCreateSession() {
+
+function useCreateSession(onSuccess) {
   const [sessionName, setSessionName] = useState('');
   const [date, setDate] = useState('');
 
@@ -20,8 +25,9 @@ function useCreateSession() {
     try {
       const formattedDate = new Date(date).toISOString();
       console.log('Formatted Date:', formattedDate); 
-      const response = await createSession(sessionName, formattedDate);
+      await createSession(sessionName, formattedDate);
       alert(`새로운 세션이 생성되었습니다.`);
+      onSuccess();
     } catch (error) {
       console.error('Failed to create session:', error); 
     }
@@ -37,14 +43,19 @@ function useCreateSession() {
 }
 
 const CreateSessionForm = () => {
+  const navigate = useNavigate();
+
+  const onSuccess = () => {
+    navigate('/sessions');
+  };
+
   const {
     sessionName,
     date,
-    message,
     onChangeSessionName,
     onChangeDate,
     onPressCreateSession,
-  } = useCreateSession();
+  } = useCreateSession(onSuccess);
 
   return (
     <InputContainer>
@@ -66,4 +77,26 @@ const CreateSessionForm = () => {
   );
 };
 
-export default CreateSessionForm;
+const CreateSessionPage = () => {
+  const [isStart, setIsStart] = useState(true);
+
+  useEffect(() => {
+    checkAttendStart(setIsStart);
+  }, []);
+
+  return (
+    <InputContainer>
+      <Logo />
+      <Header text={`반가워요, 어드민님!`} />
+      {isStart ? (
+        <>
+          <CreateSessionForm />
+        </>
+      ) : (
+        <CreateSessionForm />
+      )}
+    </InputContainer>
+  );
+};
+
+export default CreateSessionPage;

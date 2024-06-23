@@ -1,64 +1,74 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { COLORS } from "../utils/theme";
-import { checkUserState, checkAttendStart } from "../utils/stateCheck";
-import { FontStyledText, StyledText } from "./common/Text";
-import { useNavigate } from "react-router-dom";
-import { client } from "../utils/client";
-import { MainButton } from "./common/Button";
+// UserList.js
+import React, { useEffect, useState } from 'react';
+import { client } from '../../utils/client'; 
+import styled from 'styled-components';
+import { COLORS } from '../../utils/theme'; 
+import { Header } from '../common/Header';
 
-// useUserList Hook
-function useUserList() {
-  const onChangePin = (value) => {
-    setPin(value);
-  };
+const Container = styled.div`
+  padding: 100px;
+`;
 
-  return {};
-}
+const UserItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 30px 0;
+  border: 1px solid ${COLORS.green};
+  border-radius: 5px;
+  background-color: ${COLORS.light_gray};
+`;
 
-function UserInfoContainer(props) {
-  const { key, ...filteredProps } = props;
-  // 유저별 정보 확인 -> 출석 정보 페이지, 유저 정보 수정 페이지, 삭제 버튼 생성
-  return (
-    <div>
-      {filteredProps.map((content, key) => {
-        return <StyledText content={content} />;
-      })}
-      <div>
-        <MainButton />
-        <SubMainButton />
-        <SubMainButton />
-      </div>
-    </div>
-  );
-}
+const UserDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-export default function UserList(props) {
-  const navigate = useNavigate();
+const UserField = styled.div`
+  margin-bottom: 10px;
+`;
+
+const UserList = () => {
   const [users, setUsers] = useState([]);
-  const [warning, setWarning] = useState("");
-  const {} = useUserList();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // 현재 유저가 어드민이 아닌지 확인
-  // useEffect(() => {
-  //   checkUserState(navigate);
-  // }, []);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await client.get('/user/users');
+        setUsers(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // 유저 정보 불러오기
-  useEffect(async () => {
-    const response = await client.get("/user/users");
-    if (response.status == 200) {
-      setUsers(response.data);
-    } else {
-      setWarning(response.msg);
-    }
-  });
+    fetchUsers();
+  }, []);
+
+  if (loading) return <Container>Loading...</Container>;
+  if (error) return <Container>Error: {error}</Container>;
 
   return (
-    <div>
-      {users.map((user, key) => {
-        return <CardInfoContainer key={key} user={user} />;
-      })}
-    </div>
+    <Container>
+    <Header text={`유저 리스트`} />
+      {users.map((user) => (
+        <UserItem key={user._id}>
+          <UserDetails>
+            <UserField>UserID: {user._id}</UserField>
+            <UserField>Username: {user.username}</UserField>
+            <UserField>Email: {user.email}</UserField>
+            <UserField>Password: {user.password}</UserField>
+            <UserField>Is Admin: {user.isAdmin ? 'Yes' : 'No'}</UserField>
+          </UserDetails>
+        </UserItem>
+      ))}
+    </Container>
   );
-}
+};
+
+export default UserList;
+

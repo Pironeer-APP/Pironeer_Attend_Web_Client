@@ -8,6 +8,10 @@ import UserCheckPage from "./pages/UserCheckPage";
 import AdminPage from "./pages/AdminPage";
 import SessionList from "./components/admin/SessionList";
 import CreateCode from "./components/admin/CreateCode";
+import UserList from "./components/admin/UserList";
+import UpdateUser from "./components/admin/UpdateUser";
+import CheckUserAttend from "./components/admin/CheckUserAttend";
+import CreateSessionPage from "./components/admin/CreateSession";
 const router = createBrowserRouter([
   {
     path: "/signup",
@@ -30,9 +34,25 @@ const router = createBrowserRouter([
     element: <SessionList />,
   },
   {
+    path: "/createSession",
+    element: <CreateSessionPage/>,
+  },
+  {
     path: "/createCode",
     element: <CreateCode />,
   },
+  {
+    path: "/users",
+    element: <UserList />,
+  },
+  {
+    path: "/updateUser",
+    element: <UpdateUser />,
+  },
+  {
+    path: "/checkAttend",
+    element: <CheckUserAttend />,
+  }
 
 ]);
 

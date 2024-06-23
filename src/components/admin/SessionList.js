@@ -86,7 +86,6 @@ const SessionListPage = () => {
 
   return (
     <Container>
-      <Logo />
       <Header text={`세션 리스트`} />
       {sessions.map((session) => (
         <SessionItem key={session._id}>
