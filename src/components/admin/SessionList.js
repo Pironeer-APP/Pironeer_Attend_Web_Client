@@ -51,8 +51,9 @@ const SessionListPage = () => {
     return <Container>Error: {error}</Container>;
   }
   const handleSessionClick = (sessionId) => {
-    navigate(`/createCode/${sessionId}`);
+    navigate('/createCode', { state: { sessionId } });
   };
+  
 
   return (
     <Container>

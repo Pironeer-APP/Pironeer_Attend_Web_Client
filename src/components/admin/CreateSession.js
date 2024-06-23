@@ -19,10 +19,11 @@ function useCreateSession() {
   const onPressCreateSession = async () => {
     try {
       const formattedDate = new Date(date).toISOString();
-      console.log('Formatted Date:', formattedDate); // Log the formatted date
+      console.log('Formatted Date:', formattedDate); 
       const response = await createSession(sessionName, formattedDate);
+      alert(`새로운 세션이 생성되었습니다.`);
     } catch (error) {
-      console.error('Failed to create session:', error); // Log the error
+      console.error('Failed to create session:', error); 
     }
   };
 
