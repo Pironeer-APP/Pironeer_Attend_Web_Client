@@ -49,7 +49,7 @@ export default function UserCheckPage() {
           {isAttend && <AttendSuccess/>}
         </>
       ) : (
-        <AttendSuccess />
+        <AttendList userId={userId} />
       )}
     </Container>
   );

@@ -73,7 +73,14 @@ export const getLocal = (datetime) => {
     min
   }
 }
+export const formatDate = (dateTime) => {
+  const localeDate = new Date(dateTime);
+  const year = localeDate.getFullYear();
+  const month = localeDate.toLocaleString('default', { month: 'long' });
+  const day = String(localeDate.getDate()).padStart(2, '0');
 
+  return `${month} ${day}, ${year}`;
+}
 // 다음 세션 찾기
 export const findNextSession = async (sessions) => {
   const userToken = await getData('user_token');

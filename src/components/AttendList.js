@@ -2,15 +2,21 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../utils/theme';
 import OnAirCircle from './common/OnAirCircle';
-import { checkAttendance } from '../utils';
 import { getLocal } from '../utils';
+import { client } from "../utils/client";
 
 const AttendanceContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px; 
   padding: 20px;
   align-items: center;
+`;
+
+const SessionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
 `;
 
 const RowContainer = styled.div`
@@ -28,16 +34,22 @@ const DateContainer = styled.div`
   color: ${COLORS.textColor};
 `;
 
+const SessionName = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+`;
+
 const AttendList = ({ userId }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
 
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        const response = await checkAttendance(userId);
-        console.log('Attendance Response:', response.data); // Log the full response data
-        if (response.data && response.data.attend) {
-          setAttendanceRecords(response.data.attend);
+        const response = await client.get(`/user/checkAttendance/${userId}`);
+        console.log('Attendance Response:', response.data);
+        if (response.data && response.data.attendances) {
+          setAttendanceRecords(response.data.attendances);
         } else {
           throw new Error('No attendance records found');
         }
@@ -62,25 +74,31 @@ const AttendList = ({ userId }) => {
   return (
     <AttendanceContainer>
       {attendanceRecords.map((record, index) => {
-        const { month, date, day } = getLocal(record.session.date);
+        const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
+        const attendListLength = record.attendList ? record.attendList.length : 0;
+        const grayCirclesNeeded = 3 - attendListLength;
 
         return (
-          <RowContainer key={index}>
-            <OnAirCircle color={finalStatus} />
-            <DateContainer>
-              {month}/{date}
-              <br />
-              {day}
-            </DateContainer>
-            {record.attendList && record.attendList.length > 0
-              ? record.attendList.map((attend, i) => (
-                <OnAirCircle key={i} color={attend.status ? COLORS.green : COLORS.red} />
-              ))
-              : [0, 1, 2].map(i => ( 
-                <OnAirCircle key={i} color={COLORS.light_gray} />
+          <SessionContainer key={index}>
+            <SessionName>{record.session_name}</SessionName>
+            <RowContainer>
+              <OnAirCircle color={finalStatus} />
+              <DateContainer>
+                {month}/{date}
+                <br />
+                {day}
+              </DateContainer>
+              {record.attendList && record.attendList.length > 0
+                ? record.attendList.map((attend, i) => (
+                  <OnAirCircle key={i} color={attend.status ? COLORS.green : COLORS.red} />
+                ))
+                : null}
+              {[...Array(grayCirclesNeeded)].map((_, i) => (
+                <OnAirCircle key={attendListLength + i} color={COLORS.light_gray} />
               ))}
-          </RowContainer>
+            </RowContainer>
+          </SessionContainer>
         );
       })}
     </AttendanceContainer>

@@ -6,7 +6,7 @@ import { COLORS } from '../../utils/theme';
 import { Header } from '../common/Header';
 import Logo from '../common/Logo';
 import { StyledText, StyledSubText, FontStyledText } from '../common/Text';
-
+import { formatDate } from '../../utils';
 
 const Container = styled.div`
   padding: 50px;
@@ -50,19 +50,19 @@ const SessionListPage = () => {
   if (error) {
     return <Container>Error: {error}</Container>;
   }
+
   const handleSessionClick = (sessionId) => {
     navigate('/createCode', { state: { sessionId } });
   };
-  
 
   return (
     <Container>
       <Logo />
-      <Header text={`세션 리스트`} />      
+      <Header text={`세션 리스트`} />
       {sessions.map((session) => (
         <SessionItem key={session._id} onClick={() => handleSessionClick(session._id)}>
           <StyledText content={session.name} fontSize={15} />
-          <StyledText content={new Date(session.date).toLocaleDateString()} fontSize={15} />
+          <StyledText content={formatDate(session.date)} fontSize={15} />
         </SessionItem>
       ))}
     </Container>
