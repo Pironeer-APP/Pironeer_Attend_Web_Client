@@ -32,7 +32,7 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
     }
 
     data = await response.json();
-    return { status: response.status, data }; // Return both status and data
+    return { status: response.status, data }; 
   } catch (err) {
     return Promise.reject(err.message ? err.message : { status: response.status, data });
   }

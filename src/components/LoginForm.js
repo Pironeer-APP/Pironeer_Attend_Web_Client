@@ -27,18 +27,28 @@ function useLogin() {
         password,
       });
       console.log(response);
-
-      // Assuming the response contains the token
-      const token = response.token;
+  
+      // Check if the response contains the token inside the data object
+      if (!response || !response.data || !response.data.token) {
+        throw new Error("Invalid response: No token found");
+      }
+  
+      const token = response.data.token;
+      
+      // Ensure the token is a string
+      if (typeof token !== "string") {
+        throw new Error("Invalid token: Token is not a string");
+      }
+  
       const decodedToken = jwtDecode(token);
       const isAdmin = decodedToken._isAdmin;
       console.log(decodedToken);
-
+  
       localStorage.setItem("token", token);
       localStorage.setItem("id", decodedToken._id);
       localStorage.setItem("isAdmin", decodedToken._isAdmin);
       localStorage.setItem("username", username);
-
+  
       if (isAdmin === "true") {
         navigate("/admin");
       } else {
@@ -49,6 +59,8 @@ function useLogin() {
       setLoginStatus(false);
     }
   };
+  
+  
 
   return {
     username,
