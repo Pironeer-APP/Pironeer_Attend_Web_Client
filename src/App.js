@@ -5,7 +5,7 @@ import Logo from "./components/common/Logo";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import UserCheckPage from "./pages/UserCheckPage";
-import { Header } from "./components/common/Header";
+import AdminPage from "./pages/AdminPage";
 const router = createBrowserRouter([
   {
     path: "/signup",
@@ -18,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <UserCheckPage />,
+  },
+  {
+    path: "/admin",
+    element: <AdminPage />,
   },
 ]);
 
