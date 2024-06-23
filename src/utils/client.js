@@ -2,6 +2,12 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
   const SERVER_URL = "http://3.38.96.3:3000/api";
   const headers = { "Content-Type": "application/json" };
 
+  // Retrieve the token from local storage
+  const token = localStorage.getItem("token");
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
   const config = {
     method: body ? "POST" : "GET",
     ...customConfig,
@@ -12,10 +18,6 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
   };
 
   if (body) {
-    const userToken = localStorage.getItem("user_token"); // Use local storage
-    if (userToken && !Object.keys(body).includes("userToken")) {
-      body.userToken = userToken;
-    }
     config.body = JSON.stringify(body);
   }
 
