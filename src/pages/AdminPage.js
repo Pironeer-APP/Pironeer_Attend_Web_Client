@@ -19,7 +19,6 @@ export default function AdminPage() {
       <MainButton content={"세션 생성"} onPress={() => navigate('/createSession')}></MainButton>
       <MainButton content={"전체 세션 조회"} onPress={() => navigate('/sessions')}></MainButton>
       <MainButton content={"전체 유저 조회"} onPress={() => navigate('/users')}></MainButton>
-      <MainButton content={"정보 변경"} onPress={() => navigate('/updateUser')}></MainButton>
       <MainButton content={"유저 별 출석 상태 확인"} onPress={() => navigate('/checkAttend')}></MainButton>
     </InputContainer>
   );
