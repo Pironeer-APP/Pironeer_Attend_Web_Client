@@ -55,7 +55,10 @@ const UserList = () => {
     const fetchUsers = async () => {
       try {
         const response = await client.get("/user/users");
-        setUsers(response.data);
+        const filtered_user = response.data.filter(
+          (user) => user.isAdmin == false
+        );
+        setUsers(filtered_user);
       } catch (err) {
         setError(err.message);
       } finally {

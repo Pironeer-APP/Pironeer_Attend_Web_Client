@@ -71,7 +71,7 @@ const AttendUpdateList = ({ userId, setUpdateAttends }) => {
     return COLORS.red;
   };
 
-  const toggleAttend = (attend) => {
+  const toggleAttend = (attend, record_index, attend_index) => {
     const new_attend = {
       userId: userId,
       sessionId: attend._id,
@@ -79,11 +79,17 @@ const AttendUpdateList = ({ userId, setUpdateAttends }) => {
       status: !attend.status,
     };
     setUpdateAttends((prev) => [...prev, new_attend]);
+    setAttendanceRecords((prev) => {
+      const newRecords = [...prev];
+      newRecords[record_index].attendList[attend_index].status =
+        !newRecords[record_index].attendList[attend_index].status;
+      return newRecords;
+    });
   };
 
   return (
     <AttendanceContainer>
-      {attendanceRecords.map((record, index) => {
+      {attendanceRecords.map((record, record_index) => {
         const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
         const attendListLength = record.attendList
@@ -92,7 +98,7 @@ const AttendUpdateList = ({ userId, setUpdateAttends }) => {
         const grayCirclesNeeded = 3 - attendListLength;
 
         return (
-          <SessionContainer key={index}>
+          <SessionContainer key={record_index}>
             <SessionName>{record.session_name}</SessionName>
             <RowContainer>
               <OnAirCircle color={finalStatus} />
@@ -102,13 +108,13 @@ const AttendUpdateList = ({ userId, setUpdateAttends }) => {
                 {day}
               </DateContainer>
               {record.attendList && record.attendList.length > 0
-                ? record.attendList.map((attend, i) => (
+                ? record.attendList.map((attend, attend_index) => (
                     <OnAirCircle
-                      key={i}
+                      key={attend_index}
                       color={attend.status ? COLORS.green : COLORS.red}
-                      onPress={() => {
-                        toggleAttend(attend);
-                      }}
+                      onPress={() =>
+                        toggleAttend(attend, record_index, attend_index)
+                      }
                     />
                   ))
                 : null}

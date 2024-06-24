@@ -33,7 +33,7 @@ const OnAirCircleInner = styled(motion.div)`
   border: 1px solid ${COLORS.textColor};
 `;
 
-const OnAirCircle = ({ color, isSelected = false }) => {
+const OnAirCircle = ({ color, onPress }) => {
   const scaleControls = useAnimation();
   const unscaleControls = useAnimation();
 
@@ -69,8 +69,8 @@ const OnAirCircle = ({ color, isSelected = false }) => {
   }, [scaleControls, unscaleControls]);
 
   return (
-    <OnAirCircleContainer animate={scaleControls}>
-      <Shadow isSelected={isSelected}>
+    <OnAirCircleContainer animate={scaleControls} onClick={onPress}>
+      <Shadow>
         <OnAirCircleBack color={color}>
           <OnAirCircleInner color={color} animate={unscaleControls} />
         </OnAirCircleBack>

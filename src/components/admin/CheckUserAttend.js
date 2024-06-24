@@ -37,7 +37,15 @@ const UpdateUser = () => {
       });
 
     try {
-      alert("출석 정보가 변경되었습니다.");
+      updateAttends.map(async (update_info) => {
+        const response = await updateUserAttendance(update_info);
+        if (response.status == 200) {
+          alert("출석 정보가 변경되었습니다.");
+          console.log(update_info);
+        } else {
+          alert("출석 정보 변경에 실패했습니다. 다시 시도해주세요.");
+        }
+      });
     } catch (error) {
       console.error("Failed to update user:", error);
       alert("출석 정보 변경에 실패했습니다. 다시 시도해주세요.");
