@@ -2,3 +2,4 @@ npm install jwt-decode
 npm install react-modal
 npm install react-spinners
 npm install styled-components framer-motion
+npm install bcryptjs

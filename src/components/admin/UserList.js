@@ -43,6 +43,7 @@ const UpdateButton = styled.button`
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  margin: 5px 0;
 `;
 
 const UserList = () => {
