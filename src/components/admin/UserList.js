@@ -6,6 +6,7 @@ import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
+import { checkAdminState } from "../../utils/stateCheck";
 
 const Container = styled.div`
   padding: 100px;
@@ -36,6 +37,7 @@ const ButtonContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
 const UpdateButton = styled.button`
   background-color: ${COLORS.green};
   color: black;
@@ -57,7 +59,7 @@ const UserList = () => {
       try {
         const response = await client.get("/user/users");
         const filtered_user = response.data.filter(
-          (user) => user.isAdmin == false
+          (user) => user.isAdmin === false
         );
         setUsers(filtered_user);
       } catch (err) {
@@ -68,6 +70,7 @@ const UserList = () => {
     };
 
     fetchUsers();
+    checkAdminState(navigate);
   }, []);
 
   if (loading) return <Container>Loading...</Container>;

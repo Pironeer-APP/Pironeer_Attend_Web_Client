@@ -7,9 +7,14 @@ import CreateSessionForm from "../components/admin/CreateSession";
 import { checkAttendStart } from "../utils/stateCheck";
 import { MainButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
+import { checkAdminState } from "../utils/stateCheck";
 
 export default function AdminPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    checkAdminState(navigate);
+  }, []);
 
   return (
     <InputContainer>
@@ -28,10 +33,9 @@ export default function AdminPage() {
         onPress={() => navigate("/users")}
       ></MainButton>
       <MainButton
-        content={"화원 등록"}
+        content={"회원 등록"}
         onPress={() => navigate("/signup")}
       ></MainButton>
-
     </InputContainer>
   );
 }

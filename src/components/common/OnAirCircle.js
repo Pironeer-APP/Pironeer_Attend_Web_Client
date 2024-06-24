@@ -38,40 +38,46 @@ const OnAirCircle = ({ color, onPress }) => {
   const unscaleControls = useAnimation();
 
   useEffect(() => {
+    const isMounted = { value: true }; // Using an object to avoid stale closure
+
     const scaleSequence = async () => {
-      while (true) {
-        await scaleControls.start({
-          scale: 1.2,
-          transition: { duration: 1, ease: "easeInOut" },
-        });
-        await scaleControls.start({
-          scale: 1,
-          transition: { duration: 1, ease: "easeInOut" },
-        });
-      }
+      if (!isMounted.value) return;
+      await scaleControls.start({
+        scale: 1.2,
+        transition: { duration: 1, ease: "easeInOut" },
+      });
+      if (!isMounted.value) return;
+      await scaleControls.start({
+        scale: 1,
+        transition: { duration: 1, ease: "easeInOut" },
+      });
     };
 
     const unscaleSequence = async () => {
-      while (true) {
-        await unscaleControls.start({
-          scale: 0.8,
-          transition: { duration: 1, ease: "easeInOut" },
-        });
-        await unscaleControls.start({
-          scale: 1,
-          transition: { duration: 1, ease: "easeInOut" },
-        });
-      }
+      if (!isMounted.value) return;
+      await unscaleControls.start({
+        scale: 0.8,
+        transition: { duration: 1, ease: "easeInOut" },
+      });
+      if (!isMounted.value) return;
+      await unscaleControls.start({
+        scale: 1,
+        transition: { duration: 1, ease: "easeInOut" },
+      });
     };
 
     scaleSequence();
     unscaleSequence();
+
+    return () => {
+      isMounted.value = false;
+    };
   }, [scaleControls, unscaleControls]);
 
   return (
-    <OnAirCircleContainer animate={scaleControls} onClick={onPress}>
+    <OnAirCircleContainer animate={scaleControls}>
       <Shadow>
-        <OnAirCircleBack color={color}>
+        <OnAirCircleBack color={color} onClick={onPress}>
           <OnAirCircleInner color={color} animate={unscaleControls} />
         </OnAirCircleBack>
       </Shadow>

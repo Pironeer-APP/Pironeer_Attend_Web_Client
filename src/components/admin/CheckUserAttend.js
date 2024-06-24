@@ -9,6 +9,7 @@ import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
+import { checkAdminState } from "../../utils/stateCheck";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
@@ -16,18 +17,17 @@ const UpdateUserContainer = styled(InputContainer)`
 
 const UpdateUser = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userId } = location.state || {};
   const [attends, setAttends] = useState([]);
   const [updateAttends, setUpdateAttends] = useState([]);
 
-  const username = sessionStorage.getItem("username");
+  const userId = sessionStorage.getItem("id");
 
   useEffect(() => {
     if (!userId) {
       console.error("User ID is not provided");
       return;
     }
+    checkAdminState(navigate);
   }, [userId]);
 
   const handleUpdateAttendance = async () => {

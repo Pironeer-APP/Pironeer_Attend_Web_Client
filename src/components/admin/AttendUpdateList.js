@@ -4,6 +4,7 @@ import { COLORS } from "../../utils/theme";
 import OnAirCircle from "../common/OnAirCircle";
 import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
+import { Container } from "../common/Container";
 
 const AttendanceContainer = styled.div`
   display: flex;
@@ -42,6 +43,8 @@ const SessionName = styled.div`
 
 const AttendUpdateList = ({ userId, setUpdateAttends, updateAttends }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
+  const [updateLoading, setUpdateLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAttendance = async () => {
@@ -55,6 +58,9 @@ const AttendUpdateList = ({ userId, setUpdateAttends, updateAttends }) => {
         }
       } catch (error) {
         console.error("Error fetching attendance records:", error.message);
+        setError(error.message);
+      } finally {
+        setUpdateLoading(false);
       }
     };
 
@@ -62,6 +68,9 @@ const AttendUpdateList = ({ userId, setUpdateAttends, updateAttends }) => {
       fetchAttendance();
     }
   }, [userId]);
+
+  if (updateLoading) return <Container>Loading...</Container>;
+  if (error) return <Container>Error: {error}</Container>;
 
   const calculateStatus = (attendList) => {
     if (!attendList || attendList.length === 0) return COLORS.light_gray;
