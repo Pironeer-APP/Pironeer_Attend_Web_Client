@@ -40,7 +40,7 @@ const SessionName = styled.div`
   margin-bottom: 20px;
 `;
 
-const AttendUpdateList = ({ userId, setUpdateAttends }) => {
+const AttendUpdateList = ({ userId, setUpdateAttends, updateAttends }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
 
   useEffect(() => {
@@ -71,13 +71,28 @@ const AttendUpdateList = ({ userId, setUpdateAttends }) => {
     return COLORS.red;
   };
 
-  const toggleAttend = (attend, record_index, attend_index) => {
+  const toggleAttend = (record_index, attend_index) => {
+    const target_record = attendanceRecords[record_index];
+    const target_attend =
+      attendanceRecords[record_index].attendList[attend_index];
+
     const new_attend = {
       userId: userId,
-      sessionId: attend._id,
-      attendIdx: attend.attendIdx,
-      status: !attend.status,
+      sessionId: target_record.session,
+      attendIdx: target_attend.attendIdx,
+      status: !target_attend.status,
     };
+
+    // 중복 클릭 여부 확인
+    setUpdateAttends((prev) => {
+      console.log(prev);
+      return prev.filter(
+        (attend) =>
+          attend.userId !== new_attend.userId ||
+          attend.sessionId !== new_attend.sessionId ||
+          attend.attendIdx !== new_attend.attendIdx
+      );
+    });
     setUpdateAttends((prev) => [...prev, new_attend]);
     setAttendanceRecords((prev) => {
       const newRecords = [...prev];
@@ -112,9 +127,7 @@ const AttendUpdateList = ({ userId, setUpdateAttends }) => {
                     <OnAirCircle
                       key={attend_index}
                       color={attend.status ? COLORS.green : COLORS.red}
-                      onPress={() =>
-                        toggleAttend(attend, record_index, attend_index)
-                      }
+                      onPress={() => toggleAttend(record_index, attend_index)}
                     />
                   ))
                 : null}

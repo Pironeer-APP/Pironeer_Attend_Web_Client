@@ -33,19 +33,27 @@ const UpdateUser = () => {
   const handleUpdateAttendance = async () => {
     const updateUserAttendance = async (update_info) =>
       await client.put(`/user/users/${userId}/attendance`, {
-        update_info,
+        userId: update_info.userId,
+        sessionId: update_info.sessionId,
+        attendIdx: update_info.attendIdx,
+        status: update_info.status,
       });
 
     try {
+      let isSuccess = true;
       updateAttends.map(async (update_info) => {
         const response = await updateUserAttendance(update_info);
         if (response.status == 200) {
-          alert("출석 정보가 변경되었습니다.");
           console.log(update_info);
         } else {
-          alert("출석 정보 변경에 실패했습니다. 다시 시도해주세요.");
+          isSuccess = false;
         }
       });
+      if (isSuccess) {
+        alert("출석 정보가 변경되었습니다.");
+      } else {
+        alert("출석 정보 변경에 실패했습니다. 다시 시도해주세요.");
+      }
     } catch (error) {
       console.error("Failed to update user:", error);
       alert("출석 정보 변경에 실패했습니다. 다시 시도해주세요.");
@@ -58,7 +66,11 @@ const UpdateUser = () => {
         content={"출석 정보 변경하기"}
         onPress={handleUpdateAttendance}
       />
-      <AttendUpdateList userId={userId} setUpdateAttends={setUpdateAttends} />
+      <AttendUpdateList
+        userId={userId}
+        setUpdateAttends={setUpdateAttends}
+        updateAttends={updateAttends}
+      />
     </Container>
   );
 };
