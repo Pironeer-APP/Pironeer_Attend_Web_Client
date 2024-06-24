@@ -21,7 +21,7 @@ const UpdateUser = () => {
   const [attends, setAttends] = useState([]);
   const [updateAttends, setUpdateAttends] = useState([]);
 
-  const username = localStorage.getItem("username");
+  const username = sessionStorage.getItem("username");
 
   useEffect(() => {
     if (!userId) {

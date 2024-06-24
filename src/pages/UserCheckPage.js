@@ -16,8 +16,8 @@ export default function UserCheckPage() {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(false);
   const [isAttend, setIsAttend] = useState(false);
-  const userId = localStorage.getItem("id");
-  const username = localStorage.getItem("username"); 
+  const userId = sessionStorage.getItem("id");
+  const username = sessionStorage.getItem("username"); 
 
   useEffect(() => {
     if (!userId) {

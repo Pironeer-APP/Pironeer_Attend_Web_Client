@@ -44,10 +44,10 @@ function useLogin() {
       const isAdmin = decodedToken._isAdmin;
       console.log(decodedToken);
   
-      localStorage.setItem("token", token);
-      localStorage.setItem("id", decodedToken._id);
-      localStorage.setItem("isAdmin", decodedToken._isAdmin);
-      localStorage.setItem("username", username);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("id", decodedToken._id);
+      sessionStorage.setItem("isAdmin", decodedToken._isAdmin);
+      sessionStorage.setItem("username", username);
   
       if (isAdmin === "true") {
         navigate("/admin");

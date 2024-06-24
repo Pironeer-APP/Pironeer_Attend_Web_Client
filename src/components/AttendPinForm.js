@@ -17,7 +17,7 @@ function useAttend() {
   };
 
   const onPressAttend = async (navigate, setIsAttend) => {
-    const userId = localStorage.getItem("id");
+    const userId = sessionStorage.getItem("id");
 
     // 숫자가 아닌 경우 경고
     if (isNaN(pin)) {
