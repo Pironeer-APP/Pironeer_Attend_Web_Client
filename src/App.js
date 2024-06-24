@@ -35,7 +35,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/createSession",
-    element: <CreateSessionPage/>,
+    element: <CreateSessionPage />,
   },
   {
     path: "/createCode",
@@ -52,8 +52,7 @@ const router = createBrowserRouter([
   {
     path: "/checkAttend",
     element: <CheckUserAttend />,
-  }
-
+  },
 ]);
 
 function App() {
