@@ -36,6 +36,7 @@ const ButtonContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
 const UpdateButton = styled.button`
   background-color: ${COLORS.green};
   color: black;
@@ -57,7 +58,7 @@ const UserList = () => {
       try {
         const response = await client.get("/user/users");
         const filtered_user = response.data.filter(
-          (user) => user.isAdmin == false
+          (user) => user.isAdmin === false
         );
         setUsers(filtered_user);
       } catch (err) {

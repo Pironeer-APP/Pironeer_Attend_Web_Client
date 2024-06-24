@@ -16,12 +16,10 @@ const UpdateUserContainer = styled(InputContainer)`
 
 const UpdateUser = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userId } = location.state || {};
   const [attends, setAttends] = useState([]);
   const [updateAttends, setUpdateAttends] = useState([]);
 
-  const username = localStorage.getItem("username");
+  const userId = localStorage.getItem("id");
 
   useEffect(() => {
     if (!userId) {
