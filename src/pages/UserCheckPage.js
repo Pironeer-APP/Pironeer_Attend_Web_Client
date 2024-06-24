@@ -10,20 +10,29 @@ import AttendList from "../components/AttendList";
 import { Container } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 
-
-
 export default function UserCheckPage() {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(false);
   const [isAttend, setIsAttend] = useState(false);
   const userId = sessionStorage.getItem("id");
-  const username = sessionStorage.getItem("username"); 
+  const username = sessionStorage.getItem("username");
 
   useEffect(() => {
     if (!userId) {
       navigate("/login");
     }
   }, [userId, navigate]);
+
+  // Polling checkAttendStart every second if not attended
+  useEffect(() => {
+    if (!isAttend) {
+      const interval = setInterval(() => {
+        checkAttendStart(setIsStart);
+      }, 1000);
+
+      return () => clearInterval(interval); // Clear interval on component unmount or when isAttend changes
+    }
+  }, [isAttend]);
 
   // 출석 체크가 시작되었고, 현재 유저가 출석하지 않았다면 출석 창 보여주기
   // 출석 완료되었다면 완료 창 보여주기
@@ -38,16 +47,14 @@ export default function UserCheckPage() {
     }
   }, [isAttend]);
 
-
   return (
     <Container>
       <Logo />
-      <Header text={`반가워요, ${username}님!`} /> 
+      <Header text={`반가워요, ${username}님!`} />
       {isStart ? (
         <>
           {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
           <AttendList userId={userId} />
-          
         </>
       ) : (
         <AttendList userId={userId} />
