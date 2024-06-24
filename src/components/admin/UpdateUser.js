@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { client } from '../../utils/client';
+import bcrypt from 'bcryptjs';
 import { InputContainer } from '../../components/common/Container';
 import StyledInput from '../../components/common/Input';
 import { MainButton } from '../../components/common/Button';
@@ -43,10 +44,17 @@ const UpdateUser = () => {
 
   const handleUpdateUser = async () => {
     try {
+      let hashedPassword = password;
+
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        hashedPassword = await bcrypt.hash(password, salt);
+      }
+
       await client.put(`/user/users/${userId}`, {
         username,
         email,
-        password,
+        password: hashedPassword,
       });
       alert('유저 정보가 변경되었습니다.');
       navigate('/users'); 
@@ -59,7 +67,7 @@ const UpdateUser = () => {
   return (
     <UpdateUserContainer>
       <Logo />
-      <Header text={`유저 정보 변겅`} />
+      <Header text={`유저 정보 변경`} />
       <StyledInput
         placeholder="이름"
         keyboardType="default"
