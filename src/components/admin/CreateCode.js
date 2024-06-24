@@ -14,7 +14,7 @@ const CreateCode = () => {
   const location = useLocation();
   const { sessionId } = location.state;
   const [code, setCode] = useState(
-    localStorage.getItem("attendanceCode") || null
+    sessionStorage.getItem("attendanceCode") || null
   );
   const [isStart, setIsStart] = useState(false);
 
@@ -24,7 +24,7 @@ const CreateCode = () => {
       console.log("Response from startAttendCheck:", response);
       if (response && response.code) {
         setCode(response.code);
-        localStorage.setItem("attendanceCode", response.code);
+        sessionStorage.setItem('attendanceCode', response.code);
         alert(`Code: ${response.code}`);
         setIsStart(true);
       } else {
@@ -39,7 +39,7 @@ const CreateCode = () => {
     try {
       await endAttendCheck();
       setCode(null);
-      localStorage.removeItem("attendanceCode");
+      sessionStorage.removeItem('attendanceCode');
       setIsStart(false);
     } catch (error) {
       alert(error);

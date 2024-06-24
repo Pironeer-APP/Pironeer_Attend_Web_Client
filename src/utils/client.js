@@ -2,7 +2,7 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
   const SERVER_URL = "http://3.38.96.3:3000/api";
   const headers = { "Content-Type": "application/json" };
 
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
