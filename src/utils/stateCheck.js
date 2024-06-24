@@ -14,6 +14,21 @@ function checkUserState(navigate) {
   }
 }
 
+function checkAdminState(navigate) {
+  const token = localStorage.getItem("token");
+  const isAdmin = localStorage.getItem("isAdmin");
+
+  // 인증 정보가 없을 경우 로그인 페이지로 이동
+  if (!token || !isAdmin) {
+    navigate("/login");
+  }
+
+  // 일반 유저라면 메인 페이지로 이동
+  if (isAdmin == "false") {
+    navigate("/");
+  }
+}
+
 async function checkAttendStart(setIsStart) {
   try {
     const response = await client.get("/session/isCheckAttend");
@@ -23,7 +38,7 @@ async function checkAttendStart(setIsStart) {
       console.log("출석 시작");
     }
   } catch (err) {
-    if (err.includes('Error 404')) {
+    if (err.includes("Error 404")) {
       setIsStart(false);
     } else {
       console.error("출석 확인 중 오류가 발생했습니다", err);
@@ -32,4 +47,4 @@ async function checkAttendStart(setIsStart) {
   }
 }
 
-export { checkUserState, checkAttendStart };
+export { checkUserState, checkAttendStart, checkAdminState };

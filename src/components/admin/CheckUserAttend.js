@@ -9,6 +9,7 @@ import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
+import { checkAdminState } from "../../utils/stateCheck";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
@@ -26,6 +27,7 @@ const UpdateUser = () => {
       console.error("User ID is not provided");
       return;
     }
+    checkAdminState(navigate);
   }, [userId]);
 
   const handleUpdateAttendance = async () => {

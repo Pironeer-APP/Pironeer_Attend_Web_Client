@@ -7,6 +7,7 @@ import { checkAttendStart } from "../../utils/stateCheck";
 import Logo from "../common/Logo";
 import { Header } from "../common/Header";
 import { useNavigate } from "react-router-dom";
+import { checkAdminState } from "../../utils/stateCheck";
 
 function useCreateSession(onSuccess) {
   const [sessionName, setSessionName] = useState("");
@@ -41,9 +42,7 @@ function useCreateSession(onSuccess) {
   };
 }
 
-const CreateSessionForm = () => {
-  const navigate = useNavigate();
-
+const CreateSessionForm = ({ navigate }) => {
   const onSuccess = () => {
     navigate("/sessions");
   };
@@ -78,9 +77,11 @@ const CreateSessionForm = () => {
 
 const CreateSessionPage = () => {
   const [isStart, setIsStart] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     checkAttendStart(setIsStart);
+    checkAdminState(navigate);
   }, []);
 
   return (
@@ -89,7 +90,7 @@ const CreateSessionPage = () => {
       <Header text={`반가워요, 어드민님!`} />
       {isStart ? (
         <>
-          <CreateSessionForm />
+          <CreateSessionForm navigate={navigate} />
         </>
       ) : (
         <CreateSessionForm />

@@ -6,6 +6,7 @@ import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
+import { checkAdminState } from "../../utils/stateCheck";
 
 const Container = styled.div`
   padding: 100px;
@@ -69,6 +70,7 @@ const UserList = () => {
     };
 
     fetchUsers();
+    checkAdminState(navigate);
   }, []);
 
   if (loading) return <Container>Loading...</Container>;

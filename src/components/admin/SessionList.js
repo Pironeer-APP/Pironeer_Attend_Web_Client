@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { getSessions, deleteSession } from '../../utils/admin'; // Import deleteSession function
-import { COLORS } from '../../utils/theme';
-import { Header } from '../common/Header';
-import Logo from '../common/Logo';
-import { StyledText, StyledSubText, FontStyledText } from '../common/Text';
-import { formatDate } from '../../utils';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { getSessions, deleteSession } from "../../utils/admin"; // Import deleteSession function
+import { COLORS } from "../../utils/theme";
+import { Header } from "../common/Header";
+import Logo from "../common/Logo";
+import { StyledText, StyledSubText, FontStyledText } from "../common/Text";
+import { formatDate } from "../../utils";
+import { checkAdminState } from "../../utils/stateCheck";
 
 const Container = styled.div`
   padding: 100px;
@@ -60,17 +61,18 @@ const SessionListPage = () => {
     };
 
     fetchSessions();
+    checkAdminState(navigate);
   }, []);
 
   const handleSessionClick = (sessionId) => {
-    navigate('/createCode', { state: { sessionId } });
+    navigate("/createCode", { state: { sessionId } });
   };
 
   const handleDeleteClick = async (sessionId) => {
     try {
       await deleteSession(sessionId);
-      setSessions(sessions.filter(session => session._id !== sessionId));
-      alert('세션이 삭제되었습니다.')
+      setSessions(sessions.filter((session) => session._id !== sessionId));
+      alert("세션이 삭제되었습니다.");
     } catch (err) {
       setError(err.message);
     }
@@ -95,7 +97,9 @@ const SessionListPage = () => {
             </SessionName>
             <StyledText content={formatDate(session.date)} fontSize={15} />
           </SessionDetails>
-          <DeleteButton onClick={() => handleDeleteClick(session._id)}>삭제</DeleteButton>
+          <DeleteButton onClick={() => handleDeleteClick(session._id)}>
+            삭제
+          </DeleteButton>
         </SessionItem>
       ))}
     </Container>

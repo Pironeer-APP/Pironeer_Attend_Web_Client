@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import { client } from '../../utils/client';
-import bcrypt from 'bcryptjs';
-import { InputContainer } from '../../components/common/Container';
-import StyledInput from '../../components/common/Input';
-import { MainButton } from '../../components/common/Button';
-import Logo from '../../components/common/Logo';
-import { Header } from '../../components/common/Header';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import styled from "styled-components";
+import { client } from "../../utils/client";
+import bcrypt from "bcryptjs";
+import { InputContainer } from "../../components/common/Container";
+import StyledInput from "../../components/common/Input";
+import { MainButton } from "../../components/common/Button";
+import Logo from "../../components/common/Logo";
+import { Header } from "../../components/common/Header";
+import { checkAdminState } from "../../utils/stateCheck";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
@@ -16,14 +17,14 @@ const UpdateUserContainer = styled(InputContainer)`
 const UpdateUser = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userId } = location.state || {}; 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { userId } = location.state || {};
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (!userId) {
-      console.error('User ID not provided');
+      console.error("User ID not provided");
       return;
     }
 
@@ -33,13 +34,14 @@ const UpdateUser = () => {
         const user = response.data;
         setUsername(user.username);
         setEmail(user.email);
-        setPassword(''); 
+        setPassword("");
       } catch (error) {
-        console.error('Failed to fetch user:', error);
+        console.error("Failed to fetch user:", error);
       }
     };
 
     fetchUser();
+    checkAdminState(navigate);
   }, [userId]);
 
   const handleUpdateUser = async () => {
@@ -56,11 +58,11 @@ const UpdateUser = () => {
         email,
         password: hashedPassword,
       });
-      alert('유저 정보가 변경되었습니다.');
-      navigate('/users'); 
+      alert("유저 정보가 변경되었습니다.");
+      navigate("/users");
     } catch (error) {
-      console.error('Failed to update user:', error);
-      alert('유저 정보 변경에 실패했습니다. 다시 시도해주세요.');
+      console.error("Failed to update user:", error);
+      alert("유저 정보 변경에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
