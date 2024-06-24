@@ -32,6 +32,10 @@ export default function AdminPage() {
         content={"전체 유저 조회"}
         onPress={() => navigate("/users")}
       ></MainButton>
+      <MainButton
+        content={"회원 등록"}
+        onPress={() => navigate("/signup")}
+      ></MainButton>
     </InputContainer>
   );
 }
