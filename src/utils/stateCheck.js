@@ -15,8 +15,8 @@ function checkUserState(navigate) {
 }
 
 function checkAdminState(navigate) {
-  const token = localStorage.getItem("token");
-  const isAdmin = localStorage.getItem("isAdmin");
+  const token = sessionStorage.getItem("token");
+  const isAdmin = sessionStorage.getItem("isAdmin");
 
   // 인증 정보가 없을 경우 로그인 페이지로 이동
   if (!token || !isAdmin) {
