@@ -1,17 +1,16 @@
-import React, { useState,useEffect } from 'react';
-import { MainButton } from '../common/Button';
-import { InputContainer } from '../common/Container';
-import StyledInput from '../common/Input';
-import { createSession } from '../../utils/admin';
+import React, { useState, useEffect } from "react";
+import { MainButton } from "../common/Button";
+import { InputContainer } from "../common/Container";
+import StyledInput from "../common/Input";
+import { createSession } from "../../utils/admin";
 import { checkAttendStart } from "../../utils/stateCheck";
-import Logo from '../common/Logo';
-import { Header } from '../common/Header';
+import Logo from "../common/Logo";
+import { Header } from "../common/Header";
 import { useNavigate } from "react-router-dom";
 
-
 function useCreateSession(onSuccess) {
-  const [sessionName, setSessionName] = useState('');
-  const [date, setDate] = useState('');
+  const [sessionName, setSessionName] = useState("");
+  const [date, setDate] = useState("");
 
   const onChangeSessionName = (value) => {
     setSessionName(value);
@@ -24,12 +23,12 @@ function useCreateSession(onSuccess) {
   const onPressCreateSession = async () => {
     try {
       const formattedDate = new Date(date).toISOString();
-      console.log('Formatted Date:', formattedDate); 
+      console.log("Formatted Date:", formattedDate);
       await createSession(sessionName, formattedDate);
       alert(`새로운 세션이 생성되었습니다.`);
       onSuccess();
     } catch (error) {
-      console.error('Failed to create session:', error); 
+      console.error("Failed to create session:", error);
     }
   };
 
@@ -46,7 +45,7 @@ const CreateSessionForm = () => {
   const navigate = useNavigate();
 
   const onSuccess = () => {
-    navigate('/sessions');
+    navigate("/sessions");
   };
 
   const {
