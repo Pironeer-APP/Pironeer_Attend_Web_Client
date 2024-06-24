@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { client } from '../../utils/client'; 
-import styled from 'styled-components';
-import { COLORS } from '../../utils/theme'; 
-import { Header } from '../common/Header';
-import { MainButton } from '../common/Button';
-import { StyledText } from '../common/Text';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { client } from "../../utils/client";
+import styled from "styled-components";
+import { COLORS } from "../../utils/theme";
+import { Header } from "../common/Header";
+import { MainButton } from "../common/Button";
+import { StyledText } from "../common/Text";
 
 const Container = styled.div`
   padding: 100px;
@@ -54,7 +54,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await client.get('/user/users');
+        const response = await client.get("/user/users");
         setUsers(response.data);
       } catch (err) {
         setError(err.message);
@@ -73,17 +73,45 @@ const UserList = () => {
     <Container>
       <Header text={`유저 리스트`} />
       {users.map((user) => (
-        <UserItem key={user._id}>
+        <UserItem key={user?._id}>
           <UserDetails>
-          <UserField><StyledText content={user.isAdmin ? '어드민' : '일반 유저'} fontSize={15} /></UserField>
-            <UserField><StyledText content={`아이디: ${user._id}`} fontSize={10} /></UserField>
-            <UserField><StyledText content={`이름: ${user.username}`} fontSize={10} /></UserField>
-            <UserField><StyledText content={`이메일: ${user.email}`} fontSize={10} /></UserField>
-            <UserField><StyledText content={`비밀번호: ${user.password}`} fontSize={10} /></UserField>
+            <UserField>
+              <StyledText
+                content={user?.isAdmin ? "어드민" : "일반 유저"}
+                fontSize={15}
+              />
+            </UserField>
+            <UserField>
+              <StyledText content={`아이디: ${user?._id}`} fontSize={10} />
+            </UserField>
+            <UserField>
+              <StyledText content={`이름: ${user?.username}`} fontSize={10} />
+            </UserField>
+            <UserField>
+              <StyledText content={`이메일: ${user?.email}`} fontSize={10} />
+            </UserField>
+            <UserField>
+              <StyledText
+                content={`비밀번호: ${user?.password}`}
+                fontSize={10}
+              />
+            </UserField>
           </UserDetails>
           <ButtonContainer>
-            <UpdateButton 
-              onClick={() => navigate('/updateUser', { state: { userId: user._id } })}>정보 변경</UpdateButton>
+            <UpdateButton
+              onClick={() =>
+                navigate("/updateUser", { state: { userId: user?._id } })
+              }
+            >
+              정보 변경
+            </UpdateButton>
+            <UpdateButton
+              onClick={() => {
+                navigate("/checkAttend", { state: { userId: user._id } });
+              }}
+            >
+              출석 내역
+            </UpdateButton>
           </ButtonContainer>
         </UserItem>
       ))}

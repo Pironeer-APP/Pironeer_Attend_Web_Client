@@ -27,14 +27,6 @@ export default function AdminPage() {
         content={"전체 유저 조회"}
         onPress={() => navigate("/users")}
       ></MainButton>
-      <MainButton
-        content={"정보 변경"}
-        onPress={() => navigate("/updateUser")}
-      ></MainButton>
-      <MainButton
-        content={"유저 별 출석 상태 확인"}
-        onPress={() => navigate("/checkAttend")}
-      ></MainButton>
     </InputContainer>
   );
 }

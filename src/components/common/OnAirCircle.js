@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
-import { COLORS } from '../../utils/theme';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { motion, useAnimation } from "framer-motion";
+import { COLORS } from "../../utils/theme";
 
 const OnAirCircleContainer = styled(motion.div)`
   display: flex;
@@ -33,22 +33,34 @@ const OnAirCircleInner = styled(motion.div)`
   border: 1px solid ${COLORS.textColor};
 `;
 
-const OnAirCircle = ({ color }) => {
+const OnAirCircle = ({ color, isSelected = false }) => {
   const scaleControls = useAnimation();
   const unscaleControls = useAnimation();
 
   useEffect(() => {
     const scaleSequence = async () => {
       while (true) {
-        await scaleControls.start({ scale: 1.2, transition: { duration: 1, ease: 'easeInOut' } });
-        await scaleControls.start({ scale: 1, transition: { duration: 1, ease: 'easeInOut' } });
+        await scaleControls.start({
+          scale: 1.2,
+          transition: { duration: 1, ease: "easeInOut" },
+        });
+        await scaleControls.start({
+          scale: 1,
+          transition: { duration: 1, ease: "easeInOut" },
+        });
       }
     };
 
     const unscaleSequence = async () => {
       while (true) {
-        await unscaleControls.start({ scale: 0.8, transition: { duration: 1, ease: 'easeInOut' } });
-        await unscaleControls.start({ scale: 1, transition: { duration: 1, ease: 'easeInOut' } });
+        await unscaleControls.start({
+          scale: 0.8,
+          transition: { duration: 1, ease: "easeInOut" },
+        });
+        await unscaleControls.start({
+          scale: 1,
+          transition: { duration: 1, ease: "easeInOut" },
+        });
       }
     };
 
@@ -58,7 +70,7 @@ const OnAirCircle = ({ color }) => {
 
   return (
     <OnAirCircleContainer animate={scaleControls}>
-      <Shadow>
+      <Shadow isSelected={isSelected}>
         <OnAirCircleBack color={color}>
           <OnAirCircleInner color={color} animate={unscaleControls} />
         </OnAirCircleBack>
