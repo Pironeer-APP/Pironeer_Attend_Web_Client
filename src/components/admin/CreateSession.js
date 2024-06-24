@@ -82,18 +82,16 @@ const CreateSessionPage = () => {
   useEffect(() => {
     checkAttendStart(setIsStart);
     checkAdminState(navigate);
-  }, []);
+  }, [navigate]);
 
   return (
     <InputContainer>
       <Logo />
       <Header text={`반가워요, 어드민님!`} />
       {isStart ? (
-        <>
-          <CreateSessionForm navigate={navigate} />
-        </>
+        <CreateSessionForm navigate={navigate} />
       ) : (
-        <CreateSessionForm />
+        <CreateSessionForm navigate={navigate} />
       )}
     </InputContainer>
   );
