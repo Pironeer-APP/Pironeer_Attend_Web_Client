@@ -52,9 +52,9 @@ const CreateCode = () => {
   }, []);
 
   return (
+    <>
+    <Header text={`반가워요, 어드민님!`} />
     <Container>
-      <Logo />
-      <Header text={`반가워요, 어드민님!`} />
       {isStart ? (
         <>
           <Header text={`현재 생성된 코드는 ${code} 입니다.`} />
@@ -68,6 +68,7 @@ const CreateCode = () => {
         <MainButton content={"코드 생성"} onPress={createCode} />
       )}
     </Container>
+    </>
   );
 };
 

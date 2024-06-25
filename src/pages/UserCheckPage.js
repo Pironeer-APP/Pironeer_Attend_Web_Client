@@ -7,7 +7,7 @@ import { checkUserState, checkAttendStart } from "../utils/stateCheck";
 import Logo from "../components/common/Logo";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
-import { Container } from "../components/common/Container";
+import { Container,ScreenContainer } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 import Gap from "../components/common/Gap";
 
@@ -50,9 +50,8 @@ export default function UserCheckPage() {
 
   return (
     <Container>
-      <Logo />
-      <Header text={`반가워요, ${username}님!`} />
-      <Gap />
+    <Header text={`반가워요, ${username}님!`} />
+    <ScreenContainer>
       {isStart ? (
         <>
           {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
@@ -61,6 +60,7 @@ export default function UserCheckPage() {
       ) : (
         <AttendList userId={userId} />
       )}
+    </ScreenContainer>
     </Container>
   );
 }

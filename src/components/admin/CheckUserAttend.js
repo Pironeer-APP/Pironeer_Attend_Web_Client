@@ -63,6 +63,7 @@ const UpdateUser = () => {
 
   return (
     <Container>
+      <Header text={`반가워요, 어드민님!`} />
       <MainButton
         content={"출석 정보 변경하기"}
         onPress={handleUpdateAttendance}

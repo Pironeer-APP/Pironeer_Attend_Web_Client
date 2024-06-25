@@ -65,7 +65,6 @@ const UpdateUser = () => {
 
   return (
     <Container>
-      <Logo />
       <Header text={`유저 정보 변경`} />
       <Gap />
       <InputContainer>

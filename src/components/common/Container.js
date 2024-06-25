@@ -8,6 +8,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 2rem 4rem;
+  padding-top: 13rem;
 `;
 
 // 세로 full 페이지 레이아웃
