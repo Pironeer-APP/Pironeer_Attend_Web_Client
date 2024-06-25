@@ -16,11 +16,11 @@ const UpdateUserContainer = styled(InputContainer)`
 `;
 
 const UpdateUser = () => {
+  const location = useLocation();
+  const { userId } = location.state || {};
   const navigate = useNavigate();
   const [attends, setAttends] = useState([]);
   const [updateAttends, setUpdateAttends] = useState([]);
-
-  const userId = sessionStorage.getItem("id");
 
   useEffect(() => {
     if (!userId) {
@@ -67,7 +67,6 @@ const UpdateUser = () => {
         onPress={handleUpdateAttendance}
       />
       <AttendUpdateList
-        userId={userId}
         setUpdateAttends={setUpdateAttends}
         updateAttends={updateAttends}
       />
