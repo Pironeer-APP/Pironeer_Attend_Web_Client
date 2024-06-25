@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { COLORS } from '../../utils/theme.js';
 import { LeftArrowBtn } from './Button.js';
 import { StyledText } from './Text.js';
+import Logo from './Logo.js';
 
 const RowView = styled.div`
   flex-direction: row;
@@ -12,8 +13,13 @@ const RowView = styled.div`
 
 const HeaderContainer = styled.div`
   background-color: ${COLORS.bg_black};
-  padding: 2rem;
+  padding-top: 2.5rem;
   text-align: center;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
 `;
 
 const HeaderText = styled.h1`
@@ -26,6 +32,7 @@ const Header = ({ text }) => {
   return (
     <HeaderContainer>
       <HeaderText>{text}</HeaderText>
+      <Logo />
     </HeaderContainer>
   );
 };

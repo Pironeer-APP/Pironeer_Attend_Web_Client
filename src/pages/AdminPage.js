@@ -17,9 +17,9 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <Container>
-      <Logo />
+    <> 
       <Header text={`반가워요, 어드민님!`} />
+      <Container>
       <MainButton
         content={"세션 생성"}
         onPress={() => navigate("/createSession")}
@@ -37,5 +37,6 @@ export default function AdminPage() {
         onPress={() => navigate("/signup")}
       ></MainButton>
     </Container>
+    </>
   );
 }

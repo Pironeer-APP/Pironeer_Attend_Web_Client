@@ -87,7 +87,6 @@ const CreateSessionPage = () => {
 
   return (
     <Container>
-      <Logo />
       <Header text={`반가워요, 어드민님!`} />
       <InputContainer>
         <Gap />

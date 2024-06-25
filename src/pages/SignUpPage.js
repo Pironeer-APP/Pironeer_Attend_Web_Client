@@ -10,9 +10,8 @@ import {Header} from "../components/common/Header";
 export default function SignupPage() {
   return (
     <Container>
+      <Header text={"피로그래밍 출석"} />
       <ScreenContainer>
-        <Logo />
-        <Header text={"피로그래밍 출석"} />
         <SignupForm />
       </ScreenContainer>
     </Container>
