@@ -10,17 +10,18 @@ import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { checkAdminState } from "../../utils/stateCheck";
+import Gap from "../common/Gap";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
 `;
 
 const UpdateUser = () => {
+  const location = useLocation();
+  const { userId } = location.state || {};
   const navigate = useNavigate();
   const [attends, setAttends] = useState([]);
   const [updateAttends, setUpdateAttends] = useState([]);
-
-  const userId = sessionStorage.getItem("id");
 
   useEffect(() => {
     if (!userId) {
@@ -62,12 +63,13 @@ const UpdateUser = () => {
 
   return (
     <Container>
+      <Header text={`반가워요, 어드민님!`} />
       <MainButton
         content={"출석 정보 변경하기"}
         onPress={handleUpdateAttendance}
       />
+      <Gap />
       <AttendUpdateList
-        userId={userId}
         setUpdateAttends={setUpdateAttends}
         updateAttends={updateAttends}
       />

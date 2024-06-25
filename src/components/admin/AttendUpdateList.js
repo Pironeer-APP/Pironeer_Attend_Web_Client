@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
 import OnAirCircle from "../common/OnAirCircle";
@@ -23,7 +24,7 @@ const SessionContainer = styled.div`
 const RowContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 `;
 
 const DateContainer = styled.div`
@@ -41,12 +42,19 @@ const SessionName = styled.div`
   margin-bottom: 20px;
 `;
 
-const AttendUpdateList = ({ userId, setUpdateAttends, updateAttends }) => {
+const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
+  const location = useLocation();
+  const { userId } = location.state || {};
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [updateLoading, setUpdateLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!userId) {
+      console.error("User ID not provided");
+      return;
+    }
+
     const fetchAttendance = async () => {
       try {
         const response = await client.get(`/user/checkAttendance/${userId}`);

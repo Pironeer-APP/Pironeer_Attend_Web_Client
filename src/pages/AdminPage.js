@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../components/common/Logo";
-import { Container, InputContainer } from "../components/common/Container"; // Ensure this is the correct export
+import { Container } from "../components/common/Container"; // Ensure this is the correct export
 import { Header } from "../components/common/Header"; // Ensure this is the correct export
 import CreateSessionForm from "../components/admin/CreateSession";
 import { checkAttendStart } from "../utils/stateCheck";
@@ -17,9 +17,9 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <InputContainer>
-      <Logo />
+    <> 
       <Header text={`반가워요, 어드민님!`} />
+      <Container>
       <MainButton
         content={"세션 생성"}
         onPress={() => navigate("/createSession")}
@@ -36,6 +36,7 @@ export default function AdminPage() {
         content={"회원 등록"}
         onPress={() => navigate("/signup")}
       ></MainButton>
-    </InputContainer>
+    </Container>
+    </>
   );
 }

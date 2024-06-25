@@ -8,20 +8,17 @@ import Logo from "../common/Logo";
 import { StyledText, StyledSubText, FontStyledText } from "../common/Text";
 import { formatDate } from "../../utils";
 import { checkAdminState } from "../../utils/stateCheck";
-
-const Container = styled.div`
-  padding: 100px;
-`;
+import { Container, InputContainer } from "../common/Container";
 
 const SessionItem = styled.div`
   display: flex;
+  width: calc(100% - 40px);
   justify-content: space-between;
   align-items: center; // Center align items vertically
   padding: 20px;
-  margin: 30px 0;
   border: 1px solid ${COLORS.green};
   border-radius: 5px;
-  background-color: ${COLORS.light_gray};
+  background-color: ${COLORS.black};
 `;
 
 const DeleteButton = styled.button`
@@ -36,6 +33,7 @@ const DeleteButton = styled.button`
 const SessionDetails = styled.div`
   display: flex;
   flex-direction: column;
+  width: 80%;
 `;
 
 const SessionName = styled.div`
@@ -89,19 +87,25 @@ const SessionListPage = () => {
   return (
     <Container>
       <Header text={`세션 리스트`} />
-      {sessions.map((session) => (
-        <SessionItem key={session._id}>
-          <SessionDetails onClick={() => handleSessionClick(session._id)}>
-            <SessionName>
-              <StyledText content={session.name} fontSize={15} />
-            </SessionName>
-            <StyledText content={formatDate(session.date)} fontSize={15} />
-          </SessionDetails>
-          <DeleteButton onClick={() => handleDeleteClick(session._id)}>
-            삭제
-          </DeleteButton>
-        </SessionItem>
-      ))}
+      <InputContainer>
+        {sessions.map((session) => (
+          <SessionItem key={session._id}>
+            <SessionDetails onClick={() => handleSessionClick(session._id)}>
+              <SessionName>
+                <StyledText content={session.name} fontSize={15} weight={500} />
+              </SessionName>
+              <StyledText
+                content={formatDate(session.date)}
+                fontSize={12}
+                weight={200}
+              />
+            </SessionDetails>
+            <DeleteButton onClick={() => handleDeleteClick(session._id)}>
+              삭제
+            </DeleteButton>
+          </SessionItem>
+        ))}
+      </InputContainer>
     </Container>
   );
 };

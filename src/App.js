@@ -13,6 +13,7 @@ import UpdateUser from "./components/admin/UpdateUser";
 import CheckUserAttend from "./components/admin/CheckUserAttend";
 import CreateSessionPage from "./components/admin/CreateSession";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
+
 const router = createBrowserRouter([
   {
     path: "/signup",
