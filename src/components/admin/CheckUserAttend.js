@@ -10,6 +10,7 @@ import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { checkAdminState } from "../../utils/stateCheck";
+import Gap from "../common/Gap";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
@@ -66,6 +67,7 @@ const UpdateUser = () => {
         content={"출석 정보 변경하기"}
         onPress={handleUpdateAttendance}
       />
+      <Gap />
       <AttendUpdateList
         setUpdateAttends={setUpdateAttends}
         updateAttends={updateAttends}

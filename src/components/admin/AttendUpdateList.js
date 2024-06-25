@@ -24,7 +24,7 @@ const SessionContainer = styled.div`
 const RowContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 `;
 
 const DateContainer = styled.div`

@@ -6,7 +6,8 @@ const Container = styled.div`
   background-color: ${COLORS.bg_black};
   display: flex;
   flex-direction: column;
-  margin: 2rem;
+  align-items: center;
+  margin: 2rem 4rem;
 `;
 
 // 세로 full 페이지 레이아웃
@@ -16,7 +17,7 @@ const ScreenContainer = styled.div`
   flex: 1;
   height: 100vh;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2rem 4rem;
 `;
 
 // 입력창 (로그인, 회원가입, 출석 코드 입력) 레이아웃
@@ -27,7 +28,7 @@ const InputContainer = styled.div`
   max-width: 50rem;
   margin: 0 auto;
   align-items: center;
-  gap: 2rem;
+  gap: 2rem 4rem;
 `;
 
 export { Container, InputContainer, ScreenContainer };

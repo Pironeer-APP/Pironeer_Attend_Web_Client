@@ -7,20 +7,17 @@ import { Header } from "../common/Header";
 import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/stateCheck";
-
-const Container = styled.div`
-  padding: 100px;
-`;
+import { Container, InputContainer } from "../common/Container";
 
 const UserItem = styled.div`
   display: flex;
+  width: calc(100% - 40px);
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  margin: 30px 0;
   border: 1px solid ${COLORS.green};
   border-radius: 5px;
-  background-color: ${COLORS.light_gray};
+  background-color: ${COLORS.black};
 `;
 
 const UserDetails = styled.div`
@@ -79,49 +76,46 @@ const UserList = () => {
   return (
     <Container>
       <Header text={`유저 리스트`} />
-      {users.map((user) => (
-        <UserItem key={user?._id}>
-          <UserDetails>
-            <UserField>
-              <StyledText
-                content={user?.isAdmin ? "어드민" : "일반 유저"}
-                fontSize={15}
-              />
-            </UserField>
-            <UserField>
-              <StyledText content={`아이디: ${user?._id}`} fontSize={10} />
-            </UserField>
-            <UserField>
-              <StyledText content={`이름: ${user?.username}`} fontSize={10} />
-            </UserField>
-            <UserField>
-              <StyledText content={`이메일: ${user?.email}`} fontSize={10} />
-            </UserField>
-            <UserField>
-              <StyledText
-                content={`비밀번호: ${user?.password}`}
-                fontSize={10}
-              />
-            </UserField>
-          </UserDetails>
-          <ButtonContainer>
-            <UpdateButton
-              onClick={() =>
-                navigate("/updateUser", { state: { userId: user?._id } })
-              }
-            >
-              정보 변경
-            </UpdateButton>
-            <UpdateButton
-              onClick={() => {
-                navigate("/checkAttend", { state: { userId: user._id } });
-              }}
-            >
-              출석 내역
-            </UpdateButton>
-          </ButtonContainer>
-        </UserItem>
-      ))}
+      <InputContainer>
+        {users.map((user) => (
+          <UserItem key={user?._id}>
+            <UserDetails>
+              <UserField>
+                <StyledText
+                  content={user?.isAdmin ? "어드민" : "일반 유저"}
+                  fontSize={15}
+                  weight={500}
+                />
+              </UserField>
+              <UserField>
+                <StyledText content={`아이디: ${user?._id}`} fontSize={10} />
+              </UserField>
+              <UserField>
+                <StyledText content={`이름: ${user?.username}`} fontSize={10} />
+              </UserField>
+              <UserField>
+                <StyledText content={`이메일: ${user?.email}`} fontSize={10} />
+              </UserField>
+            </UserDetails>
+            <ButtonContainer>
+              <UpdateButton
+                onClick={() =>
+                  navigate("/updateUser", { state: { userId: user?._id } })
+                }
+              >
+                정보 변경
+              </UpdateButton>
+              <UpdateButton
+                onClick={() => {
+                  navigate("/checkAttend", { state: { userId: user._id } });
+                }}
+              >
+                출석 내역
+              </UpdateButton>
+            </ButtonContainer>
+          </UserItem>
+        ))}
+      </InputContainer>
     </Container>
   );
 };

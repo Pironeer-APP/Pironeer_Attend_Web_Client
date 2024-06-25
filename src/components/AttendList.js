@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../utils/theme';
-import OnAirCircle from './common/OnAirCircle';
-import { getLocal } from '../utils';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { COLORS } from "../utils/theme";
+import OnAirCircle from "./common/OnAirCircle";
+import { getLocal } from "../utils";
 import { client } from "../utils/client";
 
 const AttendanceContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px; 
+  gap: 20px;
   padding: 20px;
+  justify-content: center;
   align-items: center;
+  max-width: 300px;
 `;
 
 const SessionContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  width: 100%;
 `;
 
 const RowContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 `;
 
 const DateContainer = styled.div`
@@ -30,6 +33,7 @@ const DateContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: 14px;
   color: ${COLORS.textColor};
 `;
@@ -47,11 +51,11 @@ const AttendList = ({ userId }) => {
     const fetchAttendance = async () => {
       try {
         const response = await client.get(`/user/checkAttendance/${userId}`);
-        console.log('Attendance Response:', response.data);
+        console.log("Attendance Response:", response.data);
         if (response.data && response.data.attendances) {
           setAttendanceRecords(response.data.attendances);
         } else {
-          throw new Error('No attendance records found');
+          throw new Error("No attendance records found");
         }
       } catch (error) {
         console.error("Error fetching attendance records:", error.message);
@@ -64,8 +68,8 @@ const AttendList = ({ userId }) => {
   }, [userId]);
 
   const calculateStatus = (attendList) => {
-    if (!attendList || attendList.length === 0) return COLORS.light_gray; 
-    const checkedCount = attendList.filter(item => item.status).length;
+    if (!attendList || attendList.length === 0) return COLORS.light_gray;
+    const checkedCount = attendList.filter((item) => item.status).length;
     if (checkedCount === 3) return COLORS.green;
     if (checkedCount >= 1) return COLORS.orange;
     return COLORS.red;
@@ -76,7 +80,9 @@ const AttendList = ({ userId }) => {
       {attendanceRecords.map((record, index) => {
         const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
-        const attendListLength = record.attendList ? record.attendList.length : 0;
+        const attendListLength = record.attendList
+          ? record.attendList.length
+          : 0;
         const grayCirclesNeeded = 3 - attendListLength;
 
         return (
@@ -91,11 +97,17 @@ const AttendList = ({ userId }) => {
               </DateContainer>
               {record.attendList && record.attendList.length > 0
                 ? record.attendList.map((attend, i) => (
-                  <OnAirCircle key={i} color={attend.status ? COLORS.green : COLORS.red} />
-                ))
+                    <OnAirCircle
+                      key={i}
+                      color={attend.status ? COLORS.green : COLORS.red}
+                    />
+                  ))
                 : null}
               {[...Array(grayCirclesNeeded)].map((_, i) => (
-                <OnAirCircle key={attendListLength + i} color={COLORS.light_gray} />
+                <OnAirCircle
+                  key={attendListLength + i}
+                  color={COLORS.light_gray}
+                />
               ))}
             </RowContainer>
           </SessionContainer>

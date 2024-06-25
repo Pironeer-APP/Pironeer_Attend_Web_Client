@@ -9,6 +9,7 @@ import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
 import { Container } from "../components/common/Container";
 import { Header } from "../components/common/Header";
+import Gap from "../components/common/Gap";
 
 export default function UserCheckPage() {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ export default function UserCheckPage() {
     <Container>
       <Logo />
       <Header text={`반가워요, ${username}님!`} />
+      <Gap />
       {isStart ? (
         <>
           {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}

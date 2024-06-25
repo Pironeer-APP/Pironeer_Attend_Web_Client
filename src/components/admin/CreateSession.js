@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MainButton } from "../common/Button";
-import { InputContainer } from "../common/Container";
+import { Container, InputContainer } from "../common/Container";
 import StyledInput from "../common/Input";
 import { createSession } from "../../utils/admin";
 import { checkAttendStart } from "../../utils/stateCheck";
@@ -8,6 +8,7 @@ import Logo from "../common/Logo";
 import { Header } from "../common/Header";
 import { useNavigate } from "react-router-dom";
 import { checkAdminState } from "../../utils/stateCheck";
+import Gap from "../common/Gap";
 
 function useCreateSession(onSuccess) {
   const [sessionName, setSessionName] = useState("");
@@ -85,15 +86,18 @@ const CreateSessionPage = () => {
   }, [navigate]);
 
   return (
-    <InputContainer>
+    <Container>
       <Logo />
       <Header text={`반가워요, 어드민님!`} />
-      {isStart ? (
-        <CreateSessionForm navigate={navigate} />
-      ) : (
-        <CreateSessionForm navigate={navigate} />
-      )}
-    </InputContainer>
+      <InputContainer>
+        <Gap />
+        {isStart ? (
+          <CreateSessionForm navigate={navigate} />
+        ) : (
+          <CreateSessionForm navigate={navigate} />
+        )}
+      </InputContainer>
+    </Container>
   );
 };
 
