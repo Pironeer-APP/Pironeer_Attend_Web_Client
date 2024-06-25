@@ -1,5 +1,5 @@
 export async function client(endpoint, { body, ...customConfig } = {}) {
-  const SERVER_URL = "http://3.38.96.3:3000/api";
+  const SERVER_URL = "https://piro-recruiting.top/api";
   const headers = { "Content-Type": "application/json" };
 
   const token = sessionStorage.getItem("token");
@@ -23,6 +23,7 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
   console.log(`Making request to ${SERVER_URL + endpoint} with config:`, config);
 
   let response, data;
+  
   try {
     response = await fetch(SERVER_URL + endpoint, config);
     console.log("Full response object:", response);

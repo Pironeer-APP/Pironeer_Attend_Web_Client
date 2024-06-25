@@ -31,7 +31,7 @@ function checkAdminState(navigate) {
 
 async function checkAttendStart(setIsStart) {
   try {
-    const response = await client.get("/session/isCheckAttend");
+    const response = await client.get("/session/isCheck");
     console.log("Response object: ", response);
     if (response.status === 200) {
       setIsStart(true);

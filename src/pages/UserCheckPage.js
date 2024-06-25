@@ -29,8 +29,17 @@ export default function UserCheckPage() {
       const interval = setInterval(() => {
         checkAttendStart(setIsStart);
       }, 1000);
-
-      return () => clearInterval(interval); // Clear interval on component unmount or when isAttend changes
+  
+      // Set a timeout to clear the interval after 10 minutes (600,000 milliseconds)
+      const timeout = setTimeout(() => {
+        clearInterval(interval);
+      }, 300000);
+  
+      // Clear the interval and timeout on component unmount or when isAttend changes
+      return () => {
+        clearInterval(interval);
+        clearTimeout(timeout);
+      };
     }
   }, [isAttend]);
 
