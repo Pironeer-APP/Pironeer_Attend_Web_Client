@@ -87,7 +87,7 @@ const CreateSessionPage = () => {
 
   return (
     <Container>
-      <Header text={`반가워요, 어드민님!`} />
+      <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin"/>
       <InputContainer>
         <Gap />
         {isStart ? (

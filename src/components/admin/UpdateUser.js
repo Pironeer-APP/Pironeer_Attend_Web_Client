@@ -65,7 +65,7 @@ const UpdateUser = () => {
 
   return (
     <Container>
-      <Header text={`유저 정보 변경`} />
+      <Header text={`유저 정보 변경`} navigateOnClick="/admin"/>
       <Gap />
       <InputContainer>
         <StyledInput

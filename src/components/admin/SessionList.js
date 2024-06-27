@@ -86,7 +86,7 @@ const SessionListPage = () => {
 
   return (
     <Container>
-      <Header text={`세션 리스트`} />
+      <Header text={`세션 리스트`} navigateOnClick="/admin"/>
       <InputContainer>
         {sessions.map((session) => (
           <SessionItem key={session._id}>

@@ -4,8 +4,10 @@ import { COLORS } from '../../utils/theme.js';
 import { LeftArrowBtn } from './Button.js';
 import { StyledText } from './Text.js';
 import Logo from './Logo.js';
+import { useNavigate } from 'react-router-dom';
 
 const RowView = styled.div`
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -20,6 +22,7 @@ const HeaderContainer = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
+  cursor: pointer;
 `;
 
 const HeaderText = styled.h1`
@@ -28,9 +31,15 @@ const HeaderText = styled.h1`
   margin: 0;
 `;
 
-const Header = ({ text }) => {
+const Header = ({ text, navigateOnClick }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(navigateOnClick);
+  };
+
   return (
-    <HeaderContainer>
+    <HeaderContainer onClick={handleClick}>
       <HeaderText>{text}</HeaderText>
       <Logo />
     </HeaderContainer>

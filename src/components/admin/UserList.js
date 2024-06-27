@@ -75,7 +75,7 @@ const UserList = () => {
 
   return (
     <Container>
-      <Header text={`유저 리스트`} />
+      <Header text={`유저 리스트`} navigateOnClick="/admin"/>
       <InputContainer>
         {users.map((user) => (
           <UserItem key={user?._id}>
