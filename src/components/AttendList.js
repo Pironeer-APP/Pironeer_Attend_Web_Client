@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import OnAirCircle from "./common/OnAirCircle";
 import { getLocal } from "../utils";
-import { client } from "../utils/client";
 
 const AttendanceContainer = styled.div`
   display: flex;
@@ -48,22 +47,28 @@ const AttendList = ({ userId }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
 
   useEffect(() => {
-    const fetchAttendance = async () => {
-      try {
-        const response = await client.get(`/user/checkAttendance/${userId}`);
-        console.log("Attendance Response:", response.data);
-        if (response.data && response.data.attendances) {
-          setAttendanceRecords(response.data.attendances);
-        } else {
-          throw new Error("No attendance records found");
-        }
-      } catch (error) {
-        console.error("Error fetching attendance records:", error.message);
-      }
-    };
-
     if (userId) {
-      fetchAttendance();
+      const token = sessionStorage.getItem("token");
+      const eventSource = new EventSource(`/user/checkAttendance/${userId}?token=${token}`);
+
+      eventSource.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        console.log("Received attendance update:", data); // Log the data being received
+        if (data && data.attendances) {
+          setAttendanceRecords(data.attendances);
+        } else {
+          console.error("No attendance records found");
+        }
+      };
+
+      eventSource.onerror = function(event) {
+        console.error("EventSource failed:", event);
+        eventSource.close();
+      };
+
+      return () => {
+        eventSource.close();
+      };
     }
   }, [userId]);
 

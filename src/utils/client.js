@@ -1,5 +1,5 @@
 export async function client(endpoint, { body, ...customConfig } = {}) {
-  const SERVER_URL = "http://3.38.96.3:3000/api";
+  const SERVER_URL = "http://localhost:3000/api";
   const headers = { "Content-Type": "application/json" };
 
   const token = sessionStorage.getItem("token");
@@ -20,12 +20,10 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
     config.body = JSON.stringify(body);
   }
 
-  console.log(`Making request to ${SERVER_URL + endpoint} with config:`, config);
 
   let response, data;
   try {
     response = await fetch(SERVER_URL + endpoint, config);
-    console.log("Full response object:", response);
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -35,7 +33,6 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
     data = await response.json();
     return { status: response.status, data }; 
   } catch (err) {
-    console.error('Error in client function:', err.message);
     return Promise.reject(err.message ? err.message : 'An error occurred');
   }
 }
