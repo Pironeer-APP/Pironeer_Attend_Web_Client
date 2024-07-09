@@ -1,5 +1,5 @@
 export async function client(endpoint, { body, ...customConfig } = {}) {
-  const SERVER_URL = "http://localhost:3000/api";
+  const SERVER_URL = "http://localhost:3000/api"; // Backend URL
   const headers = { "Content-Type": "application/json" };
 
   const token = sessionStorage.getItem("token");
@@ -19,7 +19,6 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
   if (body) {
     config.body = JSON.stringify(body);
   }
-
 
   let response, data;
   try {
@@ -48,6 +47,15 @@ client.post = function (endpoint, body, customConfig = {}) {
 client.delete = function (endpoint, customConfig = {}) {
   return client(endpoint, { ...customConfig, method: "DELETE" });
 };
+
 client.put = function (endpoint, body, customConfig = {}) {
   return client(endpoint, { ...customConfig, body, method: "PUT" });
+};
+
+client.sse = function (endpoint) {
+  const SERVER_URL = "http://localhost:3000/api"; 
+  const token = sessionStorage.getItem("token");
+  const url = `${SERVER_URL}${endpoint}?token=${token}`;
+  
+  return new EventSource(url);
 };

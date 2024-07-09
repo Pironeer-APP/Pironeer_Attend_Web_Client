@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import OnAirCircle from "./common/OnAirCircle";
 import { getLocal } from "../utils";
+import { client } from "../utils/client";
 
 const AttendanceContainer = styled.div`
   display: flex;
@@ -48,12 +49,11 @@ const AttendList = ({ userId }) => {
 
   useEffect(() => {
     if (userId) {
-      const token = sessionStorage.getItem("token");
-      const eventSource = new EventSource(`/user/checkAttendance/${userId}?token=${token}`);
+      const eventSource = client.sse(`/user/events/${userId}`);
 
       eventSource.onmessage = function(event) {
         const data = JSON.parse(event.data);
-        console.log("Received attendance update:", data); // Log the data being received
+        console.log("Attendance Update:", data);
         if (data && data.attendances) {
           setAttendanceRecords(data.attendances);
         } else {
