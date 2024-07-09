@@ -16,7 +16,7 @@ const StyledImage = styled.img`
 const Logo = () => {
   return (
     <ImageContainer>
-      <StyledImage src="/images/logo.png" alt=" Logo" />
+      <StyledImage src="/Logo.png" alt=" Logo" />
     </ImageContainer>
   );
 };

@@ -31,5 +31,54 @@ const InputContainer = styled.div`
   align-items: center;
   gap: 2rem 4rem;
 `;
+const ButtonContainerStyled = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: ${(props) => `${props.paddingV}px ${props.paddingH}px`};
+  background-color: ${(props) =>
+    props.outline ? "transparent" : props.backgroundColor || COLORS.green};
+  border: ${(props) => (props.outline ? `3px solid ${COLORS.green}` : "none")};
+  border-radius: 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
+`;
 
-export { Container, InputContainer, ScreenContainer };
+const MainButtonContainer = ({
+  outline = false,
+  paddingH = 20,
+  paddingV = 15,
+  onPress,
+  children,
+  backgroundColor,
+}) => {
+  return (
+    <ButtonContainerStyled
+      outline={outline}
+      paddingH={paddingH}
+      paddingV={paddingV}
+      onClick={onPress}
+      backgroundColor={backgroundColor}
+    >
+      {children}
+    </ButtonContainerStyled>
+  );
+};
+const TwoButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const HeaderContainer = styled.div`
+  background-color: ${COLORS.bg_black};
+  padding-top: 2.5rem;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  cursor: pointer;
+`;
+
+export { Container, InputContainer, ScreenContainer, MainButtonContainer, ButtonContainerStyled, TwoButtonContainer, HeaderContainer};
