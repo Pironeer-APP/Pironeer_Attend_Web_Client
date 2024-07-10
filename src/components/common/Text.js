@@ -20,13 +20,6 @@ const StyledText = ({
   </TextCSS>
 );
 
-const SubTextCSS = styled.span`
-  font-size: 17px;
-  color: ${COLORS.light_gray};
-  font-family: "Interop-Medium";
-`;
-
-const StyledSubText = (props) => <SubTextCSS>{props.content}</SubTextCSS>;
 
 const FontStyledTextCSS = styled.span`
   color: white;
@@ -37,4 +30,4 @@ const FontStyledText = ({ style, content }) => (
   <FontStyledTextCSS style={style}>{content}</FontStyledTextCSS>
 );
 
-export { StyledText, StyledSubText, FontStyledText };
+export { StyledText, FontStyledText };

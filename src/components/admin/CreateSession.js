@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { MainButton } from "../common/Button";
 import { Container, InputContainer } from "../common/Container";
-import StyledInput from "../common/Input";
+import { StyledInput } from "../common/Input";
 import { createSession } from "../../utils/admin";
 import { checkAttendStart } from "../../utils/stateCheck";
 import Logo from "../common/Logo";
 import { Header } from "../common/Header";
 import { useNavigate } from "react-router-dom";
 import { checkAdminState } from "../../utils/stateCheck";
-import Gap from "../common/Gap";
+import {Gap} from "../common/Gap";
 
 function useCreateSession(onSuccess) {
   const [sessionName, setSessionName] = useState("");

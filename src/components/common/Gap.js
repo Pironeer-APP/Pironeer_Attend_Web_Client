@@ -12,5 +12,4 @@ const HorizontalGap = styled.div`
 const Gap = ({ height = 20 }) => <VerticalGap height={height} />;
 const GapH = ({ width = 20 }) => <HorizontalGap width={width} />;
 
-export default Gap;
-export { GapH };
+export { Gap,GapH };

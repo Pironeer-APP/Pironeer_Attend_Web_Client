@@ -7,7 +7,7 @@ import { useState } from "react";
 import { client } from "../utils/client";
 import { jwtDecode } from "jwt-decode";
 import { InputContainer } from "./common/Container";
-import StyledInput from "./common/Input";
+import { StyledInput } from "./common/Input";
 import { MainButton } from "./common/Button";
 
 // useLogin Hook

@@ -17,14 +17,16 @@ const MediumLoaderContainer = styled.div`
   margin-bottom: 70px;
 `;
 
-export const TinyLoader = () => (
+const TinyLoader = () => (
   <TinyLoaderContainer>
     <ClipLoader size={20} color={COLORS.icon_gray} />
   </TinyLoaderContainer>
 );
 
-export const MediumLoader = () => (
+const MediumLoader = () => (
   <MediumLoaderContainer>
     <ClipLoader size={50} color={COLORS.green} />
   </MediumLoaderContainer>
 );
+
+export { TinyLoader, MediumLoader };

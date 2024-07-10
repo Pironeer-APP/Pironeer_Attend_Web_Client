@@ -3,14 +3,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { client } from "../../utils/client";
 import { InputContainer } from "../../components/common/Container";
-import StyledInput from "../../components/common/Input";
+import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
 import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { checkAdminState } from "../../utils/stateCheck";
-import Gap from "../common/Gap";
+import {Gap} from "../common/Gap";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;

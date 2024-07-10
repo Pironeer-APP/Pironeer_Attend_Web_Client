@@ -7,7 +7,7 @@ import { Header } from "../common/Header";
 import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/stateCheck";
-import { Container, InputContainer } from "../common/Container";
+import { Container, InputContainer,TwoButtonContainer } from "../common/Container";
 
 const UserItem = styled.div`
   display: flex;
@@ -29,11 +29,7 @@ const UserField = styled.div`
   margin-bottom: 10px;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
+
 
 const UpdateButton = styled.button`
   background-color: ${COLORS.green};
@@ -97,7 +93,7 @@ const UserList = () => {
                 <StyledText content={`이메일: ${user?.email}`} fontSize={10} />
               </UserField>
             </UserDetails>
-            <ButtonContainer>
+            <TwoButtonContainer>
               <UpdateButton
                 onClick={() =>
                   navigate("/updateUser", { state: { userId: user?._id } })
@@ -112,7 +108,7 @@ const UserList = () => {
               >
                 출석 내역
               </UpdateButton>
-            </ButtonContainer>
+            </TwoButtonContainer>
           </UserItem>
         ))}
       </InputContainer>
