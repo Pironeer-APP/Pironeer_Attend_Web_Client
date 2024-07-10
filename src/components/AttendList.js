@@ -48,22 +48,27 @@ const AttendList = ({ userId }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
 
   useEffect(() => {
-    const fetchAttendance = async () => {
-      try {
-        const response = await client.get(`/user/checkAttendance/${userId}`);
-        console.log("Attendance Response:", response.data);
-        if (response.data && response.data.attendances) {
-          setAttendanceRecords(response.data.attendances);
-        } else {
-          throw new Error("No attendance records found");
-        }
-      } catch (error) {
-        console.error("Error fetching attendance records:", error.message);
-      }
-    };
-
     if (userId) {
-      fetchAttendance();
+      const eventSource = client.sse(`/user/events/${userId}`);
+
+      eventSource.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        console.log("Attendance Update:", data);
+        if (data && data.attendances) {
+          setAttendanceRecords(data.attendances);
+        } else {
+          console.error("No attendance records found");
+        }
+      };
+
+      eventSource.onerror = function(event) {
+        console.error("EventSource failed:", event);
+        eventSource.close();
+      };
+
+      return () => {
+        eventSource.close();
+      };
     }
   }, [userId]);
 
