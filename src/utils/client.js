@@ -1,4 +1,6 @@
 export async function client(endpoint, { body, ...customConfig } = {}) {
+  // const SERVER_URL = "http://localhost:3000/api"; 
+  // const SERVER_URL = "http://3.38.96.3:3000/api";
   const SERVER_URL = "https://piro-recruiting.top/api";
   const headers = { "Content-Type": "application/json" };
 
@@ -55,6 +57,7 @@ client.put = function (endpoint, body, customConfig = {}) {
 
 client.sse = function (endpoint) {
   // const SERVER_URL = "http://localhost:3000/api"; 
+  // const SERVER_URL = "http://3.38.96.3:3000/api";
   const SERVER_URL = "https://piro-recruiting.top/api";
   const token = sessionStorage.getItem("token");
   const url = `${SERVER_URL}${endpoint}?token=${token}`;
