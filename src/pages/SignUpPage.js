@@ -10,7 +10,7 @@ import {Header} from "../components/common/Header";
 export default function SignupPage() {
   return (
     <Container>
-      <Header text={"피로그래밍 출석"} />
+      <Header text={"피로그래밍 출석"} navigateOnClick="/admin"/>
       <ScreenContainer>
         <SignupForm />
       </ScreenContainer>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { client } from "../utils/client";
 import { InputContainer } from "./common/Container";
-import StyledInput from "./common/Input";
+import { StyledInput } from "./common/Input";
 import { MainButton } from "./common/Button";
 
 function useSignup() {

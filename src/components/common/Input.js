@@ -30,4 +30,4 @@ function StyledInput(props) {
   );
 }
 
-export default StyledInput;
+export  {StyledInput};

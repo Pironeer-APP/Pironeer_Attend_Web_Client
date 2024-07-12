@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { client } from "../../utils/client";
 import bcrypt from "bcryptjs";
 import { Container, InputContainer } from "../../components/common/Container";
-import StyledInput from "../../components/common/Input";
+import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
 import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import { checkAdminState } from "../../utils/stateCheck";
-import Gap from "../common/Gap";
+import {Gap} from "../common/Gap";
 
 const UpdateUser = () => {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ const UpdateUser = () => {
 
   return (
     <Container>
-      <Header text={`유저 정보 변경`} />
+      <Header text={`유저 정보 변경`} navigateOnClick="/admin"/>
       <Gap />
       <InputContainer>
         <StyledInput

@@ -41,7 +41,6 @@ async function checkAttendStart(setIsStart) {
     if (err.includes("Error 404")) {
       setIsStart(false);
     } else {
-      console.error("출석 확인 중 오류가 발생했습니다", err);
       setIsStart(false);
     }
   }

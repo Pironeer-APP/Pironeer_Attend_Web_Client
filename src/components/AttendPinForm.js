@@ -4,7 +4,7 @@ import { COLORS } from "../utils/theme";
 import { FontStyledText, StyledText } from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { InputContainer } from "./common/Container";
-import StyledInput from "./common/Input";
+import {StyledInput} from "./common/Input";
 import { client } from "../utils/client";
 import { MainButton } from "./common/Button";
 

@@ -5,7 +5,7 @@ import { getSessions, deleteSession } from "../../utils/admin"; // Import delete
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import Logo from "../common/Logo";
-import { StyledText, StyledSubText, FontStyledText } from "../common/Text";
+import { StyledText, FontStyledText } from "../common/Text";
 import { formatDate } from "../../utils";
 import { checkAdminState } from "../../utils/stateCheck";
 import { Container, InputContainer } from "../common/Container";
@@ -86,7 +86,7 @@ const SessionListPage = () => {
 
   return (
     <Container>
-      <Header text={`세션 리스트`} />
+      <Header text={`세션 리스트`} navigateOnClick="/admin"/>
       <InputContainer>
         {sessions.map((session) => (
           <SessionItem key={session._id}>
