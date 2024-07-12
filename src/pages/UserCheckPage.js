@@ -34,7 +34,7 @@ export default function UserCheckPage() {
       // Set a timeout to clear the interval after 10 minutes (600,000 milliseconds)
       const timeout = setTimeout(() => {
         clearInterval(interval);
-      }, 300000);
+      }, 120000);
   
       // Clear the interval and timeout on component unmount or when isAttend changes
       return () => {
