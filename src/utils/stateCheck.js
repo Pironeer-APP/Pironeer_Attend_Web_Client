@@ -45,6 +45,7 @@ function checkAdminState(navigate) {
 //     }
 //   }
 // }
+
 async function checkAttendStart(setIsStart) {
   const eventSource = client.sse("/session/isCheckAttend");
 
@@ -62,6 +63,12 @@ async function checkAttendStart(setIsStart) {
     console.error("EventSource failed:", err);
     eventSource.close();
   };
+
+  // sse 연결을 5분으로 제한
+  setTimeout(() => {
+    eventSource.close();
+    console.log('SSE connection timed out on client');
+  }, 300000);
 
   return () => {
     eventSource.close();
