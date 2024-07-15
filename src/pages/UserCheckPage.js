@@ -27,20 +27,21 @@ export default function UserCheckPage() {
   // Polling checkAttendStart every second if not attended
   useEffect(() => {
     if (!isAttend) {
-      const interval = setInterval(() => {
-        checkAttendStart(setIsStart);
-      }, 1000);
+      checkAttendStart(setIsStart);
+      // const interval = setInterval(() => {
+      //   checkAttendStart(setIsStart);
+      // }, 1000);
   
-      // Set a timeout to clear the interval after 10 minutes (600,000 milliseconds)
-      const timeout = setTimeout(() => {
-        clearInterval(interval);
-      }, 120000);
+      // // Set a timeout to clear the interval after 10 minutes (600,000 milliseconds)
+      // const timeout = setTimeout(() => {
+      //   clearInterval(interval);
+      // }, 120000);
   
-      // Clear the interval and timeout on component unmount or when isAttend changes
-      return () => {
-        clearInterval(interval);
-        clearTimeout(timeout);
-      };
+      // // Clear the interval and timeout on component unmount or when isAttend changes
+      // return () => {
+      //   clearInterval(interval);
+      //   clearTimeout(timeout);
+      // };
     }
   }, [isAttend]);
 

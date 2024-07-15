@@ -1,3 +1,4 @@
+// AttendList.js
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
@@ -78,6 +79,10 @@ const AttendList = ({ userId }) => {
   return (
     <AttendanceContainer>
       {attendanceRecords.map((record, index) => {
+        if (!record.session_date) {
+          return null;
+        }
+
         const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
         const attendListLength = record.attendList
@@ -91,9 +96,9 @@ const AttendList = ({ userId }) => {
             <RowContainer>
               <OnAirCircle color={finalStatus} />
               <DateContainer>
-                {month}/{date}
+              {month}/{date}
                 <br />
-                {day}
+                {day }
               </DateContainer>
               {record.attendList && record.attendList.length > 0
                 ? record.attendList.map((attend, i) => (

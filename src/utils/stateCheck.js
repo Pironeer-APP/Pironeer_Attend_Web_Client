@@ -29,21 +29,43 @@ function checkAdminState(navigate) {
   }
 }
 
+// async function checkAttendStart(setIsStart) {
+//   try {
+//     const response = await client.get("/session/isCheckAttend");
+//     console.log("Response object: ", response);
+//     if (response.status === 200) {
+//       setIsStart(true);
+//       console.log("출석 시작");
+//     }
+//   } catch (err) {
+//     if (err.includes("Error 404")) {
+//       setIsStart(false);
+//     } else {
+//       setIsStart(false);
+//     }
+//   }
+// }
 async function checkAttendStart(setIsStart) {
-  try {
-    const response = await client.get("/session/isCheck");
-    console.log("Response object: ", response);
-    if (response.status === 200) {
+  const eventSource = client.sse("/session/isCheckAttend");
+
+  eventSource.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    console.log("SSE data received:", data);
+    if (data.message === "출석체크 진행중") {
       setIsStart(true);
-      console.log("출석 시작");
-    }
-  } catch (err) {
-    if (err.includes("Error 404")) {
-      setIsStart(false);
     } else {
       setIsStart(false);
     }
-  }
+  };
+
+  eventSource.onerror = function(err) {
+    console.error("EventSource failed:", err);
+    eventSource.close();
+  };
+
+  return () => {
+    eventSource.close();
+  };
 }
 
 export { checkUserState, checkAttendStart, checkAdminState };
