@@ -27,11 +27,7 @@ export default function UserCheckPage() {
   // Polling checkAttendStart every second if not attended
   useEffect(() => {
     if (!isAttend) {
-      const interval = setInterval(() => {
-        checkAttendStart(setIsStart);
-      }, 1000);
-
-      return () => clearInterval(interval); // Clear interval on component unmount or when isAttend changes
+      checkAttendStart(setIsStart);
     }
   }, [isAttend]);
 
