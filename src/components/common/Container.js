@@ -87,5 +87,6 @@ export {
   ScreenContainer,
   HeaderContainer,
   MainButtonContainer,
-  TwoButtonContainer
+  TwoButtonContainer,
+  ButtonContainerStyled
 };
