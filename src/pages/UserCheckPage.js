@@ -10,13 +10,15 @@ import AttendList from "../components/AttendList";
 import { Container,ScreenContainer } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 import Gap from "../components/common/Gap";
+import useUserStore from '../store/userStore';
 
 export default function UserCheckPage() {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(false);
   const [isAttend, setIsAttend] = useState(false);
-  const userId = sessionStorage.getItem("id");
-  const username = sessionStorage.getItem("username");
+  const {user} = useUserStore();
+  const userId = user.userId;
+  const username = user.username;
 
   useEffect(() => {
     if (!userId) {

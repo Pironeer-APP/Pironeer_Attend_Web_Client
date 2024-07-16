@@ -1,3 +1,5 @@
+import useUserStore from '../store/userStore';
+
 export async function client(endpoint, { body, ...customConfig } = {}) {
   // const SERVER_URL = "http://localhost:3000/api"; 
   // const SERVER_URL = "http://3.38.96.3:3000/api";

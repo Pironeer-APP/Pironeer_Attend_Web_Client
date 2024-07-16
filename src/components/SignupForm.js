@@ -38,7 +38,6 @@ function useSignup() {
       console.log(`password: ${password}`);
       console.log(`email: ${email}`);
 
-      // 240621 연우: 회원가입하면 바로 로그인할 수 있도록 수정해도 좋을 것 같습니다.
       navigate("/users");
     } catch (error) {
       console.error(error);
