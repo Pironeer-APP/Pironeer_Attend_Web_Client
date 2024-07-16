@@ -30,4 +30,12 @@ const FontStyledText = ({ style, content }) => (
   <FontStyledTextCSS style={style}>{content}</FontStyledTextCSS>
 );
 
-export { StyledText, FontStyledText };
+const StyledWarning = styled(FontStyledText)`
+  color: ${COLORS.red};
+  margin: 0.5rem;
+`;
+
+export {
+  StyledText,
+  StyledWarning
+};

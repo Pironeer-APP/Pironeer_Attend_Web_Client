@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
-import { FontStyledText, StyledText } from "./common/Text";
+import { StyledText} from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { InputContainer } from "./common/Container";
 import {StyledInput} from "./common/Input";
@@ -84,7 +84,4 @@ export default function AttendPinForm(props) {
   );
 }
 
-const StyledWarning = styled(FontStyledText)`
-  color: ${COLORS.red};
-  margin: 0.5rem;
-`;
+

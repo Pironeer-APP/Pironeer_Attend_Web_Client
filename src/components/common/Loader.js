@@ -29,4 +29,7 @@ const MediumLoader = () => (
   </MediumLoaderContainer>
 );
 
-export { TinyLoader, MediumLoader };
+export {
+  TinyLoader,
+  MediumLoader
+};

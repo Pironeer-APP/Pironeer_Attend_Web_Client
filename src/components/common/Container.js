@@ -81,4 +81,11 @@ const HeaderContainer = styled.div`
   cursor: pointer;
 `;
 
-export { Container, InputContainer, ScreenContainer, MainButtonContainer, ButtonContainerStyled, TwoButtonContainer, HeaderContainer};
+export {
+  Container,
+  InputContainer,
+  ScreenContainer,
+  HeaderContainer,
+  MainButtonContainer,
+  TwoButtonContainer
+};

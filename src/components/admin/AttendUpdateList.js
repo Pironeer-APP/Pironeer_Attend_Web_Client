@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
-import OnAirCircle from "../common/OnAirCircle";
+import { OnAirCircle } from "../common/OnAirCircle";
 import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
 import { Container } from "../common/Container";

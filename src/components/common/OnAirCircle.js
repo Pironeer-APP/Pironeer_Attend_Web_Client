@@ -98,4 +98,7 @@ const StatusCircleContainer = styled.div`
 const StatusCircle = () => <StatusCircleContainer />;
 
 
-export default OnAirCircle;
+export default {
+  OnAirCircle,
+  StatusCircle
+};
