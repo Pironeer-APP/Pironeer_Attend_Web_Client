@@ -1,6 +1,7 @@
-import useUserStore from '../store/userStore';
-
-export async function client(endpoint, { body, ...customConfig } = {}) {
+// 240716 연우: hook이 아니어서 zustand 상태 관리를 사용할 수 없음.
+//             token을 매개변수로 넣어서 처리
+//             client라는 함수명이 모호함. api로 변경
+export async function client(endpoint, token, { body, ...customConfig } = {}) {
   // const SERVER_URL = "http://localhost:3000/api"; 
   // const SERVER_URL = "http://3.38.96.3:3000/api";
   const SERVER_URL = "https://piro-recruiting.top/api";
