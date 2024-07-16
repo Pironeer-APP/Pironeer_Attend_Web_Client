@@ -1,18 +1,18 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Container } from "./components/common/Container";
-import Logo from "./components/common/Logo";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignUpPage";
-import UserCheckPage from "./pages/UserCheckPage";
-import AdminPage from "./pages/AdminPage";
-import SessionList from "./components/admin/SessionList";
-import CreateCode from "./components/admin/CreateCode";
-import UserList from "./components/admin/UserList";
-import UpdateUser from "./components/admin/UpdateUser";
-import CheckUserAttend from "./components/admin/CheckUserAttend";
-import CreateSessionPage from "./components/admin/CreateSession";
-import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
+import { Container } from "./common/Container";
+import Logo from "./common/Logo";
+import LoginPage from "./pages/Login/LoginPage";
+import SignupPage from "./pages/Admin/SignUpPage/SignUpPage";
+import UserCheckPage from "./pages/User/UserCheckPage";
+import AdminPage from "./pages/Admin/AdminPage/Admin";
+import SessionList from "./pages/Admin/SessionListPage/SessionList";
+import CreateCode from "./pages/Admin/SessionListPage/CreateCode";
+import UserList from "./pages/Admin/UserListPage/UserList";
+import UpdateUser from "./pages/Admin/UserListPage/UpdateUserInfo";
+import CheckUserAttend from "./pages/Admin/UserListPage/UpdateUserAttendList";
+import CreateSessionPage from "./pages/Admin/SessionCreatePage/CreateSession";
+import AdminProtectedRoute from "./utils/AdminProtectedRoute";
 
 const router = createBrowserRouter([
   {
