@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
-import { StyledText} from "./common/Text";
+import { StyledText, StyledWarning } from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { InputContainer } from "./common/Container";
 import {StyledInput} from "./common/Input";
@@ -78,7 +78,7 @@ export default function AttendPinForm(props) {
         onPress={() => onPressAttend(navigate, setIsAttend)}
       />
       {warning && (
-        <StyledText content={warning} fontSize={15} color={COLORS.green} />
+        <StyledWarning content={warning} />
       )}
     </InputContainer>
   );

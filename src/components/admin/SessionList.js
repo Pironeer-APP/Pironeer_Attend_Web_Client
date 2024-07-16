@@ -5,7 +5,7 @@ import { getSessions, deleteSession } from "../../utils/admin"; // Import delete
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import Logo from "../common/Logo";
-import { StyledText, FontStyledText } from "../common/Text";
+import { StyledText } from "../common/Text";
 import { formatDate } from "../../utils";
 import { checkAdminState } from "../../utils/stateCheck";
 import { Container, InputContainer } from "../common/Container";

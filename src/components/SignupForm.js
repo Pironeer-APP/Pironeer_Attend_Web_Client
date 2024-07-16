@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
-import { FontStyledText, StyledText } from "./common/Text";
+import { StyledText, StyledWarning } from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { client } from "../utils/client";

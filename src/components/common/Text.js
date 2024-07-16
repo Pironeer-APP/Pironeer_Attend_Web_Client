@@ -31,8 +31,8 @@ const FontStyledText = ({ style, content }) => (
 );
 
 const StyledWarning = styled(FontStyledText)`
-  color: ${COLORS.red};
-  margin: 0.5rem;
+  color: ${COLORS.green};
+  margin: 1.5rem;
 `;
 
 export {

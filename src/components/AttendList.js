@@ -123,3 +123,10 @@ const AttendList = ({ userId }) => {
 };
 
 export default AttendList;
+export {
+  AttendanceContainer,
+  SessionContainer,
+  RowContainer,
+  DateContainer,
+  SessionName
+}

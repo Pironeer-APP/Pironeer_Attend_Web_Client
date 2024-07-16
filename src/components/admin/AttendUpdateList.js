@@ -6,41 +6,7 @@ import { OnAirCircle } from "../common/OnAirCircle";
 import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
 import { Container } from "../common/Container";
-
-const AttendanceContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  align-items: center;
-`;
-
-const SessionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-`;
-
-const RowContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const DateContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: ${COLORS.textColor};
-`;
-
-const SessionName = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;
+import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
 
 const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
   const location = useLocation();
@@ -50,10 +16,6 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!userId) {
-      console.error("User ID not provided");
-      return;
-    }
 
     const fetchAttendance = async () => {
       try {
@@ -122,6 +84,10 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
   return (
     <AttendanceContainer>
       {attendanceRecords.map((record, record_index) => {
+        if (!record.session_date) {
+          return null;
+        }
+        
         const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
         const attendListLength = record.attendList
