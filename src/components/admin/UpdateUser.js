@@ -8,7 +8,7 @@ import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
 import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
-import { checkAdminState } from "../../utils/stateCheck";
+import { checkAdminState } from "../../utils/authentication";
 import {Gap} from "../common/Gap";
 
 const UpdateUser = () => {

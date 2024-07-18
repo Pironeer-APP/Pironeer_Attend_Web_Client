@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { COLORS } from "../utils/theme";
-import { client } from "../utils/client";
-import { checkUserState, checkAttendStart } from "../utils/stateCheck";
-import Logo from "../components/common/Logo";
+import { checkUserState, checkAttendStart } from "../utils/authentication";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
 import { Container,ScreenContainer } from "../components/common/Container";
 import { Header } from "../components/common/Header";
-import Gap from "../components/common/Gap";
 
 export default function UserCheckPage() {
   const navigate = useNavigate();

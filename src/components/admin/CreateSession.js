@@ -3,11 +3,11 @@ import { MainButton } from "../common/Button";
 import { Container, InputContainer } from "../common/Container";
 import { StyledInput } from "../common/Input";
 import { createSession } from "../../utils/admin";
-import { checkAttendStart } from "../../utils/stateCheck";
+import { checkAttendStart } from "../../utils/authentication";
 import Logo from "../common/Logo";
 import { Header } from "../common/Header";
 import { useNavigate } from "react-router-dom";
-import { checkAdminState } from "../../utils/stateCheck";
+import { checkAdminState } from "../../utils/authentication";
 import {Gap} from "../common/Gap";
 
 function useCreateSession(onSuccess) {
