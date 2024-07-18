@@ -29,22 +29,7 @@ function checkAdminState(navigate) {
   }
 }
 
-// async function checkAttendStart(setIsStart) {
-//   try {
-//     const response = await client.get("/session/isCheckAttend");
-//     console.log("Response object: ", response);
-//     if (response.status === 200) {
-//       setIsStart(true);
-//       console.log("출석 시작");
-//     }
-//   } catch (err) {
-//     if (err.includes("Error 404")) {
-//       setIsStart(false);
-//     } else {
-//       setIsStart(false);
-//     }
-//   }
-// }
+
 async function checkAttendStart(setIsStart) {
   const eventSource = client.sse("/session/isCheckAttend");
 
@@ -67,5 +52,15 @@ async function checkAttendStart(setIsStart) {
     eventSource.close();
   };
 }
+async function handleSessionExpired(response) {
+  if (response.status === 403) {
+    // JWT 만료시 세션 정보 삭제 후 로그인 페이지로 이동
+    sessionStorage.clear();
+    alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+    window.location.href = '/login';
+    return;
+  }
+}
 
-export { checkUserState, checkAttendStart, checkAdminState };
+
+export { checkUserState, checkAttendStart, checkAdminState, handleSessionExpired };
