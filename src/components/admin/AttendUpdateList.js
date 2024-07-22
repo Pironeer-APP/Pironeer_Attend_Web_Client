@@ -7,6 +7,7 @@ import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
 import { Container } from "../common/Container";
 import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
+import useUserStore from '../store/userStore';
 
 const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
   const location = useLocation();
@@ -14,12 +15,13 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [updateLoading, setUpdateLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useUserStore();
 
   useEffect(() => {
 
     const fetchAttendance = async () => {
       try {
-        const response = await client.get(`/user/checkAttendance/${userId}`);
+        const response = await client.get(`/user/checkAttendance/${userId}`, user.token);
         console.log("Attendance Response:", response.data);
         if (response.data && response.data.attendances) {
           setAttendanceRecords(response.data.attendances);

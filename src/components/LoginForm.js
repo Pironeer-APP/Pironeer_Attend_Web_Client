@@ -26,7 +26,7 @@ function useLogin() {
 
   const onPressLogin = async (navigate) => {
     try {
-      const response = await client.post("/user/login", {
+      const response = await client.post("/user/login", user.token, {
         "username": user.username,
         "password": user.password,
       });

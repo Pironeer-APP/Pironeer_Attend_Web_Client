@@ -1,5 +1,6 @@
 import { client } from './client';
 
+// 240722: 이 부분 modelView로 뺴야 할 듯
 export const createSession = async (sessionName, date) => {
   try {
     const response = await client.post('/session/createSession', {

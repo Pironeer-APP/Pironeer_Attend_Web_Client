@@ -8,6 +8,7 @@ import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/stateCheck";
 import { Container, InputContainer,TwoButtonContainer } from "../common/Container";
+import useUserStore from '../store/userStore';
 
 const UserItem = styled.div`
   display: flex;
@@ -46,11 +47,12 @@ const UserList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { user } = useUserStore();
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await client.get("/user/users");
+        const response = await client.get("/user/users", user.token);
         const filtered_user = response.data.filter(
           (user) => user.isAdmin === false
         );

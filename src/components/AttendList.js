@@ -5,6 +5,7 @@ import { COLORS } from "../utils/theme";
 import { OnAirCircle } from "./common/OnAirCircle";
 import { getLocal } from "../utils";
 import { client } from "../utils/client";
+import useUserStore from '../store/userStore';
 
 const AttendanceContainer = styled.div`
   display: flex;
@@ -47,11 +48,12 @@ const SessionName = styled.div`
 
 const AttendList = ({ userId }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
+  const { user } = useUserStore();
 
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        const response = await client.get(`/user/checkAttendance/${userId}`);
+        const response = await client.get(`/user/checkAttendance/${userId}`, user.token);
         console.log("Attendance Response:", response.data);
         if (response.data && response.data.attendances) {
           setAttendanceRecords(response.data.attendances);
