@@ -7,13 +7,23 @@ import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
 import { Container } from "../common/Container";
 import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
+import useAttendStore from "../../store/attendStore";
 
-const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
+const AttendUpdateList = () => {
   const location = useLocation();
   const { userId } = location.state || {};
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [updateLoading, setUpdateLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { attends, addAttend, removeAttend, setUpdateAttends } = useAttendStore(
+    (state) => ({
+      attends: state.attends,
+      addAttend: state.addAttend,
+      removeAttend: state.removeAttend,
+      setUpdateAttends: state.setUpdateAttends,
+    })
+  );
 
   useEffect(() => {
 
@@ -63,16 +73,9 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
     };
 
     // 중복 클릭 여부 확인
-    setUpdateAttends((prev) => {
-      console.log(prev);
-      return prev.filter(
-        (attend) =>
-          attend.userId !== new_attend.userId ||
-          attend.sessionId !== new_attend.sessionId ||
-          attend.attendIdx !== new_attend.attendIdx
-      );
-    });
-    setUpdateAttends((prev) => [...prev, new_attend]);
+    removeAttend(new_attend);
+    addAttend(new_attend);
+    
     setAttendanceRecords((prev) => {
       const newRecords = [...prev];
       newRecords[record_index].attendList[attend_index].status =

@@ -9,7 +9,7 @@ import { Header } from "../components/common/Header";
 export default function UserCheckPage() {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(false);
-  const [isAttend, setIsAttend] = useState(false);
+  const [isAttend, setIsAttend] = useState(false); // 출석코드 입력 여부
   const userId = sessionStorage.getItem("id");
   const username = sessionStorage.getItem("username");
 
