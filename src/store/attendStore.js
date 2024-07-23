@@ -8,24 +8,22 @@ const useAttendStore = create((set) => ({
     status: false,
   },
   attends: [],
-  updateAttend: (attend) => set((state) => ({
+  setAttend: (newAttend) => set((state) => ({
     attend: {
-        ...state.attend,
-        ...attend,
+      ...state.attend,
+      ...newAttend,
     }
-    })),
-    addAttend: (newAttend) => set((state) => ({
-        attends: [...state.attends, newAttend]
-    })),
-    removeAttend: (attend) => set((state) => ({
-        attends: state.attends.filter(a => 
-            a.userId !== attend.userId || 
-            a.sessionId !== attend.sessionId || 
-            a.attendIdx !== attend.attendIdx)
-    })),
-    setUpdateAttends: (attends) => set(() => ({
-        attends: attends
-    }))
+  })),
+  setUpdateAttends: (newAttend) => set((state) => {
+    const filteredAttends = state.attends.filter(
+      (attend) =>
+        attend.userId !== newAttend.userId ||
+        attend.sessionId !== newAttend.sessionId ||
+        attend.attendIdx !== newAttend.attendIdx
+    );
+    return { attends: [...filteredAttends, newAttend] };
+  }),
+
 }));
 
 export default useAttendStore;

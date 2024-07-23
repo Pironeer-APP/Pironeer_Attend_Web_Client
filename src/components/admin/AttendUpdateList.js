@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
 import { OnAirCircle } from "../common/OnAirCircle";
@@ -15,18 +15,9 @@ const AttendUpdateList = () => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [updateLoading, setUpdateLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const { attends, addAttend, removeAttend, setUpdateAttends } = useAttendStore(
-    (state) => ({
-      attends: state.attends,
-      addAttend: state.addAttend,
-      removeAttend: state.removeAttend,
-      setUpdateAttends: state.setUpdateAttends,
-    })
-  );
+  const { setUpdateAttends } = useAttendStore();
 
   useEffect(() => {
-
     const fetchAttendance = async () => {
       try {
         const response = await client.get(`/user/checkAttendance/${userId}`);
@@ -62,8 +53,7 @@ const AttendUpdateList = () => {
 
   const toggleAttend = (record_index, attend_index) => {
     const target_record = attendanceRecords[record_index];
-    const target_attend =
-      attendanceRecords[record_index].attendList[attend_index];
+    const target_attend = target_record.attendList[attend_index];
 
     const new_attend = {
       userId: userId,
@@ -72,10 +62,7 @@ const AttendUpdateList = () => {
       status: !target_attend.status,
     };
 
-    // 중복 클릭 여부 확인
-    removeAttend(new_attend);
-    addAttend(new_attend);
-    
+    setUpdateAttends(new_attend);
     setAttendanceRecords((prev) => {
       const newRecords = [...prev];
       newRecords[record_index].attendList[attend_index].status =
@@ -90,12 +77,10 @@ const AttendUpdateList = () => {
         if (!record.session_date) {
           return null;
         }
-        
+
         const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
-        const attendListLength = record.attendList
-          ? record.attendList.length
-          : 0;
+        const attendListLength = record.attendList ? record.attendList.length : 0;
         const grayCirclesNeeded = 3 - attendListLength;
 
         return (
