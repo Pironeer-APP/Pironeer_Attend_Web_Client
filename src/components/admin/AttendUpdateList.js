@@ -1,41 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
 import { OnAirCircle } from "../common/OnAirCircle";
 import { getLocal } from "../../utils";
-import { api } from "../../utils/api";
 import { Container } from "../common/Container";
 import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
 import useAttendStore from "../../states/attendStore";
-import useListDataStore from "../../states/listDataStore";
+import { useAttendUpdate } from "../../viewModel/adminHook";
+import useListDataStore from '../../states/listDataStore';
+
 
 const AttendUpdateList = () => {
   const location = useLocation();
   const { userId } = location.state || {};
-  const { data: attendanceRecords, loading, error, setData, updateData, setLoading, setError} = useListDataStore();
+  const { attendanceRecords, loading, error } = useAttendUpdate(userId);
   const { setUpdateAttends } = useAttendStore();
-
-  useEffect(() => {
-    const fetchAttendance = async () => {
-      try {
-        const response = await api.get(`/user/checkAttendance/${userId}`);
-        if (response.data && response.data.attendances) {
-          setData(response.data.attendances);
-        } else {
-          throw new Error("No attendance records found");
-        }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (userId) {
-      fetchAttendance();
-    }
-  }, [userId]);
+  const { updateData } = useListDataStore();
 
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;

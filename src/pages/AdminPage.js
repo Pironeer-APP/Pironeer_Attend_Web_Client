@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../components/common/Logo";
-import { Container } from "../components/common/Container"; // Ensure this is the correct export
-import { Header } from "../components/common/Header"; // Ensure this is the correct export
-import CreateSessionForm from "../components/admin/CreateSession";
-import { checkAttendStart } from "../utils/authentication";
+import { Container } from "../components/common/Container"; 
+import { Header } from "../components/common/Header"; 
 import { MainButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import { checkAdminState } from "../utils/authentication";
