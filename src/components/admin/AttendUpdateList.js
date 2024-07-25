@@ -8,30 +8,27 @@ import { client } from "../../utils/client";
 import { Container } from "../common/Container";
 import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
 import useAttendStore from "../../store/attendStore";
+import useListDataStore from "../../store/listDataStore";
 
 const AttendUpdateList = () => {
   const location = useLocation();
   const { userId } = location.state || {};
-  const [attendanceRecords, setAttendanceRecords] = useState([]);
-  const [updateLoading, setUpdateLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data: attendanceRecords, loading, error, setData, updateData, setLoading, setError} = useListDataStore();
   const { setUpdateAttends } = useAttendStore();
 
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
         const response = await client.get(`/user/checkAttendance/${userId}`);
-        console.log("Attendance Response:", response.data);
         if (response.data && response.data.attendances) {
-          setAttendanceRecords(response.data.attendances);
+          setData(response.data.attendances);
         } else {
           throw new Error("No attendance records found");
         }
       } catch (error) {
-        console.error("Error fetching attendance records:", error.message);
         setError(error.message);
       } finally {
-        setUpdateLoading(false);
+        setLoading(false);
       }
     };
 
@@ -40,7 +37,7 @@ const AttendUpdateList = () => {
     }
   }, [userId]);
 
-  if (updateLoading) return <Container>Loading...</Container>;
+  if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
 
   const calculateStatus = (attendList) => {
@@ -63,7 +60,7 @@ const AttendUpdateList = () => {
     };
 
     setUpdateAttends(new_attend);
-    setAttendanceRecords((prev) => {
+    updateData((prev) => {
       const newRecords = [...prev];
       newRecords[record_index].attendList[attend_index].status =
         !newRecords[record_index].attendList[attend_index].status;
