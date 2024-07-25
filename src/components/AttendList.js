@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import { OnAirCircle } from "./common/OnAirCircle";
 import { getLocal } from "../utils";
-import { client } from "../utils/client";
+import { api } from "../utils/api";
 
 const AttendanceContainer = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ const AttendList = ({ userId }) => {
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        const response = await client.get(`/user/checkAttendance/${userId}`);
+        const response = await api.get(`/user/checkAttendance/${userId}`);
         console.log("Attendance Response:", response.data);
         if (response.data && response.data.attendances) {
           setAttendanceRecords(response.data.attendances);

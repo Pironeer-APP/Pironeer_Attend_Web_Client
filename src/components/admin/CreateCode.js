@@ -4,7 +4,7 @@ import { MainButton } from "../common/Button";
 import { Container } from "../common/Container";
 import Logo from "../common/Logo";
 import { Header } from "../common/Header";
-import { startAttendCheck, endAttendCheck } from "../../utils/admin";
+import { startAttendCheck, endAttendCheck } from "../../viewModel/adminHook";
 import { COLORS } from "../../utils/theme";
 import { checkAttendStart } from "../../utils/authentication";
 import { checkAdminState } from "../../utils/authentication";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { client } from "../../utils/client";
+import { api } from "../../utils/api";
 import bcrypt from "bcryptjs";
 import { Container, InputContainer } from "../../components/common/Container";
 import { StyledInput } from "../../components/common/Input";
@@ -27,7 +27,7 @@ const UpdateUser = () => {
 
     const fetchUser = async () => {
       try {
-        const response = await client.get(`/user/users/${userId}`);
+        const response = await api.get(`/user/users/${userId}`);
         const user = response.data;
         setUsername(user.username);
         setEmail(user.email);
@@ -50,7 +50,7 @@ const UpdateUser = () => {
         hashedPassword = await bcrypt.hash(password, salt);
       }
 
-      await client.put(`/user/users/${userId}`, {
+      await api.put(`/user/users/${userId}`, {
         username,
         email,
         password: hashedPassword,

@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { getSessions, deleteSession } from "../../utils/admin"; // Import deleteSession function
+import { getSessions, deleteSession } from "../../viewModel/adminHook"; // Import deleteSession function
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { StyledText } from "../common/Text";
 import { formatDate } from "../../utils";
 import { checkAdminState } from "../../utils/authentication";
 import { Container, InputContainer } from "../common/Container";
-import useListDataStore from "../../store/listDataStore";
+import useListDataStore from "../../states/listDataStore";
 
 const SessionItem = styled.div`
   display: flex;

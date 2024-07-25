@@ -1,4 +1,4 @@
-import { client } from "./client";
+import { api } from "./api";
 function checkUserState(navigate) {
   const token = sessionStorage.getItem("token");
   const isAdmin = sessionStorage.getItem("isAdmin");
@@ -31,7 +31,7 @@ function checkAdminState(navigate) {
 
 
 async function checkAttendStart(setIsStart) {
-  const eventSource = client.sse("/session/isCheckAttend");
+  const eventSource = api.sse("/session/isCheckAttend");
 
   eventSource.onmessage = function(event) {
     const data = JSON.parse(event.data);

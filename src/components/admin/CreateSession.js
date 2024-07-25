@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MainButton } from "../common/Button";
 import { Container, InputContainer } from "../common/Container";
 import { StyledInput } from "../common/Input";
-import { createSession } from "../../utils/admin";
+import { useCreateSession } from "../../viewModel/adminHook";
 import { checkAttendStart } from "../../utils/authentication";
 import Logo from "../common/Logo";
 import { Header } from "../common/Header";
@@ -10,38 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { checkAdminState } from "../../utils/authentication";
 import {Gap} from "../common/Gap";
 
-function useCreateSession(onSuccess) {
-  const [sessionName, setSessionName] = useState("");
-  const [date, setDate] = useState("");
 
-  const onChangeSessionName = (value) => {
-    setSessionName(value);
-  };
-
-  const onChangeDate = (value) => {
-    setDate(value);
-  };
-
-  const onPressCreateSession = async () => {
-    try {
-      const formattedDate = new Date(date).toISOString();
-      console.log("Formatted Date:", formattedDate);
-      await createSession(sessionName, formattedDate);
-      alert(`새로운 세션이 생성되었습니다.`);
-      onSuccess();
-    } catch (error) {
-      console.error("Failed to create session:", error);
-    }
-  };
-
-  return {
-    sessionName,
-    date,
-    onChangeSessionName,
-    onChangeDate,
-    onPressCreateSession,
-  };
-}
 
 const CreateSessionForm = ({ navigate }) => {
   const onSuccess = () => {

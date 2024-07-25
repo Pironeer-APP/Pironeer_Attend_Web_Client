@@ -1,4 +1,4 @@
-import { client } from "./utils/client";
+import { api } from "./utils/api";
 import {storage} from "./utils/storage";
 
 export const getData = async (key) => {
@@ -35,7 +35,7 @@ export const dayOfWeek = (num) => {
 export const sendToken = async (token) => {
   const url = '/fcm/saveToken';
   try {
-    const res = await client.post(url, { token: token });
+    const res = await api.post(url, { token: token });
     console.log(res);
   } catch (error) {
     console.log(error);
@@ -85,7 +85,7 @@ export const formatDate = (dateTime) => {
 export const findNextSession = async (sessions) => {
   const userToken = await getData('user_token');
   for (let i = 0; i < sessions.length; i++) {
-    const sessionAttendsLen = await client.post('/attend/getSessionAttend', {userToken: userToken, session_id: sessions[i].session_id});
+    const sessionAttendsLen = await api.post('/attend/getSessionAttend', {userToken: userToken, session_id: sessions[i].session_id});
     if (sessionAttendsLen.len == 0) {
       // 확정된 출결이 없는 경우
       return sessions[i];

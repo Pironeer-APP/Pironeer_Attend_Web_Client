@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
 import { OnAirCircle } from "../common/OnAirCircle";
 import { getLocal } from "../../utils";
-import { client } from "../../utils/client";
+import { api } from "../../utils/api";
 import { Container } from "../common/Container";
 import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
-import useAttendStore from "../../store/attendStore";
-import useListDataStore from "../../store/listDataStore";
+import useAttendStore from "../../states/attendStore";
+import useListDataStore from "../../states/listDataStore";
 
 const AttendUpdateList = () => {
   const location = useLocation();
@@ -19,7 +19,7 @@ const AttendUpdateList = () => {
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        const response = await client.get(`/user/checkAttendance/${userId}`);
+        const response = await api.get(`/user/checkAttendance/${userId}`);
         if (response.data && response.data.attendances) {
           setData(response.data.attendances);
         } else {

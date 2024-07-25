@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { client } from "../../utils/client";
+import { api } from "../../utils/api";
 import { InputContainer } from "../../components/common/Container";
 import { MainButton } from "../../components/common/Button";
 import { Header } from "../../components/common/Header";
@@ -9,7 +9,7 @@ import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { checkAdminState } from "../../utils/authentication";
 import { Gap } from "../common/Gap";
-import useAttendStore from "../../store/attendStore";
+import useAttendStore from "../../states/attendStore";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
@@ -31,7 +31,7 @@ const UpdateUser = () => {
 
   const handleUpdateAttendance = async () => {
     const updateUserAttendance = async (update_info) =>
-      await client.put(`/user/users/${userId}/attendance`, {
+      await api.put(`/user/users/${userId}/attendance`, {
         userId: update_info.userId,
         sessionId: update_info.sessionId,
         attendIdx: update_info.attendIdx,

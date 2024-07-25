@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { client } from "../../utils/client";
+import { api } from "../../utils/api";
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/authentication";
 import { Container, InputContainer, TwoButtonContainer } from "../common/Container";
-import useListDataStore from "../../store/listDataStore";
+import useListDataStore from "../../states/listDataStore";
 
 const UserItem = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ const UserList = () => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const response = await client.get("/user/users");
+        const response = await api.get("/user/users");
         const filtered_user = response.data.filter(
           (user) => user.isAdmin === false
         );
