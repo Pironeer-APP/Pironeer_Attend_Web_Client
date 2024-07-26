@@ -1,6 +1,6 @@
 import React from "react";
-import AttendPinForm from "../components/AttendPinForm";
-import AttendList from "../components/AttendList";
+import AttendPinForm from "../components/user/AttendPinForm";
+import AttendList from "../components/user/AttendList";
 import { Container,ScreenContainer } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 import { useUserCheckPage } from "../viewModel/userHook";

@@ -5,7 +5,6 @@ import useAttendStore from '../states/attendStore';
 import { checkAdminState, checkAttendStart} from '../utils/authentication';
 import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs';
-import { COLORS } from '../utils/theme';
 
 
 export const createSession = async (sessionName, date) => {
@@ -221,8 +220,9 @@ const useCreateCode = (sessionId, navigate) => {
 
 
 
-const useSessionList = (navigate) => {
-  const { data: sessions, loading, error, setData, setLoading, setError } = useListDataStore();
+const useSessionList = () => {
+  const navigate = useNavigate();
+  const { data: sessions, loading, error, setData, updateData, setLoading, setError } = useListDataStore();
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -244,7 +244,7 @@ const useSessionList = (navigate) => {
   const handleDeleteClick = async (sessionId) => {
     try {
       await deleteSession(sessionId);
-      setData((prevSessions) => prevSessions.filter((session) => session._id !== sessionId));
+      updateData((prevSessions) => prevSessions.filter((session) => session._id !== sessionId));
       alert("세션이 삭제되었습니다.");
     } catch (err) {
       setError(err.message);
@@ -343,5 +343,32 @@ const useUpdateUser = (userId) => {
   };
 };
 
+const useAttendUpdateList = (userId) => {
+  const { attendanceRecords, loading, error } = useAttendUpdate(userId);
+  const { setUpdateAttends } = useAttendStore();
+  const { updateData } = useListDataStore();
 
-export { useCreateSession,useAttendUpdate, useCheckUserAttend, useCreateCode, useSessionList, useUserList, useUpdateUser };
+  
+  const toggleAttend = (record_index, attend_index) => {
+    const target_record = attendanceRecords[record_index];
+    const target_attend = target_record.attendList[attend_index];
+
+    const new_attend = {
+      userId: userId,
+      sessionId: target_record.session,
+      attendIdx: target_attend.attendIdx,
+      status: !target_attend.status,
+    };
+
+    setUpdateAttends(new_attend);
+    updateData((prev) => {
+      const newRecords = [...prev];
+      newRecords[record_index].attendList[attend_index].status =
+        !newRecords[record_index].attendList[attend_index].status;
+      return newRecords;
+    });
+  };
+  return { attendanceRecords, loading, error, toggleAttend };
+};
+
+export { useCreateSession,useAttendUpdate, useCheckUserAttend, useCreateCode, useSessionList, useUserList, useUpdateUser, useAttendUpdateList };

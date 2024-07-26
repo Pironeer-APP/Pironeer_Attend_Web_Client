@@ -1,11 +1,11 @@
 // //component of UserCheckPage
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { COLORS } from "../utils/theme";
-import { OnAirCircle } from "./common/OnAirCircle";
-import { getLocal } from "../utils";
-import { api } from "../utils/api";
-import { useAttendList } from "../viewModel/userHook";
+import { COLORS } from "../../utils/theme";
+import { OnAirCircle } from "../common/OnAirCircle";
+import { getLocal } from "../../utils/date";
+import { useAttendList } from "../../viewModel/userHook";
+
 
 const AttendanceContainer = styled.div`
   display: flex;
@@ -47,7 +47,14 @@ const SessionName = styled.div`
 `;
 
 const AttendList = ({ userId }) => {
-   const { attendanceRecords, calculateStatus} = useAttendList(userId);
+   const { attendanceRecords} = useAttendList(userId);
+   const calculateStatus = (attendList) => {
+    if (!attendList || attendList.length === 0) return COLORS.light_gray;
+    const checkedCount = attendList.filter((item) => item.status).length;
+    if (checkedCount === 3) return COLORS.green;
+    if (checkedCount >= 1) return COLORS.orange;
+    return COLORS.red;
+  };
 
   return (
     <AttendanceContainer>

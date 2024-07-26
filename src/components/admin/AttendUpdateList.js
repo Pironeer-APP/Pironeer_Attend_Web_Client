@@ -1,26 +1,19 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
 import { OnAirCircle } from "../common/OnAirCircle";
-import { getLocal } from "../../utils";
+import { getLocal } from "../../utils/date";
 import { Container } from "../common/Container";
-import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
+import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../user/AttendList";
 import useAttendStore from "../../states/attendStore";
 import { useAttendUpdate } from "../../viewModel/adminHook";
 import useListDataStore from '../../states/listDataStore';
-
+import { useAttendUpdateList } from "../../viewModel/adminHook";
 
 const AttendUpdateList = () => {
   const location = useLocation();
   const { userId } = location.state || {};
-  const { attendanceRecords, loading, error } = useAttendUpdate(userId);
-  const { setUpdateAttends } = useAttendStore();
-  const { updateData } = useListDataStore();
-
-  if (loading) return <Container>Loading...</Container>;
-  if (error) return <Container>Error: {error}</Container>;
-
+  const { attendanceRecords, loading, error, toggleAttend } = useAttendUpdateList(userId);
   const calculateStatus = (attendList) => {
     if (!attendList || attendList.length === 0) return COLORS.light_gray;
     const checkedCount = attendList.filter((item) => item.status).length;
@@ -29,25 +22,8 @@ const AttendUpdateList = () => {
     return COLORS.red;
   };
 
-  const toggleAttend = (record_index, attend_index) => {
-    const target_record = attendanceRecords[record_index];
-    const target_attend = target_record.attendList[attend_index];
-
-    const new_attend = {
-      userId: userId,
-      sessionId: target_record.session,
-      attendIdx: target_attend.attendIdx,
-      status: !target_attend.status,
-    };
-
-    setUpdateAttends(new_attend);
-    updateData((prev) => {
-      const newRecords = [...prev];
-      newRecords[record_index].attendList[attend_index].status =
-        !newRecords[record_index].attendList[attend_index].status;
-      return newRecords;
-    });
-  };
+  if (loading) return <Container>Loading...</Container>;
+  if (error) return <Container>Error: {error}</Container>;
 
   return (
     <AttendanceContainer>

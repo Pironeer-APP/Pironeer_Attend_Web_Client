@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { StyledText } from "../common/Text";
-import { formatDate } from "../../utils";
+import { useNavigate } from "react-router-dom";
+import { formatDate } from "../../utils/date";
 import { Container, InputContainer } from "../common/Container";
 import { useSessionList } from "../../viewModel/adminHook";
 
@@ -40,7 +40,7 @@ const SessionName = styled.div`
 
 const SessionListPage = () => {
   const navigate = useNavigate();
-  const { sessions, loading, error, handleDeleteClick } = useSessionList(navigate);
+  const { sessions, loading, error, handleDeleteClick } = useSessionList();
 
   const handleSessionClick = (sessionId) => {
     navigate("/createCode", { state: { sessionId } });

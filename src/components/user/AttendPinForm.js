@@ -1,13 +1,11 @@
 //component of UserCheckPage
 import React from "react";
-import styled from "styled-components";
-import { COLORS } from "../utils/theme";
-import { StyledText, StyledWarning } from "./common/Text";
+import {  StyledWarning } from "../common/Text";
 import { useNavigate } from "react-router-dom";
-import { InputContainer } from "./common/Container";
-import {StyledInput} from "./common/Input";
-import { MainButton } from "./common/Button";
-import { useAttend } from "../viewModel/userHook";
+import { InputContainer } from "../common/Container";
+import {StyledInput} from "../common/Input";
+import { MainButton } from "../common/Button";
+import { useAttend } from "../../viewModel/userHook";
 
 
 export default function AttendPinForm(props) {

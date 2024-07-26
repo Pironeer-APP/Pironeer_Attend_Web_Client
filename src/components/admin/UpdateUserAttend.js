@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { InputContainer } from "../../components/common/Container";
-import { MainButton } from "../../components/common/Button";
-import { Header } from "../../components/common/Header";
+import { InputContainer } from "../common/Container";
+import { MainButton } from "../common/Button";
+import { Header } from "../common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { Gap } from "../common/Gap";
@@ -13,7 +13,7 @@ const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
 `;
 
-const UpdateUser = () => {
+const UpdateUserAttend = () => {
   const location = useLocation();
   const { userId } = location.state || {}; // 머지후 userStore에서 받아오는 방식으로 변경
   const navigate = useNavigate();
@@ -33,4 +33,4 @@ const UpdateUser = () => {
   );
 };
 
-export default UpdateUser;
+export default UpdateUserAttend;

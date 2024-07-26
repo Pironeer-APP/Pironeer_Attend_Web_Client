@@ -2,7 +2,6 @@ import { api } from "../utils/api";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkUserState, checkAttendStart } from '../utils/authentication';
-import { COLORS } from '../utils/theme';
 function useAttend() {
     const [pin, setPin] = useState("");
     const [warning, setWarning] = useState("");
@@ -76,14 +75,8 @@ function useAttend() {
       }
     }, [userId]);
   
-    const calculateStatus = (attendList) => {
-      if (!attendList || attendList.length === 0) return COLORS.light_gray;
-      const checkedCount = attendList.filter((item) => item.status).length;
-      if (checkedCount === 3) return COLORS.green;
-      if (checkedCount >= 1) return COLORS.orange;
-      return COLORS.red;
-    };
-    return { attendanceRecords, calculateStatus };
+    
+    return { attendanceRecords };
   
   };
 const useUserCheckPage = () => {
