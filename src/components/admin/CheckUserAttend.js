@@ -9,7 +9,7 @@ import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
-import { checkAdminState } from "../../utils/stateCheck";
+import { checkAdminState } from "../../utils/authentication";
 import {Gap} from "../common/Gap";
 
 const UpdateUserContainer = styled(InputContainer)`

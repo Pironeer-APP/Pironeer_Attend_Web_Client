@@ -6,7 +6,7 @@ import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
-import { checkAdminState } from "../../utils/stateCheck";
+import { checkAdminState } from "../../utils/authentication";
 import { Container, InputContainer,TwoButtonContainer } from "../common/Container";
 
 const UserItem = styled.div`
