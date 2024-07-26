@@ -3,6 +3,9 @@ import { useState,useEffect } from 'react';
 import useListDataStore from '../states/listDataStore';
 import useAttendStore from '../states/attendStore';
 import { checkAdminState, checkAttendStart} from '../utils/authentication';
+import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs';
+import { COLORS } from '../utils/theme';
 
 
 export const createSession = async (sessionName, date) => {
@@ -216,49 +219,129 @@ const useCreateCode = (sessionId, navigate) => {
   return { code, isStart, createCode, endCode };
 };
 
-const useCreateSessionForm = (onSuccess) => {
-  const [sessionName, setSessionName] = useState('');
-  const [date, setDate] = useState('');
-  const { createSession } = useCreateSession();
 
-  const onChangeSessionName = (text) => {
-    setSessionName(text);
-  };
 
-  const onChangeDate = (text) => {
-    setDate(text);
-  };
+const useSessionList = (navigate) => {
+  const { data: sessions, loading, error, setData, setLoading, setError } = useListDataStore();
 
-  const onPressCreateSession = async () => {
+  useEffect(() => {
+    const fetchSessions = async () => {
+      setLoading(true);
+      try {
+        const data = await getSessions();
+        setData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSessions();
+    checkAdminState(navigate);
+  }, [navigate, setData, setLoading, setError]);
+
+  const handleDeleteClick = async (sessionId) => {
     try {
-      await createSession({ sessionName, date });
-      onSuccess();
+      await deleteSession(sessionId);
+      setData((prevSessions) => prevSessions.filter((session) => session._id !== sessionId));
+      alert("세션이 삭제되었습니다.");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return { sessions, loading, error, handleDeleteClick };
+};
+
+const useUserList = () => {
+  const navigate = useNavigate();
+  const { data: users, loading, error, setData, setLoading, setError } = useListDataStore();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get("/user/users");
+        const filtered_user = response.data.filter(
+          (user) => user.isAdmin === false
+        );
+        setData(filtered_user);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+    checkAdminState(navigate);
+  }, [navigate, setData, setLoading, setError]);
+  return { users, loading, error };
+
+};
+
+
+const useUpdateUser = (userId) => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (!userId) {
+      console.error("User ID not provided");
+      return;
+    }
+
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/user/users/${userId}`);
+        const user = response.data;
+        setUsername(user.username);
+        setEmail(user.email);
+        setPassword('');
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      }
+    };
+
+    fetchUser();
+    checkAdminState(navigate);
+  }, [userId, navigate]);
+
+  const handleUpdateUser = async () => {
+    try {
+      let hashedPassword = password;
+
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        hashedPassword = await bcrypt.hash(password, salt);
+      }
+
+      await api.put(`/user/users/${userId}`, {
+        username,
+        email,
+        password: hashedPassword,
+      });
+      alert("유저 정보가 변경되었습니다.");
+      navigate("/users");
     } catch (error) {
-      console.error('Failed to create session:', error);
-      alert('세션 생성에 실패했습니다. 다시 시도해주세요.');
+      console.error("Failed to update user:", error);
+      alert("유저 정보 변경에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
   return {
-    sessionName,
-    date,
-    onChangeSessionName,
-    onChangeDate,
-    onPressCreateSession,
+    username,
+    setUsername,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    handleUpdateUser,
   };
 };
 
 
-const useCreateSessionPage = (navigate) => {
-  const [isStart, setIsStart] = useState(true);
-
-  useEffect(() => {
-    checkAttendStart(setIsStart);
-    checkAdminState(navigate);
-  }, [navigate]);
-
-  return { isStart };
-};
-
-
-export { useCreateSession,useAttendUpdate, useCheckUserAttend, useCreateCode   };
+export { useCreateSession,useAttendUpdate, useCheckUserAttend, useCreateCode, useSessionList, useUserList, useUpdateUser };

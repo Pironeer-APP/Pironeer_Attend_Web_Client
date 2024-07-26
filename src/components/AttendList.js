@@ -5,6 +5,7 @@ import { COLORS } from "../utils/theme";
 import { OnAirCircle } from "./common/OnAirCircle";
 import { getLocal } from "../utils";
 import { api } from "../utils/api";
+import { useAttendList } from "../viewModel/userHook";
 
 const AttendanceContainer = styled.div`
   display: flex;
@@ -46,35 +47,7 @@ const SessionName = styled.div`
 `;
 
 const AttendList = ({ userId }) => {
-  const [attendanceRecords, setAttendanceRecords] = useState([]);
-
-  useEffect(() => {
-    const fetchAttendance = async () => {
-      try {
-        const response = await api.get(`/user/checkAttendance/${userId}`);
-        console.log("Attendance Response:", response.data);
-        if (response.data && response.data.attendances) {
-          setAttendanceRecords(response.data.attendances);
-        } else {
-          throw new Error("No attendance records found");
-        }
-      } catch (error) {
-        console.error("Error fetching attendance records:", error.message);
-      }
-    };
-
-    if (userId) {
-      fetchAttendance();
-    }
-  }, [userId]);
-
-  const calculateStatus = (attendList) => {
-    if (!attendList || attendList.length === 0) return COLORS.light_gray;
-    const checkedCount = attendList.filter((item) => item.status).length;
-    if (checkedCount === 3) return COLORS.green;
-    if (checkedCount >= 1) return COLORS.orange;
-    return COLORS.red;
-  };
+   const { attendanceRecords, calculateStatus} = useAttendList(userId);
 
   return (
     <AttendanceContainer>

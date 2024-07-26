@@ -1,6 +1,8 @@
 import { api } from "../utils/api";
-import { useState } from "react";
-
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { checkUserState, checkAttendStart } from '../utils/authentication';
+import { COLORS } from '../utils/theme';
 function useAttend() {
     const [pin, setPin] = useState("");
     const [warning, setWarning] = useState("");
@@ -51,4 +53,71 @@ function useAttend() {
       onPressAttend,
     };
   }
-export { useAttend };
+  const useAttendList = (userId) => {
+    const [attendanceRecords, setAttendanceRecords] = useState([]);
+  
+    useEffect(() => {
+      const fetchAttendance = async () => {
+        try {
+          const response = await api.get(`/user/checkAttendance/${userId}`);
+          console.log("Attendance Response:", response.data);
+          if (response.data && response.data.attendances) {
+            setAttendanceRecords(response.data.attendances);
+          } else {
+            throw new Error("No attendance records found");
+          }
+        } catch (error) {
+          console.error("Error fetching attendance records:", error.message);
+        }
+      };
+  
+      if (userId) {
+        fetchAttendance();
+      }
+    }, [userId]);
+  
+    const calculateStatus = (attendList) => {
+      if (!attendList || attendList.length === 0) return COLORS.light_gray;
+      const checkedCount = attendList.filter((item) => item.status).length;
+      if (checkedCount === 3) return COLORS.green;
+      if (checkedCount >= 1) return COLORS.orange;
+      return COLORS.red;
+    };
+    return { attendanceRecords, calculateStatus };
+  
+  };
+const useUserCheckPage = () => {
+  const navigate = useNavigate();
+  const [isStart, setIsStart] = useState(false);
+  const [isAttend, setIsAttend] = useState(false); // 출석코드 입력 여부
+  const userId = sessionStorage.getItem("id");
+  const username = sessionStorage.getItem("username");
+
+  useEffect(() => {
+    if (!userId) {
+      navigate("/login");
+    }
+  }, [userId, navigate]);
+
+  // Polling checkAttendStart every second if not attended
+  useEffect(() => {
+    if (!isAttend) {
+      checkAttendStart(setIsStart);
+    }
+  }, [isAttend]);
+
+  // 출석 체크가 시작되었고, 현재 유저가 출석하지 않았다면 출석 창 보여주기
+  // 출석 완료되었다면 완료 창 보여주기
+  // 출석 기간이 아니면 Attend List만
+  useEffect(() => {
+    checkUserState(navigate);
+    checkAttendStart(setIsStart);
+  }, []);
+  useEffect(() => {
+    if (isAttend) {
+      alert("출석에 성공하였습니다!");
+    }
+  }, [isAttend]);
+  return { isStart, isAttend, setIsAttend, userId, username };
+};
+export { useAttend, useAttendList, useUserCheckPage };
