@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
 import { OnAirCircle } from "../common/OnAirCircle";
@@ -7,30 +7,28 @@ import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
 import { Container } from "../common/Container";
 import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
+import useAttendStore from "../../store/attendStore";
+import useListDataStore from "../../store/listDataStore";
 
-const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
+const AttendUpdateList = () => {
   const location = useLocation();
   const { userId } = location.state || {};
-  const [attendanceRecords, setAttendanceRecords] = useState([]);
-  const [updateLoading, setUpdateLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data: attendanceRecords, loading, error, setData, updateData, setLoading, setError} = useListDataStore();
+  const { setUpdateAttends } = useAttendStore();
 
   useEffect(() => {
-
     const fetchAttendance = async () => {
       try {
         const response = await client.get(`/user/checkAttendance/${userId}`);
-        console.log("Attendance Response:", response.data);
         if (response.data && response.data.attendances) {
-          setAttendanceRecords(response.data.attendances);
+          setData(response.data.attendances);
         } else {
           throw new Error("No attendance records found");
         }
       } catch (error) {
-        console.error("Error fetching attendance records:", error.message);
         setError(error.message);
       } finally {
-        setUpdateLoading(false);
+        setLoading(false);
       }
     };
 
@@ -39,7 +37,7 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
     }
   }, [userId]);
 
-  if (updateLoading) return <Container>Loading...</Container>;
+  if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
 
   const calculateStatus = (attendList) => {
@@ -52,8 +50,7 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
 
   const toggleAttend = (record_index, attend_index) => {
     const target_record = attendanceRecords[record_index];
-    const target_attend =
-      attendanceRecords[record_index].attendList[attend_index];
+    const target_attend = target_record.attendList[attend_index];
 
     const new_attend = {
       userId: userId,
@@ -62,18 +59,8 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
       status: !target_attend.status,
     };
 
-    // 중복 클릭 여부 확인
-    setUpdateAttends((prev) => {
-      console.log(prev);
-      return prev.filter(
-        (attend) =>
-          attend.userId !== new_attend.userId ||
-          attend.sessionId !== new_attend.sessionId ||
-          attend.attendIdx !== new_attend.attendIdx
-      );
-    });
-    setUpdateAttends((prev) => [...prev, new_attend]);
-    setAttendanceRecords((prev) => {
+    setUpdateAttends(new_attend);
+    updateData((prev) => {
       const newRecords = [...prev];
       newRecords[record_index].attendList[attend_index].status =
         !newRecords[record_index].attendList[attend_index].status;
@@ -87,12 +74,10 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
         if (!record.session_date) {
           return null;
         }
-        
+
         const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
-        const attendListLength = record.attendList
-          ? record.attendList.length
-          : 0;
+        const attendListLength = record.attendList ? record.attendList.length : 0;
         const grayCirclesNeeded = 3 - attendListLength;
 
         return (

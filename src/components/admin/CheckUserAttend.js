@@ -3,14 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { client } from "../../utils/client";
 import { InputContainer } from "../../components/common/Container";
-import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
-import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { checkAdminState } from "../../utils/authentication";
-import {Gap} from "../common/Gap";
+import { Gap } from "../common/Gap";
+import useAttendStore from "../../store/attendStore";
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
@@ -18,10 +17,9 @@ const UpdateUserContainer = styled(InputContainer)`
 
 const UpdateUser = () => {
   const location = useLocation();
-  const { userId } = location.state || {};
+  const { userId } = location.state || {}; // 머지후 userStore에서 받아오는 방식으로 변경
   const navigate = useNavigate();
-  const [attends, setAttends] = useState([]);
-  const [updateAttends, setUpdateAttends] = useState([]);
+  const { attends: updateAttends } = useAttendStore();
 
   useEffect(() => {
     if (!userId) {
@@ -29,7 +27,7 @@ const UpdateUser = () => {
       return;
     }
     checkAdminState(navigate);
-  }, [userId]);
+  }, [userId, navigate]);
 
   const handleUpdateAttendance = async () => {
     const updateUserAttendance = async (update_info) =>
@@ -63,16 +61,13 @@ const UpdateUser = () => {
 
   return (
     <Container>
-      <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin"/>
+      <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin" />
       <MainButton
         content={"출석 정보 변경하기"}
         onPress={handleUpdateAttendance}
       />
       <Gap />
-      <AttendUpdateList
-        setUpdateAttends={setUpdateAttends}
-        updateAttends={updateAttends}
-      />
+      <AttendUpdateList />
     </Container>
   );
 };
