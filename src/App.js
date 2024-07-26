@@ -6,13 +6,16 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import UserCheckPage from "./pages/UserCheckPage";
 import AdminPage from "./pages/AdminPage";
-import SessionList from "./components/admin/SessionList";
-import CreateCode from "./components/admin/CreateCode";
-import UserList from "./components/admin/UserList";
+import SessionListPage from "./pages/SessionListPage";
+import CreateCodePage from "./pages/CreateCodePage";
+import UserListPage from "./pages/UserListPage";
 import UpdateUser from "./components/admin/UpdateUser";
 import CheckUserAttend from "./components/admin/CheckUserAttend";
 import CreateSessionPage from "./pages/CreateSessionPage";
-import { AdminProtectedRoute, UserProtectedRoute } from "./components/common/Authentication";
+import {
+  AdminProtectedRoute,
+  UserProtectedRoute,
+} from "./components/common/Authentication";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +50,7 @@ const router = createBrowserRouter([
     path: "/sessions",
     element: (
       <AdminProtectedRoute>
-        <SessionList />
+        <SessionListPage />
       </AdminProtectedRoute>
     ),
   },
@@ -63,7 +66,7 @@ const router = createBrowserRouter([
     path: "/createCode",
     element: (
       <AdminProtectedRoute>
-        <CreateCode />
+        <CreateCodePage />
       </AdminProtectedRoute>
     ),
   },
@@ -71,7 +74,7 @@ const router = createBrowserRouter([
     path: "/users",
     element: (
       <AdminProtectedRoute>
-        <UserList />
+        <UserListPage />
       </AdminProtectedRoute>
     ),
   },

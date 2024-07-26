@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { getSessions, deleteSession } from "../../utils/admin"; // Import deleteSession function
 import { COLORS } from "../../utils/theme";
-import { Header } from "../common/Header";
-import Logo from "../common/Logo";
 import { StyledText } from "../common/Text";
 import { formatDate } from "../../utils";
 import { Container, InputContainer } from "../common/Container";
+import { client } from "../../utils/client";
+import useUserStore from "../../store/userStore";
 
 const SessionItem = styled.div`
   display: flex;
@@ -39,11 +38,39 @@ const SessionName = styled.div`
   margin-bottom: 10px;
 `;
 
-const SessionListPage = () => {
+const SessionList = () => {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useUserStore();
   const navigate = useNavigate();
+
+  const getSessions = async (token) => {
+    try {
+      const response = await client.get("/session/sessions", user.token);
+
+      if (Array.isArray(response.data)) {
+        console.log("sessions fetched:", response.data);
+        return response.data;
+      } else {
+        console.error("Unexpected response format:", response.data);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching sessions:", error);
+      throw error;
+    }
+  };
+
+  const deleteSession = async (sessionId, token) => {
+    const response = await client.delete(
+      `/session/deleteSession/${sessionId}`,
+      user.token
+    );
+    console.log("session deleted", response);
+
+    return response.data;
+  };
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -83,29 +110,26 @@ const SessionListPage = () => {
   }
 
   return (
-    <Container>
-      <Header text={`세션 리스트`} navigateOnClick="/admin"/>
-      <InputContainer>
-        {sessions.map((session) => (
-          <SessionItem key={session._id}>
-            <SessionDetails onClick={() => handleSessionClick(session._id)}>
-              <SessionName>
-                <StyledText content={session.name} fontSize={15} weight={500} />
-              </SessionName>
-              <StyledText
-                content={formatDate(session.date)}
-                fontSize={12}
-                weight={200}
-              />
-            </SessionDetails>
-            <DeleteButton onClick={() => handleDeleteClick(session._id)}>
-              삭제
-            </DeleteButton>
-          </SessionItem>
-        ))}
-      </InputContainer>
-    </Container>
+    <InputContainer>
+      {sessions.map((session) => (
+        <SessionItem key={session._id}>
+          <SessionDetails onClick={() => handleSessionClick(session._id)}>
+            <SessionName>
+              <StyledText content={session.name} fontSize={15} weight={500} />
+            </SessionName>
+            <StyledText
+              content={formatDate(session.date)}
+              fontSize={12}
+              weight={200}
+            />
+          </SessionDetails>
+          <DeleteButton onClick={() => handleDeleteClick(session._id)}>
+            삭제
+          </DeleteButton>
+        </SessionItem>
+      ))}
+    </InputContainer>
   );
 };
 
-export default SessionListPage;
+export default SessionList;
