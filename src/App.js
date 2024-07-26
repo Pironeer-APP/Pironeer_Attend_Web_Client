@@ -13,6 +13,7 @@ import UpdateUser from "./components/admin/UpdateUser";
 import UpdateUserAttend from "./components/admin/UpdateUserAttend";
 import CreateSessionPage from "./components/admin/CreateSessionPage";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
+import UserDepositPage from "./pages/UserDepositPage";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
     path: "/checkAttend",
     element: <UpdateUserAttend />,
   },
+  {
+    path: "/userDeposit",
+    element: <UserDepositPage />,
+  }
 ]);
 
 function App() {
