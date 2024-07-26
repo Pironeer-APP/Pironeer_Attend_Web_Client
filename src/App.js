@@ -1,7 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Container } from "./components/common/Container";
-import Logo from "./components/common/Logo";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import UserCheckPage from "./pages/UserCheckPage";
@@ -9,8 +7,8 @@ import AdminPage from "./pages/AdminPage";
 import SessionListPage from "./pages/SessionListPage";
 import CreateCodePage from "./pages/CreateCodePage";
 import UserListPage from "./pages/UserListPage";
-import UpdateUser from "./components/admin/UpdateUser";
-import CheckUserAttend from "./components/admin/CheckUserAttend";
+import UpdateUserPage from "./pages/UpdateUserPage";
+import CheckUserAttendPage from "./pages/checkUserAttendPage";
 import CreateSessionPage from "./pages/CreateSessionPage";
 import {
   AdminProtectedRoute,
@@ -82,7 +80,7 @@ const router = createBrowserRouter([
     path: "/updateUser",
     element: (
       <AdminProtectedRoute>
-        <UpdateUser />
+        <UpdateUserPage />
       </AdminProtectedRoute>
     ),
   },
@@ -90,7 +88,7 @@ const router = createBrowserRouter([
     path: "/checkAttend",
     element: (
       <AdminProtectedRoute>
-        <CheckUserAttend />
+        <CheckUserAttendPage />
       </AdminProtectedRoute>
     ),
   },

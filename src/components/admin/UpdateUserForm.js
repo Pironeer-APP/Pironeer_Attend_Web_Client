@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import styled from "styled-components";
 import { client } from "../../utils/client";
 import bcrypt from "bcryptjs";
 import { Container, InputContainer } from "../../components/common/Container";
 import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
-import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import { Gap } from "../common/Gap";
-import useUserStore from '../../store/userStore';
+import useUserStore from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
 
-const UpdateUser = () => {
+const UpdateUserForm = ({ userId }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userId } = location.state || {};
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +26,8 @@ const UpdateUser = () => {
       try {
         const response = await client.get(`/user/users/${userId}`, user.token);
         const user = response.data;
+
+        // 240727 연우: admin에서 사용자 정보를 변경하는 것이므로 user store를 사용하지 않음.
         setUsername(user.username);
         setEmail(user.email);
         setPassword("");
@@ -65,7 +63,7 @@ const UpdateUser = () => {
 
   return (
     <Container>
-      <Header text={`유저 정보 변경`} navigateOnClick="/admin"/>
+      <Header text={`유저 정보 변경`} navigateOnClick="/admin" />
       <Gap />
       <InputContainer>
         <StyledInput
@@ -95,4 +93,4 @@ const UpdateUser = () => {
   );
 };
 
-export default UpdateUser;
+export default UpdateUserForm;

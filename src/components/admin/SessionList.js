@@ -45,7 +45,7 @@ const SessionList = () => {
   const { user } = useUserStore();
   const navigate = useNavigate();
 
-  const getSessions = async (token) => {
+  const getSessions = async () => {
     try {
       const response = await client.get("/session/sessions", user.token);
 
