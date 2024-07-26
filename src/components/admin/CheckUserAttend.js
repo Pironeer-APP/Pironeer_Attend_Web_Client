@@ -11,7 +11,7 @@ import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { checkAdminState } from "../../utils/stateCheck";
 import { Gap } from "../common/Gap";
-import useUserStore from '../store/userStore';
+import useUserStore from '../../store/userStore';
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;

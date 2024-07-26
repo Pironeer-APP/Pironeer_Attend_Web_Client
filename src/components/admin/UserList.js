@@ -8,7 +8,7 @@ import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/stateCheck";
 import { Container, InputContainer,TwoButtonContainer } from "../common/Container";
-import useUserStore from '../store/userStore';
+import useUserStore from '../../store/userStore';
 
 const UserItem = styled.div`
   display: flex;

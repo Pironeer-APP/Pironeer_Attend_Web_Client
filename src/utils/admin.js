@@ -1,7 +1,7 @@
 import { client } from './client';
 
-// 240722: 이 부분 modelView로 뺴야 할 듯
-export const createSession = async (sessionName, date) => {
+// 240722: admin의 viewmodel로 빼야하지 않을까?
+export const createSession = async (sessionName, date, token) => {
   try {
     const response = await client.post('/session/createSession', {
       name: sessionName,
@@ -14,7 +14,7 @@ export const createSession = async (sessionName, date) => {
     throw error;
   }
 };
-export const getSessions = async () => {
+export const getSessions = async (token) => {
     try {
       const response = await client.get('/session/sessions');
   
@@ -31,7 +31,7 @@ export const getSessions = async () => {
     }
   };
   
-  export const startAttendCheck = async (sessionId) => {
+  export const startAttendCheck = async (sessionId, token) => {
     try {
       console.log(`Starting attendance check for session ID: ${sessionId}`); 
       const response = await client.post(`/session/startAttendCheck/${sessionId}`);
@@ -42,7 +42,7 @@ export const getSessions = async () => {
     }
   };
   
-  export const endAttendCheck = async () => {
+  export const endAttendCheck = async (token) => {
     try {
       const response = await client.delete('/session/endAttendCheck');
       return response.data;
@@ -51,7 +51,7 @@ export const getSessions = async () => {
       throw error;
     }
   };
-  export const deleteSession = async (sessionId) => {
+  export const deleteSession = async (sessionId, token) => {
     const response = await client.delete(`/session/deleteSession/${sessionId}`);
     console.log("session deleted", response);
     

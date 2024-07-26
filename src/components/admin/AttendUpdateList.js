@@ -7,7 +7,7 @@ import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
 import { Container } from "../common/Container";
 import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
-import useUserStore from '../store/userStore';
+import useUserStore from '../../store/userStore';
 
 const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
   const location = useLocation();

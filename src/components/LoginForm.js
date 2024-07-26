@@ -30,7 +30,6 @@ function useLogin() {
         "username": user.username,
         "password": user.password,
       });
-      console.log(response);
   
       // Check if the response contains the token inside the data object
       if (!response || !response.data || !response.data.token) {
@@ -48,17 +47,15 @@ function useLogin() {
       console.log(decodedToken);
       sessionStorage.setItem('token', token);
 
+      // state 처리가 비동기임.
       loginUser({
-        token: token,
         userId: decodedToken._id,
         isAdmin: decodedToken._isAdmin,
+        token: token,
       })
-  
-      if (user.isAdmin === "true") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
+
+      navigate(decodedToken._isAdmin ? "/admin" : "/");
+
     } catch (error) {
       console.error(error);
       logoutUser();

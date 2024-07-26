@@ -1,11 +1,7 @@
 import { client } from "./client";
 import useUserStore from '../store/userStore';
 
-function checkUserState(navigate) {
-  const token = sessionStorage.getItem("token");
-  const isAdmin = sessionStorage.getItem("isAdmin");
-  const { user } = useUserStore();
-
+function checkUserState(navigate, token, isAdmin) {
   // 인증 정보가 없을 경우 로그인 페이지로 이동
   if (!token || !isAdmin) {
     navigate("/login");
@@ -17,9 +13,7 @@ function checkUserState(navigate) {
   }
 }
 
-function checkAdminState(navigate) {
-  const token = sessionStorage.getItem("token");
-  const isAdmin = sessionStorage.getItem("isAdmin");
+function checkAdminState(navigate, token, isAdmin) {
 
   // 인증 정보가 없을 경우 로그인 페이지로 이동
   if (!token || !isAdmin) {
@@ -48,8 +42,8 @@ function checkAdminState(navigate) {
 //     }
 //   }
 // }
-async function checkAttendStart(setIsStart) {
-  const eventSource = client.sse("/session/isCheckAttend", user.token);
+async function checkAttendStart(setIsStart, token) {
+  const eventSource = client.sse("/session/isCheckAttend", token);
 
   eventSource.onmessage = function(event) {
     const data = JSON.parse(event.data);
