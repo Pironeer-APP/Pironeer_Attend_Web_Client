@@ -31,16 +31,6 @@ export const dayOfWeek = (num) => {
 //   body.myToken = myToken;
 //   const res = await client.post(url, body);
 // }
-// 기기 토큰 서버에 전송
-export const sendToken = async (token) => {
-  const url = '/fcm/saveToken';
-  try {
-    const res = await client.post(url, { token: token });
-    console.log(res);
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 export const localeDate = (dateTime) => {
   let localeDate = new Date(dateTime);

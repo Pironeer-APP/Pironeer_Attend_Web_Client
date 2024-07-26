@@ -9,24 +9,27 @@ import { jwtDecode } from "jwt-decode";
 import { InputContainer } from "./common/Container";
 import { StyledInput } from "./common/Input";
 import { MainButton } from "./common/Button";
+import useUserStore from '../store/userStore';
 
 // useLogin Hook
 function useLogin() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState(true);
+  const [error, setError] = useState(false);
+  const { user, loginUser, logoutUser, changeUsername, changePassword} = useUserStore();
 
   const onChangeUsername = (value) => {
-    setUsername(value);
+    changeUsername(value);
   };
+
+  const onChangePassword = (value) => {
+    changePassword(value);
+  }
 
   const onPressLogin = async (navigate) => {
     try {
-      const response = await client.post("/user/login", {
-        username,
-        password,
+      const response = await client.post("/user/login", user.token, {
+        "username": user.username,
+        "password": user.password,
       });
-      console.log(response);
   
       // Check if the response contains the token inside the data object
       if (!response || !response.data || !response.data.token) {
@@ -41,33 +44,30 @@ function useLogin() {
       }
   
       const decodedToken = jwtDecode(token);
-      const isAdmin = decodedToken._isAdmin;
       console.log(decodedToken);
-  
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("id", decodedToken._id);
-      sessionStorage.setItem("isAdmin", decodedToken._isAdmin);
-      sessionStorage.setItem("username", username);
-  
-      if (isAdmin === "true") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
+      sessionStorage.setItem('token', token);
+
+      // state 처리가 비동기임.
+      loginUser({
+        userId: decodedToken._id,
+        isAdmin: decodedToken._isAdmin,
+        token: token,
+      })
+
+      navigate(decodedToken._isAdmin ? "/admin" : "/");
+
     } catch (error) {
       console.error(error);
-      setLoginStatus(false);
+      logoutUser();
+      setError(true);
     }
   };
   
-  
-
   return {
-    username,
-    password,
-    loginStatus,
+    user,
+    error,
     onChangeUsername,
-    setPassword,
+    onChangePassword,
     onPressLogin,
   };
 }
@@ -76,11 +76,10 @@ function useLogin() {
 export default function LoginForm() {
   const navigate = useNavigate();
   const {
-    username,
-    password,
-    loginStatus,
+    user,
+    error,
     onChangeUsername,
-    setPassword,
+    onChangePassword,
     onPressLogin,
   } = useLogin();
 
@@ -89,18 +88,18 @@ export default function LoginForm() {
       <StyledInput
         placeholder="이름"
         keyboardType="default"
-        value={username}
+        value={user.username}
         onChangeText={onChangeUsername}
         maxLength={50}
       />
       <StyledInput
         placeholder="비밀번호"
-        value={password}
-        onChangeText={setPassword}
+        value={user.password}
+        onChangeText={onChangePassword}
         secureTextEntry={true}
       />
       <MainButton content={"로그인"} onPress={() => onPressLogin(navigate)} />
-      {!loginStatus && (
+      {error && (
         <StyledText
           content={"일치하는 회원 정보가 없습니다."}
           fontSize={"1rem"}

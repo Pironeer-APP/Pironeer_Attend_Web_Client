@@ -8,8 +8,8 @@ import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
 import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
-import { checkAdminState } from "../../utils/stateCheck";
-import {Gap} from "../common/Gap";
+import { Gap } from "../common/Gap";
+import useUserStore from '../../store/userStore';
 
 const UpdateUser = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const UpdateUser = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { user } = useUserStore();
 
   useEffect(() => {
     if (!userId) {
@@ -27,7 +28,7 @@ const UpdateUser = () => {
 
     const fetchUser = async () => {
       try {
-        const response = await client.get(`/user/users/${userId}`);
+        const response = await client.get(`/user/users/${userId}`, user.token);
         const user = response.data;
         setUsername(user.username);
         setEmail(user.email);
@@ -38,7 +39,6 @@ const UpdateUser = () => {
     };
 
     fetchUser();
-    checkAdminState(navigate);
   }, [userId]);
 
   const handleUpdateUser = async () => {
@@ -50,7 +50,7 @@ const UpdateUser = () => {
         hashedPassword = await bcrypt.hash(password, salt);
       }
 
-      await client.put(`/user/users/${userId}`, {
+      await client.put(`/user/users/${userId}`, user.token, {
         username,
         email,
         password: hashedPassword,

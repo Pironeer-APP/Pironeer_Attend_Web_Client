@@ -6,13 +6,16 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import UserCheckPage from "./pages/UserCheckPage";
 import AdminPage from "./pages/AdminPage";
-import SessionList from "./components/admin/SessionList";
-import CreateCode from "./components/admin/CreateCode";
-import UserList from "./components/admin/UserList";
+import SessionListPage from "./pages/SessionListPage";
+import CreateCodePage from "./pages/CreateCodePage";
+import UserListPage from "./pages/UserListPage";
 import UpdateUser from "./components/admin/UpdateUser";
 import CheckUserAttend from "./components/admin/CheckUserAttend";
-import CreateSessionPage from "./components/admin/CreateSession";
-import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
+import CreateSessionPage from "./pages/CreateSessionPage";
+import {
+  AdminProtectedRoute,
+  UserProtectedRoute,
+} from "./components/common/Authentication";
 
 const router = createBrowserRouter([
   {
@@ -29,35 +32,67 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <UserCheckPage />,
+    element: (
+      <UserProtectedRoute>
+        <UserCheckPage />
+      </UserProtectedRoute>
+    ),
   },
   {
     path: "/admin",
-    element: <AdminPage />,
+    element: (
+      <AdminProtectedRoute>
+        <AdminPage />
+      </AdminProtectedRoute>
+    ),
   },
   {
     path: "/sessions",
-    element: <SessionList />,
+    element: (
+      <AdminProtectedRoute>
+        <SessionListPage />
+      </AdminProtectedRoute>
+    ),
   },
   {
     path: "/createSession",
-    element: <CreateSessionPage />,
+    element: (
+      <AdminProtectedRoute>
+        <CreateSessionPage />
+      </AdminProtectedRoute>
+    ),
   },
   {
     path: "/createCode",
-    element: <CreateCode />,
+    element: (
+      <AdminProtectedRoute>
+        <CreateCodePage />
+      </AdminProtectedRoute>
+    ),
   },
   {
     path: "/users",
-    element: <UserList />,
+    element: (
+      <AdminProtectedRoute>
+        <UserListPage />
+      </AdminProtectedRoute>
+    ),
   },
   {
     path: "/updateUser",
-    element: <UpdateUser />,
+    element: (
+      <AdminProtectedRoute>
+        <UpdateUser />
+      </AdminProtectedRoute>
+    ),
   },
   {
     path: "/checkAttend",
-    element: <CheckUserAttend />,
+    element: (
+      <AdminProtectedRoute>
+        <CheckUserAttend />
+      </AdminProtectedRoute>
+    ),
   },
 ]);
 

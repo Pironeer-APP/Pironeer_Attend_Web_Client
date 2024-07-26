@@ -7,10 +7,12 @@ import { InputContainer } from "./common/Container";
 import {StyledInput} from "./common/Input";
 import { client } from "../utils/client";
 import { MainButton } from "./common/Button";
+import useUserStore from '../store/userStore';
 
 function useAttend() {
   const [pin, setPin] = useState("");
   const [warning, setWarning] = useState("");
+  const { user } = useUserStore();
 
   const onChangePin = (value) => {
     setPin(value);
@@ -39,7 +41,7 @@ function useAttend() {
       const endpoint = `/session/checkAttend/${userId}`;
       const body = { code: pin };
 
-      const response = await client.post(endpoint, body);
+      const response = await client.post(endpoint, user.token, body);
       
       if (response.status === 201) {
         setIsAttend(true);

@@ -9,8 +9,8 @@ import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
-import { checkAdminState } from "../../utils/stateCheck";
-import {Gap} from "../common/Gap";
+import { Gap } from "../common/Gap";
+import useUserStore from '../../store/userStore';
 
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
@@ -22,18 +22,11 @@ const UpdateUser = () => {
   const navigate = useNavigate();
   const [attends, setAttends] = useState([]);
   const [updateAttends, setUpdateAttends] = useState([]);
-
-  useEffect(() => {
-    if (!userId) {
-      console.error("User ID is not provided");
-      return;
-    }
-    checkAdminState(navigate);
-  }, [userId]);
+  const { user } = useUserStore();
 
   const handleUpdateAttendance = async () => {
     const updateUserAttendance = async (update_info) =>
-      await client.put(`/user/users/${userId}/attendance`, {
+      await client.put(`/user/users/${userId}/attendance`, user.token, {
         userId: update_info.userId,
         sessionId: update_info.sessionId,
         attendIdx: update_info.attendIdx,
