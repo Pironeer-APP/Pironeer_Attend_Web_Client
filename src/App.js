@@ -11,7 +11,7 @@ import CreateCode from "./components/admin/CreateCode";
 import UserList from "./components/admin/UserList";
 import UpdateUser from "./components/admin/UpdateUser";
 import CheckUserAttend from "./components/admin/CheckUserAttend";
-import CreateSessionPage from "./components/admin/CreateSession";
+import CreateSessionPage from "./pages/CreateSessionPage";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
 
 const router = createBrowserRouter([

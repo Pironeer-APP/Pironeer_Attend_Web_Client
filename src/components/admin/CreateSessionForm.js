@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { MainButton } from "../common/Button";
-import { Container, InputContainer } from "../common/Container";
+import { InputContainer } from "../common/Container";
 import { StyledInput } from "../common/Input";
-import { createSession } from "../../utils/admin";
-import { checkAttendStart } from "../../utils/stateCheck";
-import Logo from "../common/Logo";
-import { Header } from "../common/Header";
-import { useNavigate } from "react-router-dom";
-import { checkAdminState } from "../../utils/stateCheck";
-import {Gap} from "../common/Gap";
+import { client } from '../../utils/client';
+import useUserStore from "../../store/userStore";
 
 function useCreateSession(onSuccess) {
   const [sessionName, setSessionName] = useState("");
   const [date, setDate] = useState("");
+  const { user } = useUserStore();
+
 
   const onChangeSessionName = (value) => {
     setSessionName(value);
@@ -20,6 +17,20 @@ function useCreateSession(onSuccess) {
 
   const onChangeDate = (value) => {
     setDate(value);
+  };
+
+  const createSession = async (sessionName, date, token) => {
+    try {
+      const response = await client.post('/session/createSession', user.token, {
+        name: sessionName,
+        date: date
+      });
+      console.log("session created", response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating session:', error);
+      throw error;
+    }
   };
 
   const onPressCreateSession = async () => {
@@ -76,28 +87,4 @@ const CreateSessionForm = ({ navigate }) => {
   );
 };
 
-const CreateSessionPage = () => {
-  const [isStart, setIsStart] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    checkAttendStart(setIsStart);
-    checkAdminState(navigate);
-  }, [navigate]);
-
-  return (
-    <Container>
-      <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin"/>
-      <InputContainer>
-        <Gap />
-        {isStart ? (
-          <CreateSessionForm navigate={navigate} />
-        ) : (
-          <CreateSessionForm navigate={navigate} />
-        )}
-      </InputContainer>
-    </Container>
-  );
-};
-
-export default CreateSessionPage;
+export default CreateSessionForm;
