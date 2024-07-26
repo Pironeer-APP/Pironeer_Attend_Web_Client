@@ -5,16 +5,11 @@ import { Container } from "../components/common/Container"; // Ensure this is th
 import { Header } from "../components/common/Header"; // Ensure this is the correct export
 import { MainButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
-import { checkAdminState } from "../utils/stateCheck";
 import useUserStore from "../store/userStore";
 
 export default function AdminPage() {
   const navigate = useNavigate();
   const { user } = useUserStore();
-
-  useEffect(() => {
-    checkAdminState(navigate, user.token, user.isAdmin);
-  }, []);
 
   return (
     <> 

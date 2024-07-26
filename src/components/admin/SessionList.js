@@ -7,7 +7,6 @@ import { Header } from "../common/Header";
 import Logo from "../common/Logo";
 import { StyledText } from "../common/Text";
 import { formatDate } from "../../utils";
-import { checkAdminState } from "../../utils/stateCheck";
 import { Container, InputContainer } from "../common/Container";
 
 const SessionItem = styled.div`
@@ -59,7 +58,6 @@ const SessionListPage = () => {
     };
 
     fetchSessions();
-    checkAdminState(navigate);
   }, []);
 
   const handleSessionClick = (sessionId) => {

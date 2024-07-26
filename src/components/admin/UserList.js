@@ -6,7 +6,6 @@ import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { MainButton } from "../common/Button";
 import { StyledText } from "../common/Text";
-import { checkAdminState } from "../../utils/stateCheck";
 import { Container, InputContainer,TwoButtonContainer } from "../common/Container";
 import useUserStore from '../../store/userStore';
 
@@ -65,7 +64,6 @@ const UserList = () => {
     };
 
     fetchUsers();
-    checkAdminState(navigate);
   }, []);
 
   if (loading) return <Container>Loading...</Container>;

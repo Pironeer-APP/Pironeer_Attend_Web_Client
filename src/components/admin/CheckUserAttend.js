@@ -9,7 +9,6 @@ import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
-import { checkAdminState } from "../../utils/stateCheck";
 import { Gap } from "../common/Gap";
 import useUserStore from '../../store/userStore';
 
@@ -24,14 +23,6 @@ const UpdateUser = () => {
   const [attends, setAttends] = useState([]);
   const [updateAttends, setUpdateAttends] = useState([]);
   const { user } = useUserStore();
-
-  useEffect(() => {
-    if (!userId) {
-      console.error("User ID is not provided");
-      return;
-    }
-    checkAdminState(navigate);
-  }, [userId]);
 
   const handleUpdateAttendance = async () => {
     const updateUserAttendance = async (update_info) =>

@@ -8,7 +8,6 @@ import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
 import Logo from "../../components/common/Logo";
 import { Header } from "../../components/common/Header";
-import { checkAdminState } from "../../utils/stateCheck";
 import { Gap } from "../common/Gap";
 import useUserStore from '../../store/userStore';
 
@@ -40,7 +39,6 @@ const UpdateUser = () => {
     };
 
     fetchUser();
-    checkAdminState(navigate);
   }, [userId]);
 
   const handleUpdateUser = async () => {

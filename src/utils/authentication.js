@@ -1,5 +1,5 @@
 import { client } from "./client";
-import useUserStore from '../store/userStore';
+
 
 function checkUserState(navigate, token, isAdmin) {
   // 인증 정보가 없을 경우 로그인 페이지로 이동
@@ -65,4 +65,6 @@ async function checkAttendStart(setIsStart, token) {
   };
 }
 
-export { checkUserState, checkAttendStart, checkAdminState };
+
+
+export { checkUserState, checkAdminState, checkAttendStart };

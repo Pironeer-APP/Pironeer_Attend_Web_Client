@@ -6,8 +6,7 @@ import Logo from "../common/Logo";
 import { Header } from "../common/Header";
 import { startAttendCheck, endAttendCheck } from "../../utils/admin";
 import { COLORS } from "../../utils/theme";
-import { checkAttendStart } from "../../utils/stateCheck";
-import { checkAdminState } from "../../utils/stateCheck";
+import { checkAttendStart } from "../../utils/authentication";
 
 const CreateCode = () => {
   const navigate = useNavigate();
@@ -48,7 +47,6 @@ const CreateCode = () => {
 
   useEffect(() => {
     checkAttendStart(setIsStart);
-    checkAdminState(navigate);
   }, []);
 
   return (

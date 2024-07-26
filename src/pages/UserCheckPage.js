@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import { client } from "../utils/client";
-import { checkUserState, checkAttendStart } from "../utils/stateCheck";
+import { checkAttendStart } from "../utils/authentication";
 import Logo from "../components/common/Logo";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
@@ -37,7 +37,6 @@ export default function UserCheckPage() {
   // 출석 완료되었다면 완료 창 보여주기
   // 출석 기간이 아니면 Attend List만
   useEffect(() => {
-    checkUserState(navigate);
     checkAttendStart(setIsStart);
   }, []);
   useEffect(() => {
