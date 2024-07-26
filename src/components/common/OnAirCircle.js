@@ -37,40 +37,26 @@ const OnAirCircle = ({ color, onPress }) => {
   const scaleControls = useAnimation();
   const unscaleControls = useAnimation();
 
+// controls.start()가 컴포넌트가 마운트된 후에 호출되도록 보장하기 위해
+// scaleControls와 unscaleControls를 연결하기 위해 animate() 사용
+// 하나의 useEffect() 사용
   useEffect(() => {
-    const isMounted = { value: true }; // Using an object to avoid stale closure
-
-    const scaleSequence = async () => {
-      if (!isMounted.value) return;
-      await scaleControls.start({
-        scale: 1.2,
-        transition: { duration: 1, ease: "easeInOut" },
-      });
-      if (!isMounted.value) return;
-      await scaleControls.start({
-        scale: 1,
-        transition: { duration: 1, ease: "easeInOut" },
-      });
+    const animate = async () => {
+      try {
+        await scaleControls.start({ scale: 1.2, transition: { duration: 1, ease: "easeInOut" } });
+        await scaleControls.start({ scale: 1, transition: { duration: 1, ease: "easeInOut" } });
+        await unscaleControls.start({ scale: 0.8, transition: { duration: 1, ease: "easeInOut" } });
+        await unscaleControls.start({ scale: 1, transition: { duration: 1, ease: "easeInOut" } });
+      } catch (error) {
+        console.error('Animation error:', error);
+      }
     };
 
-    const unscaleSequence = async () => {
-      if (!isMounted.value) return;
-      await unscaleControls.start({
-        scale: 0.8,
-        transition: { duration: 1, ease: "easeInOut" },
-      });
-      if (!isMounted.value) return;
-      await unscaleControls.start({
-        scale: 1,
-        transition: { duration: 1, ease: "easeInOut" },
-      });
-    };
-
-    scaleSequence();
-    unscaleSequence();
+    animate();
 
     return () => {
-      isMounted.value = false;
+      scaleControls.stop();
+      unscaleControls.stop();
     };
   }, [scaleControls, unscaleControls]);
 
@@ -97,8 +83,4 @@ const StatusCircleContainer = styled.div`
 
 const StatusCircle = () => <StatusCircleContainer />;
 
-
-export {
-  OnAirCircle,
-  StatusCircle
-};
+export { OnAirCircle, StatusCircle };

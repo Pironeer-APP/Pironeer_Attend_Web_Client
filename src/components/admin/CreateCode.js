@@ -1,55 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MainButton } from "../common/Button";
 import { Container } from "../common/Container";
-import Logo from "../common/Logo";
 import { Header } from "../common/Header";
-import { startAttendCheck, endAttendCheck } from "../../utils/admin";
 import { COLORS } from "../../utils/theme";
-import { checkAttendStart } from "../../utils/authentication";
-import { checkAdminState } from "../../utils/authentication";
+import { useCreateCode } from "../../viewModel/adminHook";
 
 const CreateCode = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { sessionId } = location.state;
-  const [code, setCode] = useState(
-    sessionStorage.getItem("attendanceCode") || null
-  );
-  const [isStart, setIsStart] = useState(false);
-
-  const createCode = async () => {
-    try {
-      const response = await startAttendCheck(sessionId);
-      console.log("Response from startAttendCheck:", response);
-      if (response && response.code) {
-        setCode(response.code);
-        sessionStorage.setItem('attendanceCode', response.code);
-        alert(`Code: ${response.code}`);
-        setIsStart(true);
-      } else {
-        console.error("No code returned from startAttendCheck");
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const endCode = async () => {
-    try {
-      await endAttendCheck();
-      setCode(null);
-      sessionStorage.removeItem('attendanceCode');
-      setIsStart(false);
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  useEffect(() => {
-    checkAttendStart(setIsStart);
-    checkAdminState(navigate);
-  }, []);
+  const { code, isStart, createCode, endCode } = useCreateCode(sessionId, navigate);
 
   return (
     <Container>
@@ -64,8 +25,8 @@ const CreateCode = () => {
         </>
       ) : (
         <>
-        <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin"/>
-        <MainButton content={"코드 생성"} onPress={createCode} />
+          <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin" />
+          <MainButton content={"코드 생성"} onPress={createCode} />
         </>
       )}
     </Container>

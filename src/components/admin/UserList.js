@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { client } from "../../utils/client";
+import { api } from "../../utils/api";
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/authentication";
 import { Container, InputContainer, TwoButtonContainer } from "../common/Container";
-import useListDataStore from "../../store/listDataStore";
+import useListDataStore from "../../states/listDataStore";
+import { useUserList } from "../../viewModel/adminHook";
 
 const UserItem = styled.div`
   display: flex;
@@ -41,27 +42,7 @@ const UpdateButton = styled.button`
 
 const UserList = () => {
   const navigate = useNavigate();
-  const { data: users, loading, error, setData, setLoading, setError } = useListDataStore();
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      try {
-        const response = await client.get("/user/users");
-        const filtered_user = response.data.filter(
-          (user) => user.isAdmin === false
-        );
-        setData(filtered_user);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-    checkAdminState(navigate);
-  }, [navigate, setData, setLoading, setError]);
+  const { users, loading, error } = useUserList();
 
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;

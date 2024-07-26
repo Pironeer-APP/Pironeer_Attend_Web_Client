@@ -1,5 +1,5 @@
 import { handleSessionExpired } from "./authentication";
-export async function client(endpoint, { body, ...customConfig } = {}) {
+export async function api(endpoint, { body, ...customConfig } = {}) {
   const SERVER_URL = "https://piro-recruiting.top/api";
     // const SERVER_URL = "http://localhost:3000/api"; 
   const headers = { "Content-Type": "application/json" };
@@ -39,23 +39,23 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
   }
 }
 
-client.get = function (endpoint, customConfig = {}) {
-  return client(endpoint, { ...customConfig, method: "GET" });
+api.get = function (endpoint, customConfig = {}) {
+  return api(endpoint, { ...customConfig, method: "GET" });
 };
 
-client.post = function (endpoint, body, customConfig = {}) {
-  return client(endpoint, { ...customConfig, body, method: "POST" }); 
+api.post = function (endpoint, body, customConfig = {}) {
+  return api(endpoint, { ...customConfig, body, method: "POST" }); 
 };
 
-client.delete = function (endpoint, customConfig = {}) {
-  return client(endpoint, { ...customConfig, method: "DELETE" });
+api.delete = function (endpoint, customConfig = {}) {
+  return api(endpoint, { ...customConfig, method: "DELETE" });
 };
 
-client.put = function (endpoint, body, customConfig = {}) {
-  return client(endpoint, { ...customConfig, body, method: "PUT" });
+api.put = function (endpoint, body, customConfig = {}) {
+  return api(endpoint, { ...customConfig, body, method: "PUT" });
 };
 
-client.sse = function (endpoint) {
+api.sse = function (endpoint) {
   const SERVER_URL = "https://piro-recruiting.top/api";
     // const SERVER_URL = "http://localhost:3000/api"; 
   const token = sessionStorage.getItem("token");

@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { getSessions, deleteSession } from "../../utils/admin"; // Import deleteSession function
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
 import { StyledText } from "../common/Text";
-import { formatDate } from "../../utils";
-import { checkAdminState } from "../../utils/authentication";
+import { useNavigate } from "react-router-dom";
+import { formatDate } from "../../utils/date";
 import { Container, InputContainer } from "../common/Container";
-import useListDataStore from "../../store/listDataStore";
+import { useSessionList } from "../../viewModel/adminHook";
 
 const SessionItem = styled.div`
   display: flex;
@@ -42,37 +40,10 @@ const SessionName = styled.div`
 
 const SessionListPage = () => {
   const navigate = useNavigate();
-  const { data: sessions, loading, error, setData, setLoading, setError } = useListDataStore();
-
-  useEffect(() => {
-    const fetchSessions = async () => {
-      setLoading(true);
-      try {
-        const data = await getSessions();
-        setData(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSessions();
-    checkAdminState(navigate);
-  }, [navigate, setData, setLoading, setError]);
+  const { sessions, loading, error, handleDeleteClick } = useSessionList();
 
   const handleSessionClick = (sessionId) => {
     navigate("/createCode", { state: { sessionId } });
-  };
-
-  const handleDeleteClick = async (sessionId) => {
-    try {
-      await deleteSession(sessionId);
-      setData(sessions.filter((session) => session._id !== sessionId));
-      alert("세션이 삭제되었습니다.");
-    } catch (err) {
-      setError(err.message);
-    }
   };
 
   if (loading) {

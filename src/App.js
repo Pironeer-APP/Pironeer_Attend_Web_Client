@@ -4,14 +4,14 @@ import { Container } from "./components/common/Container";
 import Logo from "./components/common/Logo";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
-import UserCheckPage from "./pages/UserCheckPage";
+import UserAttendPage from "./pages/UserAttendPage";
 import AdminPage from "./pages/AdminPage";
 import SessionList from "./components/admin/SessionList";
 import CreateCode from "./components/admin/CreateCode";
 import UserList from "./components/admin/UserList";
 import UpdateUser from "./components/admin/UpdateUser";
-import CheckUserAttend from "./components/admin/CheckUserAttend";
-import CreateSessionPage from "./components/admin/CreateSession";
+import UpdateUserAttend from "./components/admin/UpdateUserAttend";
+import CreateSessionPage from "./components/admin/CreateSessionPage";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
 
 const router = createBrowserRouter([
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <UserCheckPage />,
+    element: <UserAttendPage />,
   },
   {
     path: "/admin",
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/checkAttend",
-    element: <CheckUserAttend />,
+    element: <UpdateUserAttend />,
   },
 ]);
 
