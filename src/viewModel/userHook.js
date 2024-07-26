@@ -79,7 +79,7 @@ function useAttend() {
     return { attendanceRecords };
   
   };
-const useUserCheckPage = () => {
+const useUserAttendPage = () => {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(false);
   const [isAttend, setIsAttend] = useState(false); // 출석코드 입력 여부
@@ -113,4 +113,4 @@ const useUserCheckPage = () => {
   }, [isAttend]);
   return { isStart, isAttend, setIsAttend, userId, username };
 };
-export { useAttend, useAttendList, useUserCheckPage };
+export { useAttend, useAttendList, useUserAttendPage };

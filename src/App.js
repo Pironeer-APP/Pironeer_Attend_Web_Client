@@ -4,7 +4,7 @@ import { Container } from "./components/common/Container";
 import Logo from "./components/common/Logo";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
-import UserPage from "./pages/UserPage";
+import UserAttendPage from "./pages/UserAttendPage";
 import AdminPage from "./pages/AdminPage";
 import SessionList from "./components/admin/SessionList";
 import CreateCode from "./components/admin/CreateCode";
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <UserPage />,
+    element: <UserAttendPage />,
   },
   {
     path: "/admin",
