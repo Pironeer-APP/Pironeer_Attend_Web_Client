@@ -1,7 +1,7 @@
 import React from "react";
 import AttendPinForm from "../components/user/AttendPinForm";
 import AttendList from "../components/user/AttendList";
-import { Container,ScreenContainer } from "../components/common/Container";
+import { Container,ContentContainer } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 import { useUserAttendPage } from "../viewModel/userHook";
 
@@ -11,7 +11,7 @@ export default function UserAttendPage() {
   return (
     <Container>
     <Header text={`반가워요, ${username}님!`} />
-    <ScreenContainer>
+    <ContentContainer>
       {isStart ? (
         <>
           {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
@@ -20,7 +20,7 @@ export default function UserAttendPage() {
       ) : (
         <AttendList userId={userId} />
       )}
-    </ScreenContainer>
+    </ContentContainer>
     </Container>
   );
 }

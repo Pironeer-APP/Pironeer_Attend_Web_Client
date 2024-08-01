@@ -1,5 +1,5 @@
 import React from "react";
-import { Container,ScreenContainer } from "../components/common/Container";
+import { Container,ContentContainer } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 
 export default function UserDepositPage() {
@@ -8,9 +8,9 @@ export default function UserDepositPage() {
   return (
     <Container>
     <Header text={`반가워요, ${username}님!`} />
-    <ScreenContainer>
+    <ContentContainer>
       
-    </ScreenContainer>
+    </ContentContainer>
     </Container>
   );
 }
