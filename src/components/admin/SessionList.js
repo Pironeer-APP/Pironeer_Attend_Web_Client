@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
-import { Header } from "../common/Header";
+import { PageHeader } from "../common/Header";
 import { StyledText } from "../common/Text";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../utils/date";
@@ -34,6 +34,15 @@ const SessionListPage = () => {
   const navigate = useNavigate();
   const { sessions, loading, error, handleDeleteClick } = useSessionList();
 
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
+
   const handleSessionClick = (sessionId) => {
     navigate("/createCode", { state: { sessionId } });
   };
@@ -48,7 +57,7 @@ const SessionListPage = () => {
 
   return (
     <Container>
-      <Header text={`세션 리스트`} navigateOnClick="/admin"/>
+      <PageHeader text={`세션 리스트`} navigateOnClick="/admin" buttons={buttons}/>
       <ContentContainer>
       <InputContainer>
         {sessions.map((session) => (

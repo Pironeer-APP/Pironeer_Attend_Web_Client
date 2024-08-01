@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { api } from "../../utils/api";
 import { COLORS } from "../../utils/theme";
-import { Header } from "../common/Header";
+import { PageHeader } from "../common/Header";
 import { SmallButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/authentication";
@@ -36,13 +36,20 @@ const UserField = styled.div`
 const UserList = () => {
   const navigate = useNavigate();
   const { users, loading, error } = useUserList();
-
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
 
   return (
     <Container>
-      <Header text={`유저 리스트`} navigateOnClick="/admin"/>
+      <PageHeader text={`유저 리스트`} navigateOnClick="/admin" buttons={buttons}/>
       <ContentContainer>
       <InputContainer>
         {users.map((user) => (

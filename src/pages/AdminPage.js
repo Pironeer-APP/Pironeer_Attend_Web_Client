@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Logo from "../components/common/Logo";
+import { COLORS } from "../utils/theme";
 import { ContentContainer,Container, ButtonListContainer } from "../components/common/Container"; 
-import { Header } from "../components/common/Header"; 
+import { PageHeader } from "../components/common/Header"; 
 import { MainButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import { checkAdminState } from "../utils/authentication";
 
 export default function AdminPage() {
   const navigate = useNavigate();
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
 
   useEffect(() => {
     checkAdminState(navigate);
@@ -16,7 +23,7 @@ export default function AdminPage() {
 
   return (
     <Container>
-      <Header text={`반가워요, 어드민님!`} />
+      <PageHeader text={`어드민님 반가워요!`} buttons={buttons}/>
       <ContentContainer>
       <ButtonListContainer>
       <MainButton

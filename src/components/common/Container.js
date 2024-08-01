@@ -18,7 +18,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 2rem 4rem;
-  padding-top: 13rem;
+  padding-top: 10rem;
   width: 100%;
 `;
 
@@ -72,12 +72,27 @@ const TwoButtonContainer = styled.div`
 `;
 const HeaderContainer = styled.div`
   background-color: ${COLORS.bg_black};
-  padding-top: 2.5rem;
+  padding: 3rem 0;
   text-align: center;
   width: 100%;
   cursor: pointer;
   position: fixed;
   z-index: 1000;
+`;
+const PageHeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${COLORS.bg_black};
+  padding-top: 3rem;
+  width: 80%;
+  cursor: pointer;
+  position: fixed;
+  z-index: 1000;
+`;
+const HeaderButtonContainer = styled.div`
+  display: flex;
+  gap: 4rem;
 `;
 const ButtonListContainer = styled.div`
   width: 40%;
@@ -88,7 +103,9 @@ export {
   InputContainer,
   ContentContainer,
   HeaderContainer,
+  PageHeaderContainer,
   MainButtonContainer,
+  HeaderButtonContainer,
   TwoButtonContainer,
   ButtonContainerStyled,
   ButtonListContainer,

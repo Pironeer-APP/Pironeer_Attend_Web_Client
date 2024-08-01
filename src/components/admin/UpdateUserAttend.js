@@ -1,9 +1,10 @@
 import React from "react";
+import { COLORS } from "../../utils/theme";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { InputContainer } from "../common/Container";
 import { MainButton } from "../common/Button";
-import { Header } from "../common/Header";
+import { PageHeader } from "../common/Header";
 import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { Gap } from "../common/Gap";
@@ -18,10 +19,17 @@ const UpdateUserAttend = () => {
   const { userId } = location.state || {}; // 머지후 userStore에서 받아오는 방식으로 변경
   const navigate = useNavigate();
   const { handleUpdateAttendance, error } = useCheckUserAttend(userId, navigate);
-
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
   return (
     <Container>
-      <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin" />
+      <PageHeader text={`어드민님 반가워요!`} navigateOnClick="/admin" buttons={buttons} />
       <MainButton
         content={"출석 정보 변경하기"}
         onPress={handleUpdateAttendance}

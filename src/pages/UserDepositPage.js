@@ -1,13 +1,29 @@
 import React from "react";
+import { COLORS } from "../utils/theme";
 import { Container,ContentContainer } from "../components/common/Container";
-import { Header } from "../components/common/Header";
-
+import { PageHeader } from "../components/common/Header";
+import { useNavigate } from "react-router-dom";
 export default function UserDepositPage() {
     const username = sessionStorage.getItem("username");
+    const navigate = useNavigate();
+    const buttons = [
+      {
+        label: '출석',
+        bgColor: COLORS.green,
+        color: 'black',
+        onClick: () => navigate('/'),
+      },
+      {
+        label: '로그아웃',
+        bgColor: COLORS.orange,
+        color: 'black',
+        onClick: () => alert('로그아웃 clicked'),
+      },
+    ];
 
   return (
     <Container>
-    <Header text={`반가워요, ${username}님!`} />
+    <PageHeader text={`${username}님 반가워요!`} buttons={buttons}/>
     <ContentContainer>
       
     </ContentContainer>

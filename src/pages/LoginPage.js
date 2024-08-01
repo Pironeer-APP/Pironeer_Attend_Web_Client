@@ -11,6 +11,7 @@ export default function LoginPage() {
   return (
     <Container>
       <Header text={"피로그래밍 출석"} />
+      <Logo />
       <ContentContainer>
         <LoginForm />
       </ContentContainer>
