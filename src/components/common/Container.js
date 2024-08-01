@@ -16,8 +16,10 @@ const ContentContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  align-items: center;
   margin: 2rem 4rem;
-  overflow-y: auto;
+  padding-top: 13rem;
+  width: 100%;
 `;
 
 // 입력창 (로그인, 회원가입, 출석 코드 입력) 레이아웃
@@ -69,10 +71,13 @@ const TwoButtonContainer = styled.div`
   justify-content: center;
 `;
 const HeaderContainer = styled.div`
+  background-color: ${COLORS.bg_black};
   padding-top: 2.5rem;
   text-align: center;
   width: 100%;
   cursor: pointer;
+  position: fixed;
+  z-index: 1000;
 `;
 
 export {
