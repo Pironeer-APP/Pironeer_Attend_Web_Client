@@ -3,6 +3,7 @@ import { COLORS } from "../../utils/theme";
 
 // 전체 페이지 레이아웃
 const Container = styled.div`
+  background-color: ${(props) => props.backgroundColor || COLORS.bg_black};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,12 +13,11 @@ const Container = styled.div`
 // 세로 full 페이지 레이아웃
 // 100vh 페이지에서 사용
 const ContentContainer = styled.div`
-  background-color: ${COLORS.bg_black};
+  background-color: ${(props) => props.backgroundColor || COLORS.bg_black};
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
-  margin: 2rem 4rem;
   padding-top: 10rem;
   width: 100%;
 `;
@@ -77,13 +77,12 @@ const HeaderContainer = styled.div`
   width: 100%;
   cursor: pointer;
   position: fixed;
-  z-index: 1000;
 `;
 const PageHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${COLORS.bg_black};
+  background-color: ${(props) => props.backgroundColor || COLORS.bg_black};
   padding-top: 3rem;
   width: 80%;
   cursor: pointer;

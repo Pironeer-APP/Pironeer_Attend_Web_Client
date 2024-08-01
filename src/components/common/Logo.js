@@ -6,7 +6,6 @@ const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 8rem;
-  z-index: 1000;
   padding-top: 7rem;
 `;
 

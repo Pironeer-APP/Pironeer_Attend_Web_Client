@@ -8,7 +8,7 @@ import { SmallButton } from './Button.js';
 
 
 const HeaderText = styled.h1`
-  color: white;
+  color: ${(props) => props.color || "white"};
   font-size: 2.4rem;
   margin: 0;
 `;
@@ -26,7 +26,7 @@ const Header = ({ text, navigateOnClick }) => {
     </HeaderContainer>
   );
 };
-const PageHeader = ({ text, buttons, navigateOnClick }) => {
+const PageHeader = ({ text, buttons, navigateOnClick, bgColor, color }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -34,8 +34,8 @@ const PageHeader = ({ text, buttons, navigateOnClick }) => {
   };
 
   return (
-    <PageHeaderContainer>
-      <HeaderText onClick={handleClick}>{text}</HeaderText>
+    <PageHeaderContainer backgroundColor={bgColor}>
+      <HeaderText onClick={handleClick} color={color}>{text}</HeaderText>
       <HeaderButtonContainer>
       {buttons.map((button, index) => (
           <SmallButton
@@ -44,6 +44,7 @@ const PageHeader = ({ text, buttons, navigateOnClick }) => {
             color={button.color}
             onClick={button.onClick}
             content={button.label}
+            fontSize={12}
           >
           </SmallButton>
         ))}
