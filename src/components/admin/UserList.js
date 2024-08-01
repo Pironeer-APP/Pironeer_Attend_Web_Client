@@ -7,7 +7,7 @@ import { Header } from "../common/Header";
 import { SmallButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/authentication";
-import { Container, InputContainer, TwoButtonContainer } from "../common/Container";
+import { Container, ContentContainer, InputContainer, TwoButtonContainer } from "../common/Container";
 import useListDataStore from "../../states/listDataStore";
 import { useUserList } from "../../viewModel/adminHook";
 
@@ -43,6 +43,7 @@ const UserList = () => {
   return (
     <Container>
       <Header text={`유저 리스트`} navigateOnClick="/admin"/>
+      <ContentContainer>
       <InputContainer>
         {users.map((user) => (
           <UserItem key={user?._id}>
@@ -81,6 +82,7 @@ const UserList = () => {
           </UserItem>
         ))}
       </InputContainer>
+      </ContentContainer>
     </Container>
   );
 };

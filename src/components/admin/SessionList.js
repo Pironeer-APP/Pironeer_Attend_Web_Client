@@ -5,7 +5,7 @@ import { Header } from "../common/Header";
 import { StyledText } from "../common/Text";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../utils/date";
-import { Container, InputContainer } from "../common/Container";
+import { Container, ContentContainer, InputContainer } from "../common/Container";
 import { SmallButton } from "../common/Button";
 import { useSessionList } from "../../viewModel/adminHook";
 
@@ -49,6 +49,7 @@ const SessionListPage = () => {
   return (
     <Container>
       <Header text={`세션 리스트`} navigateOnClick="/admin"/>
+      <ContentContainer>
       <InputContainer>
         {sessions.map((session) => (
           <SessionItem key={session._id}>
@@ -71,6 +72,7 @@ const SessionListPage = () => {
           </SessionItem>
         ))}
       </InputContainer>
+      </ContentContainer>
     </Container>
   );
 };

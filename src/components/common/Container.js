@@ -79,6 +79,9 @@ const HeaderContainer = styled.div`
   position: fixed;
   z-index: 1000;
 `;
+const ButtonListContainer = styled.div`
+  width: 40%;
+`;
 
 export {
   Container,
@@ -87,5 +90,6 @@ export {
   HeaderContainer,
   MainButtonContainer,
   TwoButtonContainer,
-  ButtonContainerStyled
+  ButtonContainerStyled,
+  ButtonListContainer,
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, InputContainer } from "../common/Container";
+import { Container, ContentContainer, InputContainer } from "../common/Container";
 import { checkAttendStart } from "../../utils/authentication";
 import { Header } from "../common/Header";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const CreateSessionPage = () => {
   return (
     <Container>
       <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin"/>
+      <ContentContainer>
       <InputContainer>
         <Gap />
         {isStart ? (
@@ -30,6 +31,7 @@ const CreateSessionPage = () => {
           <CreateSessionForm navigate={navigate} />
         )}
       </InputContainer>
+      </ContentContainer>
     </Container>
   );
 };

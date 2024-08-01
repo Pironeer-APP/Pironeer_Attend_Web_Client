@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logo from "../components/common/Logo";
-import { Container } from "../components/common/Container"; 
+import { ContentContainer,Container, ButtonListContainer } from "../components/common/Container"; 
 import { Header } from "../components/common/Header"; 
 import { MainButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
@@ -15,9 +15,10 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <> 
+    <Container>
       <Header text={`반가워요, 어드민님!`} />
-      <Container>
+      <ContentContainer>
+      <ButtonListContainer>
       <MainButton
         content={"세션 생성"}
         onPress={() => navigate("/createSession")}
@@ -34,7 +35,8 @@ export default function AdminPage() {
         content={"회원 등록"}
         onPress={() => navigate("/signup")}
       ></MainButton>
+      </ButtonListContainer>
+      </ContentContainer>
     </Container>
-    </>
   );
 }
