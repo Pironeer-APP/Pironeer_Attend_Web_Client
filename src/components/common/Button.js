@@ -14,6 +14,16 @@ const MainButtonStyled = styled(ButtonContainerStyled)`
   margin-bottom: ${(props) => props.marginBottom}px;
 `;
 
+const SmallButtonStyled = styled.button`
+  background-color: ${(props) => props.backgroundColor || COLORS.green};
+  color: ${(props) => props.color || 'black'};
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px 0;
+`;
+
 const MainButton = ({
   content,
   onPress,
@@ -36,8 +46,21 @@ const MainButton = ({
   );
 };
 
+const SmallButton = ({ content, backgroundColor, color, onClick }) => {
+  return (
+    <SmallButtonStyled
+      onClick={onClick}
+      backgroundColor={backgroundColor}
+      color={color}
+    >
+      {content}
+    </SmallButtonStyled>
+  );
+}
+
 
 export {
   MainButton,
+  SmallButton
 };
 

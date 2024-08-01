@@ -6,6 +6,7 @@ import { StyledText } from "../common/Text";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../utils/date";
 import { Container, InputContainer } from "../common/Container";
+import { SmallButton } from "../common/Button";
 import { useSessionList } from "../../viewModel/adminHook";
 
 const SessionItem = styled.div`
@@ -17,15 +18,6 @@ const SessionItem = styled.div`
   border: 1px solid ${COLORS.green};
   border-radius: 5px;
   background-color: ${COLORS.black};
-`;
-
-const DeleteButton = styled.button`
-  background-color: ${COLORS.red};
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
 `;
 
 const SessionDetails = styled.div`
@@ -70,9 +62,12 @@ const SessionListPage = () => {
                 weight={200}
               />
             </SessionDetails>
-            <DeleteButton onClick={() => handleDeleteClick(session._id)}>
-              삭제
-            </DeleteButton>
+            <SmallButton 
+            content={"삭제"}
+            backgroundColor={COLORS.red}
+            color={'white'}
+            onClick={() => handleDeleteClick(session._id)}
+            />
           </SessionItem>
         ))}
       </InputContainer>

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { api } from "../../utils/api";
 import { COLORS } from "../../utils/theme";
 import { Header } from "../common/Header";
+import { SmallButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/authentication";
 import { Container, InputContainer, TwoButtonContainer } from "../common/Container";
@@ -30,15 +31,7 @@ const UserField = styled.div`
   margin-bottom: 10px;
 `;
 
-const UpdateButton = styled.button`
-  background-color: ${COLORS.green};
-  color: black;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 5px 0;
-`;
+
 
 const UserList = () => {
   const navigate = useNavigate();
@@ -72,20 +65,18 @@ const UserList = () => {
               </UserField>
             </UserDetails>
             <TwoButtonContainer>
-              <UpdateButton
+              <SmallButton
+                content={"정보 변경"}
                 onClick={() =>
                   navigate("/updateUser", { state: { userId: user?._id } })
                 }
-              >
-                정보 변경
-              </UpdateButton>
-              <UpdateButton
+              />
+              <SmallButton
+                content={"출석 내역"}
                 onClick={() => {
                   navigate("/checkAttend", { state: { userId: user._id } });
                 }}
-              >
-                출석 내역
-              </UpdateButton>
+              />
             </TwoButtonContainer>
           </UserItem>
         ))}
