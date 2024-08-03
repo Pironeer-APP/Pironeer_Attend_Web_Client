@@ -17,19 +17,15 @@ export default function UserCheckPage() {
   const [isStart, setIsStart] = useState(false);
   const [isAttend, setIsAttend] = useState(false);
   const { user } = useUserStore();
-  const userId = user.userId;
-  const username = user.username;
 
-  useEffect(() => {
-    if (!userId) {
-      navigate("/login");
-    }
-  }, [userId, navigate]);
+  console.log("유저 페이지");
+  console.log(user);
+  console.log(user.id);
 
   // SSE를 활용한 출석 체크
   useEffect(() => {
     if (!isAttend) {
-      checkAttendStart(setIsStart);
+      checkAttendStart(setIsStart, user.token);
     }
   }, [isAttend]);
 
@@ -37,7 +33,7 @@ export default function UserCheckPage() {
   // 출석 완료되었다면 완료 창 보여주기
   // 출석 기간이 아니면 Attend List만
   useEffect(() => {
-    checkAttendStart(setIsStart);
+    checkAttendStart(setIsStart, user.token);
   }, []);
   useEffect(() => {
     if (isAttend) {
@@ -47,15 +43,15 @@ export default function UserCheckPage() {
 
   return (
     <Container>
-      <Header text={`반가워요, ${username}님!`} />
+      <Header text={`반가워요, ${user.username}님!`} />
       <ScreenContainer>
         {isStart ? (
           <>
             {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
-            <AttendList userId={userId} />
+            <AttendList userId={user.id} />
           </>
         ) : (
-          <AttendList userId={userId} />
+          <AttendList userId={user.id} />
         )}
       </ScreenContainer>
     </Container>

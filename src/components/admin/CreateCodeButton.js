@@ -77,7 +77,10 @@ const CreateCode = ({ sessionId }) => {
 
   return isStart ? (
     <>
-      <Header text={`현재 생성된 코드는 ${code} 입니다.`} />
+      <Header
+        text={`현재 생성된 코드는 ${code} 입니다.`}
+        navigateOnClick="/admin"
+      />
       <MainButton
         content={"강제 종료"}
         onPress={endCode}

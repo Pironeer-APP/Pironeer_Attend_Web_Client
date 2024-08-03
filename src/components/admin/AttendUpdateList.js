@@ -35,8 +35,8 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends, userId }) => {
           throw new Error("No attendance records found");
         }
       } catch (error) {
-        console.error("Error fetching attendance records:", error.message);
-        setError(error.message);
+        console.error("Error fetching attendance records:", error);
+        setError(error);
       } finally {
         setUpdateLoading(false);
       }

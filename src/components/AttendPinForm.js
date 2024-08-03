@@ -4,23 +4,21 @@ import { COLORS } from "../utils/theme";
 import { StyledText, StyledWarning } from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { InputContainer } from "./common/Container";
-import {StyledInput} from "./common/Input";
+import { StyledInput } from "./common/Input";
 import { client } from "../utils/client";
 import { MainButton } from "./common/Button";
-import useUserStore from '../store/userStore';
+import useUserStore from "../store/userStore";
 
 function useAttend() {
   const [pin, setPin] = useState("");
   const [warning, setWarning] = useState("");
-  const { user } = useUserStore();
 
   const onChangePin = (value) => {
     setPin(value);
   };
 
-  const onPressAttend = async (navigate, setIsAttend) => {
-    const userId = sessionStorage.getItem("id");
-
+  const onPressAttend = async (navigate, setIsAttend, user) => {
+    console.log(user);
     // 숫자가 아닌 경우 경고
     if (isNaN(pin)) {
       setPin("");
@@ -38,16 +36,17 @@ function useAttend() {
 
     // 서버에 출석 정보 전달
     try {
-      const endpoint = `/session/checkAttend/${userId}`;
+      console.log(user.id);
+      const endpoint = `/session/checkAttend/${user.id}`;
       const body = { code: pin };
 
       const response = await client.post(endpoint, user.token, body);
-      
+
       if (response.status === 201) {
         setIsAttend(true);
       }
       setWarning(response.message);
-    }  catch (error) {
+    } catch (error) {
       setWarning(error);
     }
     setPin("");
@@ -61,10 +60,11 @@ function useAttend() {
   };
 }
 
-export default function AttendPinForm(props) {
+export default function AttendPinForm({ setIsAttend }) {
   const navigate = useNavigate();
   const { pin, warning, onChangePin, onPressAttend } = useAttend();
-  const setIsAttend = props.setIsAttend;
+  const { user } = useUserStore();
+  console.log(user);
 
   return (
     <InputContainer>
@@ -77,13 +77,9 @@ export default function AttendPinForm(props) {
       />
       <MainButton
         content={"출석하기"}
-        onPress={() => onPressAttend(navigate, setIsAttend)}
+        onPress={() => onPressAttend(navigate, setIsAttend, user)}
       />
-      {warning && (
-        <StyledWarning content={warning} />
-      )}
+      {warning && <StyledWarning content={warning} />}
     </InputContainer>
   );
 }
-
-
