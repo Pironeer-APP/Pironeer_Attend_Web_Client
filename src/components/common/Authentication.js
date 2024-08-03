@@ -7,8 +7,6 @@ const AdminProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
   const { user } = useUserStore();
 
-  console.log(user);
-
   useEffect(() => {
     checkAdminState(navigate, user.token, user.isAdmin);
   }, [navigate, user.token, user.isAdmin]);

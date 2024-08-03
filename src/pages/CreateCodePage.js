@@ -9,8 +9,6 @@ const CreateCodePage = () => {
   const location = useLocation();
   const { sessionId } = location.state || {};
 
-  console.log(sessionId);
-
   return (
     <Container>
       <CreateCodeButton sessionId={sessionId} />

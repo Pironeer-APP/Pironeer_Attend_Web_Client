@@ -1,9 +1,6 @@
 import { client } from "./client";
 
 function checkUserState(navigate, token, isAdmin) {
-  console.log(token);
-  console.log(isAdmin);
-
   // 인증 정보가 없을 경우 로그인 페이지로 이동
   if (!token) {
     navigate("/login");

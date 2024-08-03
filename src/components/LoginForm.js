@@ -53,7 +53,6 @@ function useLogin() {
         token: token,
       });
 
-      console.log("Navigating to:", decodedToken._isAdmin ? "/admin" : "/");
       navigate(decodedToken._isAdmin ? "/admin" : "/");
     } catch (error) {
       console.error(error);

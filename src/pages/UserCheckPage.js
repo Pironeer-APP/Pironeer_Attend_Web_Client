@@ -18,10 +18,6 @@ export default function UserCheckPage() {
   const [isAttend, setIsAttend] = useState(false);
   const { user } = useUserStore();
 
-  console.log("유저 페이지");
-  console.log(user);
-  console.log(user.id);
-
   // SSE를 활용한 출석 체크
   useEffect(() => {
     if (!isAttend) {

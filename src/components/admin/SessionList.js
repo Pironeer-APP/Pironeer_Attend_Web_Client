@@ -47,7 +47,6 @@ const SessionList = () => {
 
   const getSessions = async () => {
     try {
-      console.log(user.id);
       const response = await client.get("/session/sessions", user.token);
 
       if (Array.isArray(response.data)) {
