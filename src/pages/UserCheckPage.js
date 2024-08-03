@@ -7,16 +7,16 @@ import { checkAttendStart } from "../utils/authentication";
 import Logo from "../components/common/Logo";
 import AttendPinForm from "../components/AttendPinForm";
 import AttendList from "../components/AttendList";
-import { Container,ScreenContainer } from "../components/common/Container";
+import { Container, ScreenContainer } from "../components/common/Container";
 import { Header } from "../components/common/Header";
 import Gap from "../components/common/Gap";
-import useUserStore from '../store/userStore';
+import useUserStore from "../store/userStore";
 
 export default function UserCheckPage() {
   const navigate = useNavigate();
   const [isStart, setIsStart] = useState(false);
   const [isAttend, setIsAttend] = useState(false);
-  const {user} = useUserStore();
+  const { user } = useUserStore();
   const userId = user.userId;
   const username = user.username;
 
@@ -26,7 +26,7 @@ export default function UserCheckPage() {
     }
   }, [userId, navigate]);
 
-  // Polling checkAttendStart every second if not attended
+  // SSE를 활용한 출석 체크
   useEffect(() => {
     if (!isAttend) {
       checkAttendStart(setIsStart);
@@ -47,17 +47,17 @@ export default function UserCheckPage() {
 
   return (
     <Container>
-    <Header text={`반가워요, ${username}님!`} />
-    <ScreenContainer>
-      {isStart ? (
-        <>
-          {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
+      <Header text={`반가워요, ${username}님!`} />
+      <ScreenContainer>
+        {isStart ? (
+          <>
+            {!isAttend && <AttendPinForm setIsAttend={setIsAttend} />}
+            <AttendList userId={userId} />
+          </>
+        ) : (
           <AttendList userId={userId} />
-        </>
-      ) : (
-        <AttendList userId={userId} />
-      )}
-    </ScreenContainer>
+        )}
+      </ScreenContainer>
     </Container>
   );
 }

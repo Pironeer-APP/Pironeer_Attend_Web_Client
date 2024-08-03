@@ -1,6 +1,5 @@
 import { client } from "./client";
 
-
 function checkUserState(navigate, token, isAdmin) {
   // 인증 정보가 없을 경우 로그인 페이지로 이동
   if (!token || !isAdmin) {
@@ -14,7 +13,6 @@ function checkUserState(navigate, token, isAdmin) {
 }
 
 function checkAdminState(navigate, token, isAdmin) {
-
   // 인증 정보가 없을 경우 로그인 페이지로 이동
   if (!token || !isAdmin) {
     navigate("/login");
@@ -45,7 +43,7 @@ function checkAdminState(navigate, token, isAdmin) {
 async function checkAttendStart(setIsStart, token) {
   const eventSource = client.sse("/session/isCheckAttend", token);
 
-  eventSource.onmessage = function(event) {
+  eventSource.onmessage = function (event) {
     const data = JSON.parse(event.data);
     console.log("SSE data received:", data);
     if (data.message === "출석체크 진행중") {
@@ -55,7 +53,7 @@ async function checkAttendStart(setIsStart, token) {
     }
   };
 
-  eventSource.onerror = function(err) {
+  eventSource.onerror = function (err) {
     console.error("EventSource failed:", err);
     eventSource.close();
   };
@@ -64,7 +62,5 @@ async function checkAttendStart(setIsStart, token) {
     eventSource.close();
   };
 }
-
-
 
 export { checkUserState, checkAdminState, checkAttendStart };

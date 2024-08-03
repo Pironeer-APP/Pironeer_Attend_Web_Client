@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import { StyledText, StyledWarning } from "./common/Text";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +7,14 @@ import { client } from "../utils/client";
 import { InputContainer } from "./common/Container";
 import { StyledInput } from "./common/Input";
 import { MainButton } from "./common/Button";
+import useUserStore from "../store/userStore";
 
 function useSignup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [signupStatus, setSignupStatus] = useState(true);
+  const { user } = useUserStore();
 
   const onChangeUsername = (value) => {
     setUsername(value);
@@ -29,7 +30,7 @@ function useSignup() {
 
   const onPressSignup = async (navigate) => {
     try {
-      const response = await client.post("/user/signup", {
+      const response = await client.post("/user/signup", user.token, {
         username,
         password,
         email,

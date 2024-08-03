@@ -8,7 +8,7 @@ import SessionListPage from "./pages/SessionListPage";
 import CreateCodePage from "./pages/CreateCodePage";
 import UserListPage from "./pages/UserListPage";
 import UpdateUserPage from "./pages/UpdateUserPage";
-import CheckUserAttendPage from "./pages/checkUserAttendPage";
+import CheckUserAttendPage from "./pages/CheckUserAttendPage";
 import CreateSessionPage from "./pages/CreateSessionPage";
 import {
   AdminProtectedRoute,

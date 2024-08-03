@@ -6,22 +6,28 @@ import { OnAirCircle } from "../common/OnAirCircle";
 import { getLocal } from "../../utils";
 import { client } from "../../utils/client";
 import { Container } from "../common/Container";
-import { AttendanceContainer, SessionContainer, RowContainer, DateContainer, SessionName } from "../AttendList";
-import useUserStore from '../../store/userStore';
+import {
+  AttendanceContainer,
+  SessionContainer,
+  RowContainer,
+  DateContainer,
+  SessionName,
+} from "../AttendList";
+import useUserStore from "../../store/userStore";
 
-const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
-  const location = useLocation();
-  const { userId } = location.state || {};
+const AttendUpdateList = ({ setUpdateAttends, updateAttends, userId }) => {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [updateLoading, setUpdateLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useUserStore();
 
   useEffect(() => {
-
     const fetchAttendance = async () => {
       try {
-        const response = await client.get(`/user/checkAttendance/${userId}`, user.token);
+        const response = await client.get(
+          `/user/checkAttendance/${userId}`,
+          user.token
+        );
         console.log("Attendance Response:", response.data);
         if (response.data && response.data.attendances) {
           setAttendanceRecords(response.data.attendances);
@@ -89,7 +95,7 @@ const AttendUpdateList = ({ setUpdateAttends, updateAttends }) => {
         if (!record.session_date) {
           return null;
         }
-        
+
         const { month, date, day } = getLocal(record.session_date);
         const finalStatus = calculateStatus(record.attendList);
         const attendListLength = record.attendList
