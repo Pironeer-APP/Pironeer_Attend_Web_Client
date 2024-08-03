@@ -9,12 +9,13 @@ import { jwtDecode } from "jwt-decode";
 import { InputContainer } from "./common/Container";
 import { StyledInput } from "./common/Input";
 import { MainButton } from "./common/Button";
-import useUserStore from '../store/userStore';
+import useUserStore from "../store/userStore";
 
 // useLogin Hook
 function useLogin() {
   const [error, setError] = useState(false);
-  const { user, loginUser, logoutUser, changeUsername, changePassword} = useUserStore();
+  const { user, loginUser, logoutUser, changeUsername, changePassword } =
+    useUserStore();
 
   const onChangeUsername = (value) => {
     changeUsername(value);
@@ -22,47 +23,44 @@ function useLogin() {
 
   const onChangePassword = (value) => {
     changePassword(value);
-  }
+  };
 
   const onPressLogin = async (navigate) => {
     try {
       const response = await client.post("/user/login", user.token, {
-        "username": user.username,
-        "password": user.password,
+        username: user.username,
+        password: user.password,
       });
-  
+
       // Check if the response contains the token inside the data object
       if (!response || !response.data || !response.data.token) {
         throw new Error("Invalid response: No token found");
       }
-  
+
       const token = response.data.token;
-      
+
       // Ensure the token is a string
       if (typeof token !== "string") {
         throw new Error("Invalid token: Token is not a string");
       }
-  
+
       const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
-      sessionStorage.setItem('token', token);
 
       // state 처리가 비동기임.
       loginUser({
         userId: decodedToken._id,
         isAdmin: decodedToken._isAdmin,
         token: token,
-      })
+      });
 
       navigate(decodedToken._isAdmin ? "/admin" : "/");
-
     } catch (error) {
       console.error(error);
       logoutUser();
       setError(true);
     }
   };
-  
+
   return {
     user,
     error,
@@ -75,13 +73,8 @@ function useLogin() {
 // LoginForm component
 export default function LoginForm() {
   const navigate = useNavigate();
-  const {
-    user,
-    error,
-    onChangeUsername,
-    onChangePassword,
-    onPressLogin,
-  } = useLogin();
+  const { user, error, onChangeUsername, onChangePassword, onPressLogin } =
+    useLogin();
 
   return (
     <InputContainer>

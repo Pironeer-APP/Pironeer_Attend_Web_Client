@@ -4,10 +4,10 @@ import { COLORS } from "../utils/theme";
 import { StyledText, StyledWarning } from "./common/Text";
 import { useNavigate } from "react-router-dom";
 import { InputContainer } from "./common/Container";
-import {StyledInput} from "./common/Input";
+import { StyledInput } from "./common/Input";
 import { client } from "../utils/client";
 import { MainButton } from "./common/Button";
-import useUserStore from '../store/userStore';
+import useUserStore from "../store/userStore";
 
 function useAttend() {
   const [pin, setPin] = useState("");
@@ -19,8 +19,6 @@ function useAttend() {
   };
 
   const onPressAttend = async (navigate, setIsAttend) => {
-    const userId = sessionStorage.getItem("id");
-
     // 숫자가 아닌 경우 경고
     if (isNaN(pin)) {
       setPin("");
@@ -38,16 +36,16 @@ function useAttend() {
 
     // 서버에 출석 정보 전달
     try {
-      const endpoint = `/session/checkAttend/${userId}`;
+      const endpoint = `/session/checkAttend/${user.id}`;
       const body = { code: pin };
 
       const response = await client.post(endpoint, user.token, body);
-      
+
       if (response.status === 201) {
         setIsAttend(true);
       }
       setWarning(response.message);
-    }  catch (error) {
+    } catch (error) {
       setWarning(error);
     }
     setPin("");
@@ -79,11 +77,7 @@ export default function AttendPinForm(props) {
         content={"출석하기"}
         onPress={() => onPressAttend(navigate, setIsAttend)}
       />
-      {warning && (
-        <StyledWarning content={warning} />
-      )}
+      {warning && <StyledWarning content={warning} />}
     </InputContainer>
   );
 }
-
-
