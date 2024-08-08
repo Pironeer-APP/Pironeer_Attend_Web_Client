@@ -35,8 +35,8 @@ const DepositItemBox = ({ user }) => {
   ];
 
   const depositActions = [
-    { content: "보증금 방어권", onClick: () => navigate("/depositProtection", { state: { userId: user?._id } }) },
-    { content: "보증금 내역", onClick: () => navigate("/depositHistory", { state: { userId: user?._id } }) },
+    { content: "보증금 방어권", onClick: () => navigate("/updateDepositShield", { state: { userId: user?._id } }) },
+    { content: "보증금 내역", onClick: () => navigate("/updateDeposit", { state: { userId: user?._id } }) },
   ];
 
   return <ItemBox item={user} itemDetails={depositDetails} itemActions={depositActions} />;

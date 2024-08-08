@@ -11,7 +11,7 @@ const MainButtonStyled = styled(ButtonContainerStyled)`
   background-color: ${(props) => props.backgroundColor || COLORS.green};
   border-radius: 15px;
   margin-top: 2.5rem;
-  margin-bottom: ${(props) => props.marginBottom}px;
+  margin-bottom: ${(props) => props.marginBottom}rem;
 `;
 
 const SmallButtonStyled = styled.button`
