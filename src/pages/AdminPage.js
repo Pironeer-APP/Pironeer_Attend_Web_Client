@@ -42,6 +42,10 @@ export default function AdminPage() {
         content={"회원 등록"}
         onPress={() => navigate("/signup")}
       ></MainButton>
+      <MainButton
+        content={"보증금 조회"}
+        onPress={() => navigate("/adminDeposit")}
+      ></MainButton>
       </ButtonListContainer>
       </ContentContainer>
     </Container>

@@ -14,7 +14,7 @@ import UpdateUserAttend from "./components/admin/UpdateUserAttend";
 import CreateSessionPage from "./components/admin/CreateSessionPage";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
 import UserDepositPage from "./pages/UserDepositPage";
-
+import AdminDepositPage from "./pages/AdminDepositPage.js";
 const router = createBrowserRouter([
   {
     path: "/signup",
@@ -63,6 +63,10 @@ const router = createBrowserRouter([
   {
     path: "/userDeposit",
     element: <UserDepositPage />,
+  },
+  {
+    path: "/adminDeposit",
+    element: <AdminDepositPage />,
   }
 ]);
 

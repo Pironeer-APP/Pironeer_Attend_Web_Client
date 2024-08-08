@@ -2,7 +2,7 @@ import React from "react";
 import { COLORS } from "../../utils/theme";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { InputContainer } from "../common/Container";
+import { ContentContainer, InputContainer } from "../common/Container";
 import { MainButton } from "../common/Button";
 import { PageHeader } from "../common/Header";
 import AttendUpdateList from "./AttendUpdateList";
@@ -30,6 +30,8 @@ const UpdateUserAttend = () => {
   return (
     <Container>
       <PageHeader text={`어드민님 반가워요!`} navigateOnClick="/admin" buttons={buttons} />
+      <ContentContainer>
+      <InputContainer>
       <MainButton
         content={"출석 정보 변경하기"}
         onPress={handleUpdateAttendance}
@@ -37,6 +39,8 @@ const UpdateUserAttend = () => {
       <Gap />
       <AttendUpdateList />
       {error && <div>Error: {error.message}</div>}
+      </InputContainer>
+      </ContentContainer>
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { COLORS } from "../../utils/theme";
 import {  useLocation } from "react-router-dom";
-import { Container, InputContainer } from "../../components/common/Container";
+import { Container, ContentContainer, InputContainer } from "../../components/common/Container";
 import { StyledInput } from "../../components/common/Input";
 import { MainButton } from "../../components/common/Button";
 import { PageHeader } from "../../components/common/Header";
@@ -26,6 +26,7 @@ const UpdateUser = () => {
     <Container>
       <PageHeader text={`유저 정보 변경`} navigateOnClick="/admin" buttons={buttons}/>
       <Gap />
+      <ContentContainer>
       <InputContainer>
         <StyledInput
           placeholder="이름"
@@ -48,8 +49,9 @@ const UpdateUser = () => {
           onChangeText={(value) => setPassword(value)}
           maxLength={50}
         />
+        <MainButton content="변경 완료" onPress={handleUpdateUser} />
       </InputContainer>
-      <MainButton content="변경 완료" onPress={handleUpdateUser} />
+      </ContentContainer>
     </Container>
   );
 };
