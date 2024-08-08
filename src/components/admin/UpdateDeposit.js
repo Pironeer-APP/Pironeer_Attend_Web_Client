@@ -7,7 +7,7 @@ import { PageHeader } from '../common/Header';
 import { Gap } from '../common/Gap';
 import { MainButton } from '../common/Button';
 import { useNavigate } from 'react-router-dom';
-import { useUserDepositDetails } from '../../pages/UserDepositPage'; // Ensure the path is correct
+import { useUserDepositDetails } from '../../pages/UserDepositPage';
 import {
   BalanceContainer,
   BalanceTitle,
@@ -48,7 +48,7 @@ const UpdateDeposit = () => {
 
   return (
     <Container backgroundColor={`${COLORS.bg_gray}`}>
-      <PageHeader text={`어드민님 반가워요!`} buttons={buttons} bgColor={`${COLORS.bg_gray}`} color={"black"} />
+      <PageHeader text={`어드민님 반가워요!`} buttons={buttons} bgColor={`${COLORS.bg_gray}`} color={"black"} navigateOnClick="/admin" />
       <UpdateDepositPageContainer backgroundColor={`${COLORS.bg_gray}`}>
         <InputContainer>
         <BalanceContainer>

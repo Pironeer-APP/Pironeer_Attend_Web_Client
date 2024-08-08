@@ -5,6 +5,7 @@ export const COLORS = {
   bg_black: '#000000',
   bg_gray: '#AFAFAF',
   light_gray: '#6D6D6D',
+  dark_gray: '#404040',
   icon_gray: '#4B4B4B',
   gray: '#1C1C1D',
   textColor: 'white',

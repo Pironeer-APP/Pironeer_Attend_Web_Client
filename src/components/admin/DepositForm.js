@@ -9,18 +9,18 @@ export const BalanceContainer = styled.div`
 
 export const BalanceTitle = styled.div`
   font-size: 18px;
-  color: black;
+  color: ${(props) => props.color || 'black'};
   margin-bottom: 1.5rem;
 `;
 
 export const BalanceAmount = styled.div`
   font-size: 36px;
   font-weight: bold;
-  color: black;
+  color: ${(props) => props.color || 'black'};
 `;
 
 export const BadgeContainer = styled.div`
-  background-color: black;
+  background-color: ${(props) => props.bgColor || 'black'};
   color: white;
   padding: 2rem;
   margin: 3rem;
