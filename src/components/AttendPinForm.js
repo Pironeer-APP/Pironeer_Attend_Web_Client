@@ -18,7 +18,6 @@ function useAttend() {
   };
 
   const onPressAttend = async (navigate, setIsAttend, user) => {
-    console.log(user);
     // 숫자가 아닌 경우 경고
     if (isNaN(pin)) {
       setPin("");
@@ -36,7 +35,6 @@ function useAttend() {
 
     // 서버에 출석 정보 전달
     try {
-      console.log(user.id);
       const endpoint = `/session/checkAttend/${user.id}`;
       const body = { code: pin };
 
