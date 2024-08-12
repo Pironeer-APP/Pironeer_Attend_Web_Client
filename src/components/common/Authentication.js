@@ -6,6 +6,7 @@ import { checkAdminState, checkUserState } from "../../utils/authentication";
 const AdminProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
   const { user } = useUserStore();
+  console.log(user);
 
   useEffect(() => {
     checkAdminState(navigate, user.token, user.isAdmin);
