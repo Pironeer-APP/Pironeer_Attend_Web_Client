@@ -3,93 +3,57 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { api } from "../../utils/api";
 import { COLORS } from "../../utils/theme";
-import { Header } from "../common/Header";
+import { PageHeader } from "../common/Header";
+import { SmallButton } from "../common/Button";
 import { StyledText } from "../common/Text";
 import { checkAdminState } from "../../utils/authentication";
-import { Container, InputContainer, TwoButtonContainer } from "../common/Container";
+import { Container, ContentContainer, InputContainer, TwoButtonContainer } from "../common/Container";
 import useListDataStore from "../../states/listDataStore";
 import { useUserList } from "../../viewModel/adminHook";
+import { ItemBox } from "../common/Box";
 
-const UserItem = styled.div`
-  display: flex;
-  width: calc(100% - 40px);
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  border: 1px solid ${COLORS.green};
-  border-radius: 5px;
-  background-color: ${COLORS.black};
-`;
+const UserItemBox = ({ user }) => {
+  const navigate = useNavigate();
 
-const UserDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+  const userDetails = [
+    { content: user?.isAdmin ? "어드민" : "일반 유저", fontSize: 15, weight: 500 },
+    { content: `아이디: ${user?._id}`, fontSize: 10 },
+    { content: `이름: ${user?.username}`, fontSize: 10 },
+    { content: `이메일: ${user?.email}`, fontSize: 10 },
+  ];
 
-const UserField = styled.div`
-  margin-bottom: 10px;
-`;
+  const userActions = [
+    { content: "정보 변경", onClick: () => navigate("/updateUser", { state: { userId: user?._id } }) },
+    { content: "출석 내역", onClick: () => navigate("/checkAttend", { state: { userId: user._id } }) },
+  ];
 
-const UpdateButton = styled.button`
-  background-color: ${COLORS.green};
-  color: black;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 5px 0;
-`;
+  return <ItemBox item={user} itemDetails={userDetails} itemActions={userActions} />;
+};
 
 const UserList = () => {
-  const navigate = useNavigate();
   const { users, loading, error } = useUserList();
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
 
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
 
   return (
     <Container>
-      <Header text={`유저 리스트`} navigateOnClick="/admin"/>
-      <InputContainer>
-        {users.map((user) => (
-          <UserItem key={user?._id}>
-            <UserDetails>
-              <UserField>
-                <StyledText
-                  content={user?.isAdmin ? "어드민" : "일반 유저"}
-                  fontSize={15}
-                  weight={500}
-                />
-              </UserField>
-              <UserField>
-                <StyledText content={`아이디: ${user?._id}`} fontSize={10} />
-              </UserField>
-              <UserField>
-                <StyledText content={`이름: ${user?.username}`} fontSize={10} />
-              </UserField>
-              <UserField>
-                <StyledText content={`이메일: ${user?.email}`} fontSize={10} />
-              </UserField>
-            </UserDetails>
-            <TwoButtonContainer>
-              <UpdateButton
-                onClick={() =>
-                  navigate("/updateUser", { state: { userId: user?._id } })
-                }
-              >
-                정보 변경
-              </UpdateButton>
-              <UpdateButton
-                onClick={() => {
-                  navigate("/checkAttend", { state: { userId: user._id } });
-                }}
-              >
-                출석 내역
-              </UpdateButton>
-            </TwoButtonContainer>
-          </UserItem>
-        ))}
-      </InputContainer>
+      <PageHeader text={`유저 리스트`} navigateOnClick="/admin" buttons={buttons}/>
+      <ContentContainer>
+        <InputContainer>
+          {users.map((user) => (
+            <UserItemBox key={user?._id} user={user} />
+          ))}
+        </InputContainer>
+      </ContentContainer>
     </Container>
   );
 };

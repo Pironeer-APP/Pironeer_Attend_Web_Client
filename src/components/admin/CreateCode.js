@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MainButton } from "../common/Button";
 import { Container } from "../common/Container";
-import { Header } from "../common/Header";
+import { PageHeader } from "../common/Header";
 import { COLORS } from "../../utils/theme";
 import { useCreateCode } from "../../viewModel/adminHook";
 
@@ -11,12 +11,19 @@ const CreateCode = () => {
   const location = useLocation();
   const { sessionId } = location.state;
   const { code, isStart, createCode, endCode } = useCreateCode(sessionId, navigate);
-
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
   return (
     <Container>
       {isStart ? (
         <>
-          <Header text={`현재 생성된 코드는 ${code} 입니다.`} />
+          <PageHeader text={`현재 생성된 코드는 ${code} 입니다.`} buttons={buttons}/>
           <MainButton
             content={"강제 종료"}
             onPress={endCode}
@@ -25,7 +32,7 @@ const CreateCode = () => {
         </>
       ) : (
         <>
-          <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin" />
+          <PageHeader text={`어드민님 반가워요!`} navigateOnClick="/admin" buttons={buttons}/>
           <MainButton content={"코드 생성"} onPress={createCode} />
         </>
       )}

@@ -13,7 +13,10 @@ import UpdateUser from "./components/admin/UpdateUser";
 import UpdateUserAttend from "./components/admin/UpdateUserAttend";
 import CreateSessionPage from "./components/admin/CreateSessionPage";
 import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
-
+import UserDepositPage from "./pages/UserDepositPage";
+import AdminDepositPage from "./pages/AdminDepositPage.js";
+import UpdateDeposit from "./components/admin/UpdateDeposit";
+import UpdateDepositShield from "./components/admin/UpdateDepositShield";
 const router = createBrowserRouter([
   {
     path: "/signup",
@@ -59,6 +62,22 @@ const router = createBrowserRouter([
     path: "/checkAttend",
     element: <UpdateUserAttend />,
   },
+  {
+    path: "/userDeposit",
+    element: <UserDepositPage />,
+  },
+  {
+    path: "/adminDeposit",
+    element: <AdminDepositPage />,
+  },
+  {
+    path: "/updateDeposit",
+    element: <UpdateDeposit/>
+  },
+  {
+    path: "/updateDepositShield",
+    element: <UpdateDepositShield/>
+  }
 ]);
 
 function App() {

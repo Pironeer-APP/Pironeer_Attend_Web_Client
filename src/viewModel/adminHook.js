@@ -296,7 +296,7 @@ const useUpdateUser = (userId) => {
 
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/user/users/${userId}`);
+        const response = await (`/user/users/${userId}`);
         const user = response.data;
         setUsername(user.username);
         setEmail(user.email);

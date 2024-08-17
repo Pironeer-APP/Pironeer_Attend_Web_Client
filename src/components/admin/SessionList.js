@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../../utils/theme";
-import { Header } from "../common/Header";
+import { PageHeader } from "../common/Header";
 import { StyledText } from "../common/Text";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../utils/date";
-import { Container, InputContainer } from "../common/Container";
+import { Container, ContentContainer, InputContainer } from "../common/Container";
+import { SmallButton } from "../common/Button";
 import { useSessionList } from "../../viewModel/adminHook";
 
 const SessionItem = styled.div`
@@ -17,15 +18,6 @@ const SessionItem = styled.div`
   border: 1px solid ${COLORS.green};
   border-radius: 5px;
   background-color: ${COLORS.black};
-`;
-
-const DeleteButton = styled.button`
-  background-color: ${COLORS.red};
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
 `;
 
 const SessionDetails = styled.div`
@@ -42,6 +34,15 @@ const SessionListPage = () => {
   const navigate = useNavigate();
   const { sessions, loading, error, handleDeleteClick } = useSessionList();
 
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
+
   const handleSessionClick = (sessionId) => {
     navigate("/createCode", { state: { sessionId } });
   };
@@ -56,7 +57,8 @@ const SessionListPage = () => {
 
   return (
     <Container>
-      <Header text={`세션 리스트`} navigateOnClick="/admin"/>
+      <PageHeader text={`세션 리스트`} navigateOnClick="/admin" buttons={buttons}/>
+      <ContentContainer>
       <InputContainer>
         {sessions.map((session) => (
           <SessionItem key={session._id}>
@@ -70,12 +72,16 @@ const SessionListPage = () => {
                 weight={200}
               />
             </SessionDetails>
-            <DeleteButton onClick={() => handleDeleteClick(session._id)}>
-              삭제
-            </DeleteButton>
+            <SmallButton 
+            content={"삭제"}
+            backgroundColor={COLORS.red}
+            color={'white'}
+            onClick={() => handleDeleteClick(session._id)}
+            />
           </SessionItem>
         ))}
       </InputContainer>
+      </ContentContainer>
     </Container>
   );
 };

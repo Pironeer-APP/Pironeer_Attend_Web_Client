@@ -113,4 +113,38 @@ const useUserAttendPage = () => {
   }, [isAttend]);
   return { isStart, isAttend, setIsAttend, userId, username };
 };
-export { useAttend, useAttendList, useUserAttendPage };
+
+const useUserDepositDetails = (userId) => {
+  const [depositData, setDepositData] = useState([null]);
+  console.log("useUserDepositDetails userId:",userId)
+
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    const fetchDepositData = async () => {
+      try {
+        console.log("Fetching deposit data...");
+        const response = await api.get(`/deposit/${userId}`);
+        setDepositData(response.data)
+        console.log("deposit response:",response.data)
+      } catch (err){
+        setError(err.message);
+        console.error("Error fetching deposit data:", err.message);
+      }
+    };
+    fetchDepositData();
+  }, []);
+  return { depositData, error };
+};
+
+const DefendUse =  async (userId) => {
+  try{
+    const response = await api.post(`/deposit/${userId}/defend/use`);
+    return response.data;
+  } catch (err){
+    console.error(err.response?.data?.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+
+
+export { useAttend, useAttendList, useUserAttendPage, useUserDepositDetails, DefendUse };

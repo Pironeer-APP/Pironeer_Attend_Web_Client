@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container, InputContainer } from "../common/Container";
+import { COLORS } from "../../utils/theme";
+import { Container, ContentContainer, InputContainer } from "../common/Container";
 import { checkAttendStart } from "../../utils/authentication";
-import { Header } from "../common/Header";
+import { PageHeader } from "../common/Header";
 import { useNavigate } from "react-router-dom";
 import { checkAdminState } from "../../utils/authentication";
 import {Gap} from "../common/Gap";
@@ -13,6 +14,14 @@ import {CreateSessionForm} from "./CreateSessionForm";
 const CreateSessionPage = () => {
   const [isStart, setIsStart] = useState(true);
   const navigate = useNavigate();
+  const buttons = [
+    {
+      label: '로그아웃',
+      bgColor: COLORS.orange,
+      color: 'black',
+      onClick: () => alert('로그아웃 clicked'),
+    },
+  ];
 
   useEffect(() => {
     checkAttendStart(setIsStart);
@@ -21,7 +30,8 @@ const CreateSessionPage = () => {
 
   return (
     <Container>
-      <Header text={`반가워요, 어드민님!`} navigateOnClick="/admin"/>
+      <PageHeader text={`어드민님 반가워요!`} navigateOnClick="/admin" buttons={buttons}/>
+      <ContentContainer>
       <InputContainer>
         <Gap />
         {isStart ? (
@@ -30,6 +40,7 @@ const CreateSessionPage = () => {
           <CreateSessionForm navigate={navigate} />
         )}
       </InputContainer>
+      </ContentContainer>
     </Container>
   );
 };

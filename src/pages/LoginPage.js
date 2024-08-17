@@ -4,16 +4,17 @@ import styled from "styled-components";
 import { COLORS } from "../utils/theme";
 import Logo from "../components/common/Logo";
 import LoginForm from "../components/LoginForm";
-import { Container, ScreenContainer } from "../components/common/Container";
+import { Container, ContentContainer } from "../components/common/Container";
 import {Header} from "../components/common/Header";
 
 export default function LoginPage() {
   return (
     <Container>
       <Header text={"피로그래밍 출석"} />
-      <ScreenContainer>
+      <Logo />
+      <ContentContainer>
         <LoginForm />
-      </ScreenContainer>
+      </ContentContainer>
     </Container>
   );
 }
