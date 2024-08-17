@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { SmallButton } from '../common/Button';
 import { COLORS } from '../../utils/theme';
+import {  getLocal } from '../../utils/date';
 export const BalanceContainer = styled.div`
   text-align: center;
 `;
@@ -73,13 +74,15 @@ export const ActionButtons = styled.div`
   margin-top: 1rem;
 `;
 
-export const Transaction = ({ transaction, showActions, onEdit, onDelete }) => (
+export const Transaction = ({ deductionItem, showActions, onEdit, onDelete }) => {
+  const {month,date} = getLocal(deductionItem.deductionDate);
+  return (
   <TransactionItem>
-    <TransactionDate>{transaction.date}</TransactionDate>
-    <TransactionDescription>{transaction.description}</TransactionDescription>
-    <TransactionAmount positive={transaction.amount > 0}>
-      {transaction.amount > 0 ? '+' : ''}
-      {transaction.amount.toLocaleString()}
+    <TransactionDate>{`${month}.${date}`}</TransactionDate>
+    <TransactionDescription>{deductionItem.deductionDetail}</TransactionDescription>
+    <TransactionAmount positive={deductionItem.deductedAmount > 0}>
+      {deductionItem.deductedAmount > 0 ? '+' : ''}
+      {deductionItem.deductedAmount.toLocaleString()}
       {showActions && (
       <ActionButtons>
         <SmallButton onClick={onEdit} content={"수정"} fontSize={16} backgroundColor={COLORS.green} color={'black'} />
@@ -89,4 +92,5 @@ export const Transaction = ({ transaction, showActions, onEdit, onDelete }) => (
     </TransactionAmount>
     
   </TransactionItem>
-);
+  );
+};

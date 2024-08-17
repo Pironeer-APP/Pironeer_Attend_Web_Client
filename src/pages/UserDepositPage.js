@@ -5,9 +5,8 @@ import { Container,ContentContainer } from "../components/common/Container";
 import { PageHeader } from "../components/common/Header";
 import { Gap } from "../components/common/Gap";
 import { SmallButton } from "../components/common/Button";
-import { useNavigate,useParams } from "react-router-dom";
-import { useState, useEffect } from 'react';
-import { fetchUserDepositDetails } from '../utils/mockApi';
+import { useNavigate } from "react-router-dom";
+import { useUserDepositDetails, DefendUse } from "../viewModel/userHook";
 import {
   BalanceContainer,
   BalanceTitle,
@@ -25,42 +24,28 @@ const UserDepositPageContainer = styled(ContentContainer)`
   overflow-y: auto; 
 `;
 
-export const useUserDepositDetails = () => {
-  const [details, setDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [shieldCount, setShieldCount] = useState(0);
 
-  useEffect(() => {
-    fetchUserDepositDetails()
-      .then((data) => {
-        setDetails(data);
-        setShieldCount(data.shieldCount);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
-  const increment = () => setShieldCount(shieldCount + 1);
-  const decrement = () => {
-    if (shieldCount > 0) setShieldCount(shieldCount - 1);
-  };
-
-  return { details, loading, error, shieldCount, increment, decrement };
-};
 
 
 
 
 
 const UserDepositPage = () => {
-  const { userId } = useParams();
-  const { details, loading, error } = useUserDepositDetails(userId);
+  const userId = sessionStorage.getItem("id");
+  const { depositData, loading, error } = useUserDepositDetails(userId);
   const navigate = useNavigate();
 
+  const handleUseDefend = async () => {
+    if (depositData?.defendCount === 0) {
+      alert('사용 가능한 보증금 방어권이 없습니다.');
+      return;
+    }
+    else {
+      const response = await DefendUse(userId);
+      alert(response.message);
+      depositData.defendCount -= 1;
+    }
+  };
   const buttons = [
     {
       label: '출석',
@@ -76,26 +61,25 @@ const UserDepositPage = () => {
     },
   ];
 
-  if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
 
   return (
     <Container backgroundColor={COLORS.bg_gray}>
-      <PageHeader text={`${details.name}님 반가워요!`} buttons={buttons} bgColor={COLORS.bg_gray} color="black" />
+      <PageHeader text={`${depositData.user && depositData.user.username}님 반가워요!`} buttons={buttons} bgColor={COLORS.bg_gray} color="black" />
       <UserDepositPageContainer backgroundColor={COLORS.bg_gray}>
         <BalanceContainer>
           <BalanceTitle>나의 보증금 현황</BalanceTitle>
-          <BalanceAmount>{details.deposit.toLocaleString()}원</BalanceAmount>
+          <BalanceAmount>{depositData.deposit && depositData.deposit.toLocaleString()}원</BalanceAmount>
         </BalanceContainer>
         <Gap />
         <BadgeContainer>
-          <BadgeText>보증금 방어권 : {details.shieldCount}</BadgeText>
-          <SmallButton onClick={() => alert('사용 clicked')} content="사용" fontSize={16}></SmallButton>
+          <BadgeText>보증금 방어권 : {depositData && depositData.defendCount}</BadgeText>
+          <SmallButton onClick={handleUseDefend} content="사용" fontSize={16}></SmallButton>
         </BadgeContainer>
         <Gap />
         <TransactionList>
-          {details.transactions.map((transaction, index) => (
-            <Transaction key={index} transaction={transaction} showActions={false} />
+          {depositData.deductionList && depositData.deductionList.map((deductionItem, index) => (
+            <Transaction key={index} deductionItem={deductionItem} showActions={false} />
           ))}
         </TransactionList>
       </UserDepositPageContainer>

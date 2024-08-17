@@ -6,8 +6,9 @@ import { Container, ContentContainer, InputContainer } from '../common/Container
 import { PageHeader } from '../common/Header';
 import { Gap } from '../common/Gap';
 import { MainButton } from '../common/Button';
-import { useNavigate } from 'react-router-dom';
-import { useUserDepositDetails } from '../../pages/UserDepositPage';
+import { useState,useEffect } from 'react';
+import { fetchUserDepositDetails } from '../../utils/mockApi';
+
 import {
   BalanceContainer,
   BalanceTitle,
@@ -22,6 +23,33 @@ const UpdateDepositPageContainer = styled(ContentContainer)`
   padding-top: 10rem;
   overflow-y: auto;
 `;
+
+export const useUserDepositDetails = () => {
+  const [details, setDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [shieldCount, setShieldCount] = useState(0);
+
+  useEffect(() => {
+    fetchUserDepositDetails()
+      .then((data) => {
+        setDetails(data);
+        setShieldCount(data.shieldCount);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  const increment = () => setShieldCount(shieldCount + 1);
+  const decrement = () => {
+    if (shieldCount > 0) setShieldCount(shieldCount - 1);
+  };
+
+  return { details, loading, error, shieldCount, increment, decrement };
+};
 
 const UpdateDeposit = () => {
   const { details, loading, error } = useUserDepositDetails();

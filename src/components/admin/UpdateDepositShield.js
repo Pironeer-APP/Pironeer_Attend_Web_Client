@@ -7,7 +7,8 @@ import { PageHeader } from '../common/Header';
 import { MainButton } from '../common/Button';
 import { Gap } from '../common/Gap';
 import { useNavigate } from 'react-router-dom';
-import { useUserDepositDetails } from '../../pages/UserDepositPage';
+import { useUserDepositDetails } from './UpdateDeposit';
+
 import {
   BalanceContainer,
   BalanceTitle,
