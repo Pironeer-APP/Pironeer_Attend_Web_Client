@@ -32,7 +32,7 @@ const UserDepositPageContainer = styled(ContentContainer)`
 
 const UserDepositPage = () => {
   const userId = sessionStorage.getItem("id");
-  const { depositData, loading, error } = useUserDepositDetails(userId);
+  const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);
   const navigate = useNavigate();
 
   const handleUseDefend = async () => {
@@ -40,12 +40,26 @@ const UserDepositPage = () => {
       alert('사용 가능한 보증금 방어권이 없습니다.');
       return;
     }
-    else {
+  
+    try {
       const response = await DefendUse(userId);
+  
       alert(response.message);
-      depositData.defendCount -= 1;
+  
+      const updatedDefendCount = response.defendList.filter(defend => !defend.status).length;
+  
+      setDepositData(prevData => ({
+        ...prevData,
+        deposit: response.deposit, 
+        deductionList: response.deductionList, 
+        defendList: response.defendList, 
+        defendCount: updatedDefendCount 
+      }));
+    } catch (err) {
+      console.error(err);
     }
   };
+  
   const buttons = [
     {
       label: '출석',
