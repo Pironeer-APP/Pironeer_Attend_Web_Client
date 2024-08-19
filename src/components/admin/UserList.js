@@ -11,7 +11,7 @@ import { Container, ContentContainer, InputContainer, TwoButtonContainer } from 
 import useListDataStore from "../../states/listDataStore";
 import { useUserList } from "../../viewModel/adminHook";
 import { ItemBox } from "../common/Box";
-
+import { useLogin } from "../../viewModel/loginHook";
 const UserItemBox = ({ user }) => {
   const navigate = useNavigate();
 
@@ -32,12 +32,14 @@ const UserItemBox = ({ user }) => {
 
 const UserList = () => {
   const { users, loading, error } = useUserList();
+  const { onPressLogout } = useLogin();
+  const navigate = useNavigate();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

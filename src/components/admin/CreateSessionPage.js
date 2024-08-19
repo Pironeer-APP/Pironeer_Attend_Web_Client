@@ -8,18 +8,19 @@ import { checkAdminState } from "../../utils/authentication";
 import {Gap} from "../common/Gap";
 import {CreateSessionForm} from "./CreateSessionForm";
 
-
+import { useLogin } from "../../viewModel/loginHook";
 
 
 const CreateSessionPage = () => {
   const [isStart, setIsStart] = useState(true);
   const navigate = useNavigate();
+  const { onPressLogout } = useLogin();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

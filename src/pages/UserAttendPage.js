@@ -6,10 +6,11 @@ import { Container,ContentContainer } from "../components/common/Container";
 import { PageHeader } from "../components/common/Header";
 import { useUserAttendPage } from "../viewModel/userHook";
 import { useNavigate } from "react-router-dom";
-
+import { useLogin } from "../viewModel/loginHook";
 export default function UserAttendPage() {
   const { isStart, isAttend, setIsAttend, userId, username } = useUserAttendPage();
   const navigate = useNavigate();
+  const { onPressLogout } = useLogin();
   const buttons = [
     {
       label: '보증금',
@@ -21,7 +22,7 @@ export default function UserAttendPage() {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
   return (

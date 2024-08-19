@@ -5,18 +5,19 @@ import { Container, ContentContainer } from "../common/Container";
 import { PageHeader } from "../common/Header";
 import { COLORS } from "../../utils/theme";
 import { useCreateCode } from "../../viewModel/adminHook";
-
+import { useLogin } from "../../viewModel/loginHook";
 const CreateCode = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { sessionId } = location.state;
   const { code, isStart, createCode, endCode } = useCreateCode(sessionId, navigate);
+  const { onPressLogout } = useLogin();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
   return (

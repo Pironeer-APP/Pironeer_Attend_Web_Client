@@ -50,6 +50,14 @@ function useLogin() {
         setLoginStatus(false);
       }
     };
+    const onPressLogout = (navigate) => {
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("id");
+      sessionStorage.removeItem("isAdmin");
+      sessionStorage.removeItem("username");
+  
+      navigate("/login");
+    };
     
     
   
@@ -60,6 +68,7 @@ function useLogin() {
       onChangeUsername,
       setPassword,
       onPressLogin,
+      onPressLogout,
     };
   }
 

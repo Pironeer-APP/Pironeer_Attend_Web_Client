@@ -7,9 +7,8 @@ import { PageHeader } from '../common/Header';
 import { MainButton } from '../common/Button';
 import { Gap } from '../common/Gap';
 import { useNavigate } from 'react-router-dom';
-import { useState,useEffect } from 'react';
-import { fetchUserDepositDetails } from '../../utils/mockApi';
-
+import { useUserDepositDetails, DefendUse } from "../../viewModel/userHook";
+import { useLogin } from "../../viewModel/loginHook";
 import {
   BalanceContainer,
   BalanceTitle,
@@ -17,32 +16,32 @@ import {
   BadgeContainer,
   BadgeText,
 } from './DepositForm';
-export const useUserDepositDetails = () => {
-  const [details, setDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [shieldCount, setShieldCount] = useState(0);
+// export const useUserDepositDetails = () => {
+//   const [details, setDetails] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [shieldCount, setShieldCount] = useState(0);
 
-  useEffect(() => {
-    fetchUserDepositDetails()
-      .then((data) => {
-        setDetails(data);
-        setShieldCount(data.shieldCount);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+//   useEffect(() => {
+//     fetchUserDepositDetails()
+//       .then((data) => {
+//         setDetails(data);
+//         setShieldCount(data.shieldCount);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         setError(err.message);
+//         setLoading(false);
+//       });
+//   }, []);
 
-  const increment = () => setShieldCount(shieldCount + 1);
-  const decrement = () => {
-    if (shieldCount > 0) setShieldCount(shieldCount - 1);
-  };
+//   const increment = () => setShieldCount(shieldCount + 1);
+//   const decrement = () => {
+//     if (shieldCount > 0) setShieldCount(shieldCount - 1);
+//   };
 
-  return { details, loading, error, shieldCount, increment, decrement };
-};
+//   return { details, loading, error, shieldCount, increment, decrement };
+// };
 
 const CounterButton = styled.button`
   background-color: ${(props) => (props.color)};
@@ -57,20 +56,26 @@ const CounterButton = styled.button`
 
 
 const UpdateDepositShield = () => {
-    const { details, loading, error, increment,decrement } = useUserDepositDetails();
-    
-    const buttons = [
+  const userId = sessionStorage.getItem("id");
+  const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);    
+  const { onPressLogout } = useLogin();
+  const navigate = useNavigate();
+  const buttons = [
       {
         label: '로그아웃',
         bgColor: COLORS.orange,
         color: 'black',
-        onClick: () => alert('로그아웃 clicked'),
+        onClick: () => onPressLogout(navigate),
       },
     ];
+    const increment = () => setDepositData(depositData.defendCount + 1);
+  const decrement = () => {
+    if (depositData.defendCount > 0) setDepositData(depositData.defendCount - 1);
+  };
   
     if (loading) return <Container>Loading...</Container>;
     if (error) return <Container>Error: {error}</Container>;
-
+    
   
     return (
       <Container>
@@ -78,13 +83,13 @@ const UpdateDepositShield = () => {
         <ContentContainer >
           <InputContainer>
           <BalanceContainer>
-            <BalanceTitle color='white'>{`${details.username}님의 보증금 현황`}</BalanceTitle>
-            <BalanceAmount color='white'>{details.shieldCount.toLocaleString()}개</BalanceAmount>
+            <BalanceTitle color='white'>{`${depositData.user && depositData.user.username}님의 보증금 현황`}</BalanceTitle>
+            <BalanceAmount color='white'>{depositData && depositData.defendCount}개</BalanceAmount>
           </BalanceContainer>
           <Gap />
         <BadgeContainer bgColor = {`${COLORS.dark_gray}`}>
         <CounterButton color={`${COLORS.red}`} onClick={decrement}>-</CounterButton>
-          <BadgeText>보증금 방어권 : {details.shieldCount}</BadgeText>
+          <BadgeText>보증금 방어권 : {depositData && depositData.defendCount}</BadgeText>
         <CounterButton color={`${COLORS.green}`} onClick={increment}>+</CounterButton>
         </BadgeContainer>
         <Gap />

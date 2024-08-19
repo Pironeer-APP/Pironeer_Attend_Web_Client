@@ -8,7 +8,7 @@ import { formatDate } from "../../utils/date";
 import { Container, ContentContainer, InputContainer } from "../common/Container";
 import { SmallButton } from "../common/Button";
 import { useSessionList } from "../../viewModel/adminHook";
-
+import { useLogin } from "../../viewModel/loginHook";
 const SessionItem = styled.div`
   display: flex;
   width: calc(100% - 40px);
@@ -33,13 +33,13 @@ const SessionName = styled.div`
 const SessionListPage = () => {
   const navigate = useNavigate();
   const { sessions, loading, error, handleDeleteClick } = useSessionList();
-
+  const { onPressLogout } = useLogin();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

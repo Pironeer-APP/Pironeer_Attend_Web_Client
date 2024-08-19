@@ -7,6 +7,7 @@ import { Gap } from "../components/common/Gap";
 import { SmallButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import { useUserDepositDetails, DefendUse } from "../viewModel/userHook";
+import { useLogin } from "../viewModel/loginHook";
 import {
   BalanceContainer,
   BalanceTitle,
@@ -34,6 +35,7 @@ const UserDepositPage = () => {
   const userId = sessionStorage.getItem("id");
   const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);
   const navigate = useNavigate();
+  const { onPressLogout } = useLogin();
 
   const handleUseDefend = async () => {
     if (depositData?.defendCount === 0) {
@@ -71,7 +73,7 @@ const UserDepositPage = () => {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

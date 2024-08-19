@@ -7,7 +7,7 @@ import { ItemBox } from "../components/common/Box";
 import { fetchUserDeposits } from "../utils/mockApi";
 import { useUserList } from "../viewModel/adminHook";
 import { useUserDepositDetails } from "../viewModel/userHook";
-
+import { useLogin } from "../viewModel/loginHook";
 const useDepositList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,13 +48,14 @@ const DepositItemBox = ({ user }) => {
 
 const AdminDepositPage = () => {
   const { users, loading, error } = useUserList();
-
+  const { onPressLogout } = useLogin();
+  const navigate = useNavigate();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

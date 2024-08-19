@@ -7,7 +7,8 @@ import { PageHeader } from '../common/Header';
 import { Gap } from '../common/Gap';
 import { MainButton } from '../common/Button';
 import { useUserDepositDetails, DefendUse } from "../../viewModel/userHook";
-
+import { useLogin } from "../../viewModel/loginHook";
+import { useNavigate } from 'react-router-dom';
 import {
   BalanceContainer,
   BalanceTitle,
@@ -29,13 +30,14 @@ const UpdateDeposit = () => {
   // const { details, loading, error } = useUserDepositDetails();
   const userId = sessionStorage.getItem("id");
   const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);
-
+  const { onPressLogout } = useLogin();
+  const navigate = useNavigate();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

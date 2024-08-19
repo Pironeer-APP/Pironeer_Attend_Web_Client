@@ -5,15 +5,16 @@ import { PageHeader } from "../components/common/Header";
 import { MainButton } from "../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import { checkAdminState } from "../utils/authentication";
-
+import { useLogin } from "../viewModel/loginHook";
 export default function AdminPage() {
   const navigate = useNavigate();
+  const { onPressLogout } = useLogin();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

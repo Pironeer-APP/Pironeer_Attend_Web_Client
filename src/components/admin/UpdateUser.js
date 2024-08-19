@@ -7,18 +7,21 @@ import { MainButton } from "../../components/common/Button";
 import { PageHeader } from "../../components/common/Header";
 import {Gap} from "../common/Gap";
 import { useUpdateUser } from "../../viewModel/adminHook";
-
+import { useLogin } from "../../viewModel/loginHook";
+import { useNavigate } from "react-router-dom";
 
 const UpdateUser = () => {
   const location = useLocation();
   const { userId } = location.state || {};
   const { username, setUsername, email, setEmail, password, setPassword, handleUpdateUser } = useUpdateUser(userId);
+  const { onPressLogout } = useLogin();
+  const navigate = useNavigate();
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
 

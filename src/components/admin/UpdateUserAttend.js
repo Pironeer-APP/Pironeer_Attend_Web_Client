@@ -9,7 +9,7 @@ import AttendUpdateList from "./AttendUpdateList";
 import { Container } from "../common/Container";
 import { Gap } from "../common/Gap";
 import {useCheckUserAttend} from "../../viewModel/adminHook";
-
+import {useLogin} from "../../viewModel/loginHook";
 const UpdateUserContainer = styled(InputContainer)`
   padding: 100px;
 `;
@@ -19,12 +19,14 @@ const UpdateUserAttend = () => {
   const { userId } = location.state || {}; // 머지후 userStore에서 받아오는 방식으로 변경
   const navigate = useNavigate();
   const { handleUpdateAttendance, error } = useCheckUserAttend(userId, navigate);
+  const { onPressLogout } = useLogin();
+
   const buttons = [
     {
       label: '로그아웃',
       bgColor: COLORS.orange,
       color: 'black',
-      onClick: () => alert('로그아웃 clicked'),
+      onClick: () => onPressLogout(navigate),
     },
   ];
   return (

@@ -135,6 +135,7 @@ const useUserDepositDetails = (userId) => {
       fetchDepositData();
     }
   }, [userId]);
+
   return { setDepositData, depositData, error };
 };
 
