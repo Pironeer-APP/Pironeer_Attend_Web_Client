@@ -35,7 +35,7 @@ const DepositItemBox = ({ user }) => {
   const depositDetails = [
     { content: depositData.user && depositData.user.username, fontSize: 15, weight: 500 },
     { content: `보증금: ${depositData.deposit && depositData.deposit.toLocaleString()}원`, fontSize: 10 },
-    { content: `방어건: ${depositData && depositData.defendCount}개`, fontSize: 10 },
+    { content: `방어권: ${depositData && depositData.defendCount}개`, fontSize: 10 },
   ];
 
   const depositActions = [
