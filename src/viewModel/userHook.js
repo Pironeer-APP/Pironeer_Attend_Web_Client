@@ -131,14 +131,17 @@ const useUserDepositDetails = (userId) => {
         console.error("Error fetching deposit data:", err.message);
       }
     };
-    fetchDepositData();
-  }, []);
-  return { depositData, error };
+    if (userId) {
+      fetchDepositData();
+    }
+  }, [userId]);
+  return { setDepositData, depositData, error };
 };
 
 const DefendUse =  async (userId) => {
   try{
     const response = await api.post(`/deposit/${userId}/defend/use`);
+    console.log("defend use",response.data);
     return response.data;
   } catch (err){
     console.error(err.response?.data?.message);

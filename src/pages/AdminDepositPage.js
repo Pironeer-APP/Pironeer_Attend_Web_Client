@@ -5,6 +5,9 @@ import { PageHeader } from "../components/common/Header";
 import { Container, ContentContainer, InputContainer } from "../components/common/Container";
 import { ItemBox } from "../components/common/Box";
 import { fetchUserDeposits } from "../utils/mockApi";
+import { useUserList } from "../viewModel/adminHook";
+import { useUserDepositDetails } from "../viewModel/userHook";
+
 const useDepositList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,11 +30,12 @@ const useDepositList = () => {
 
 const DepositItemBox = ({ user }) => {
   const navigate = useNavigate();
+  const { depositData, loading, error } = useUserDepositDetails(user?._id);
 
   const depositDetails = [
-    { content: user?.name, fontSize: 15, weight: 500 },
-    { content: `보증금: ${user?.deposit}원`, fontSize: 10 },
-    { content: `방어건: ${user?.shieldCount}개`, fontSize: 10 },
+    { content: depositData.user && depositData.user.username, fontSize: 15, weight: 500 },
+    { content: `보증금: ${depositData.deposit && depositData.deposit.toLocaleString()}원`, fontSize: 10 },
+    { content: `방어건: ${depositData && depositData.defendCount}개`, fontSize: 10 },
   ];
 
   const depositActions = [
@@ -43,7 +47,7 @@ const DepositItemBox = ({ user }) => {
 };
 
 const AdminDepositPage = () => {
-  const { users, loading, error } = useDepositList(); 
+  const { users, loading, error } = useUserList();
 
   const buttons = [
     {
