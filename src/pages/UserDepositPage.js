@@ -40,19 +40,26 @@ const UserDepositPage = () => {
       alert('사용 가능한 보증금 방어권이 없습니다.');
       return;
     }
+  
     try {
       const response = await DefendUse(userId);
+  
       alert(response.message);
+  
+      const updatedDefendCount = response.defendList.filter(defend => !defend.status).length;
+  
       setDepositData(prevData => ({
         ...prevData,
-        defendCount: Math.max(0, prevData.defendCount - 1),
+        deposit: response.deposit, 
+        deductionList: response.deductionList, 
+        defendList: response.defendList, 
+        defendCount: updatedDefendCount 
       }));
-      } catch (err) {
-      // Handle the error gracefully
-      alert(`Error: ${err.message}`);
-      console.error(err); // Optionally log the error to the console
+    } catch (err) {
+      console.error(err);
     }
   };
+  
   const buttons = [
     {
       label: '출석',
