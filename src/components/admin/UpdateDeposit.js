@@ -27,7 +27,6 @@ const UpdateDepositPageContainer = styled(ContentContainer)`
 
 
 const UpdateDeposit = () => {
-  // const { details, loading, error } = useUserDepositDetails();
   const location = useLocation();
   const { userId } = location.state || {};
   const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);

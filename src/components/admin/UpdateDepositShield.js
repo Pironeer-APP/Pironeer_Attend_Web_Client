@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../utils/theme';
+import { useLocation } from 'react-router-dom';
 import { Container, ContentContainer, InputContainer } from '../common/Container';
 import { PageHeader } from '../common/Header';
 import { MainButton } from '../common/Button';
@@ -16,32 +17,7 @@ import {
   BadgeContainer,
   BadgeText,
 } from './DepositForm';
-// export const useUserDepositDetails = () => {
-//   const [details, setDetails] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [shieldCount, setShieldCount] = useState(0);
 
-//   useEffect(() => {
-//     fetchUserDepositDetails()
-//       .then((data) => {
-//         setDetails(data);
-//         setShieldCount(data.shieldCount);
-//         setLoading(false);
-//       })
-//       .catch((err) => {
-//         setError(err.message);
-//         setLoading(false);
-//       });
-//   }, []);
-
-//   const increment = () => setShieldCount(shieldCount + 1);
-//   const decrement = () => {
-//     if (shieldCount > 0) setShieldCount(shieldCount - 1);
-//   };
-
-//   return { details, loading, error, shieldCount, increment, decrement };
-// };
 
 const CounterButton = styled.button`
   background-color: ${(props) => (props.color)};
@@ -56,7 +32,8 @@ const CounterButton = styled.button`
 
 
 const UpdateDepositShield = () => {
-  const userId = sessionStorage.getItem("id");
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);    
   const { onPressLogout } = useLogin();
   const navigate = useNavigate();
@@ -68,9 +45,11 @@ const UpdateDepositShield = () => {
         onClick: () => onPressLogout(navigate),
       },
     ];
-    const increment = () => setDepositData(depositData.defendCount + 1);
+    const increment = () => {
+      alert("보증금 방어권 더하기");
+    }
   const decrement = () => {
-    if (depositData.defendCount > 0) setDepositData(depositData.defendCount - 1);
+    alert("보증금 방어권 빼기");
   };
   
     if (loading) return <Container>Loading...</Container>;
