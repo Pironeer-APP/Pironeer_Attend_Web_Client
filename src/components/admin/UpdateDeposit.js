@@ -8,7 +8,7 @@ import { Gap } from '../common/Gap';
 import { MainButton } from '../common/Button';
 import { useUserDepositDetails, DefendUse } from "../../viewModel/userHook";
 import { useLogin } from "../../viewModel/loginHook";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import {
   BalanceContainer,
   BalanceTitle,
@@ -28,7 +28,8 @@ const UpdateDepositPageContainer = styled(ContentContainer)`
 
 const UpdateDeposit = () => {
   // const { details, loading, error } = useUserDepositDetails();
-  const userId = sessionStorage.getItem("id");
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);
   const { onPressLogout } = useLogin();
   const navigate = useNavigate();
