@@ -45,13 +45,7 @@ const UpdateDeposit = () => {
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
 
-  const handleEdit = (deductionItem) => {
-    alert(`수정 clicked `);
-  };
-
-  const handleDelete = () => {
-    alert(`삭제 clicked`);
-  };
+  
 
   return (
     <Container backgroundColor={`${COLORS.bg_gray}`}>
@@ -62,7 +56,7 @@ const UpdateDeposit = () => {
           <BalanceTitle>{`${depositData.user && depositData.user.username}님의 보증금 현황`}</BalanceTitle>
           <BalanceAmount>{depositData.deposit && depositData.deposit.toLocaleString()}원</BalanceAmount>
         </BalanceContainer>
-        <MainButton content={"변경 완료"} onPress={() => alert('변경 완료 clicked')} marginBottom = "2.5"/>
+        <Gap></Gap>
         </InputContainer>
         <Gap />
         <TransactionList>
@@ -70,9 +64,7 @@ const UpdateDeposit = () => {
             <Transaction
               key={index}
               deductionItem={deductionItem}
-              showActions={true}
-              onEdit={() => handleEdit()}
-              onDelete={() => handleDelete()}
+              showActions={false}
             />
           ))}
         </TransactionList>
