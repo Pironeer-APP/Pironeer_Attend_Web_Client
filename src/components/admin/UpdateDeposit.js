@@ -48,7 +48,7 @@ const UpdateDeposit = () => {
 
   return (
     <Container backgroundColor={`${COLORS.bg_gray}`}>
-      <PageHeader text={`어드민님 반가워요!`} buttons={buttons} bgColor={`${COLORS.bg_gray}`} color={"black"} navigateOnClick="/admin" />
+      <PageHeader text={`${depositData.user && depositData.user.username}님 반가워요!`} buttons={buttons} bgColor={`${COLORS.bg_gray}`} color={"black"} navigateOnClick="/admin" />
       <UpdateDepositPageContainer backgroundColor={`${COLORS.bg_gray}`}>
         <InputContainer>
         <BalanceContainer>
