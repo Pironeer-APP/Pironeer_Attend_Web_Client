@@ -6,7 +6,6 @@ import { OnAirCircle } from "../common/OnAirCircle";
 import { getLocal } from "../../utils/date";
 import { useAttendList } from "../../viewModel/userHook";
 
-
 const AttendanceContainer = styled.div`
   display: flex;
   flex-direction: column;

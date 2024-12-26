@@ -3,7 +3,7 @@ import React from "react";
 import {  StyledWarning } from "../common/Text";
 import { useNavigate } from "react-router-dom";
 import { InputContainer } from "../common/Container";
-import {StyledInput} from "../common/Input";
+import { StyledInput } from "../common/Input";
 import { MainButton } from "../common/Button";
 import { useAttend } from "../../viewModel/userHook";
 
