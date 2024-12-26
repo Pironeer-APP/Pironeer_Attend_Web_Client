@@ -3,7 +3,7 @@ import { COLORS } from "../../utils/theme";
 import {  useLocation } from "react-router-dom";
 import { Container, ContentContainer, InputContainer } from "../../components/common/Container";
 import { StyledInput } from "../../components/common/Input";
-import { MainButton } from "../../components/common/Button";
+import { AdminMainButton } from "../../components/common/Button";
 import { PageHeader } from "../../components/common/Header";
 import {Gap} from "../common/Gap";
 import { useUpdateUser } from "../../viewModel/adminHook";
@@ -52,7 +52,7 @@ const UpdateUser = () => {
           onChangeText={(value) => setPassword(value)}
           maxLength={50}
         />
-        <MainButton content="변경 완료" onPress={handleUpdateUser} />
+        <AdminMainButton content="변경 완료" onPress={handleUpdateUser} />
       </InputContainer>
       </ContentContainer>
     </Container>

@@ -6,7 +6,7 @@ import { StyledText } from "../common/Text";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../utils/date";
 import { Container, ContentContainer, InputContainer } from "../common/Container";
-import { SmallButton } from "../common/Button";
+import { AdminSmallButton } from "../common/Button";
 import { useSessionList } from "../../viewModel/adminHook";
 import { useLogin } from "../../viewModel/loginHook";
 const SessionItem = styled.div`
@@ -72,7 +72,7 @@ const SessionListPage = () => {
                 weight={200}
               />
             </SessionDetails>
-            <SmallButton 
+            <AdminSmallButton 
             content={"삭제"}
             backgroundColor={COLORS.red}
             color={'white'}
