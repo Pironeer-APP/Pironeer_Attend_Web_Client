@@ -68,6 +68,26 @@ export const getSessions = async () => {
       throw error;
     }
   };
+
+  // 출석 데이터를 가져오는 함수
+export const getSessionAttendance = async (sessionId) => {
+  try {
+    // API 요청
+    const response = await api.get(`/session/sessions/${sessionId}`);
+
+    // 응답 데이터 처리
+    if (response.data && response.data.session && Array.isArray(response.data.attends)) {
+      console.log("Session and attendance data fetched successfully:", response.data);
+      return response.data;
+    } else {
+      console.error("Unexpected response format:", response.data);
+      return null; // 비정상적인 응답일 경우 null 반환
+    }
+  } catch (error) {
+    console.error("Error fetching session attendance data:", error);
+    throw error; // 호출자에게 오류 전달
+  }
+};
   
   export const startAttendCheck = async (sessionId) => {
     try {
@@ -79,6 +99,17 @@ export const getSessions = async () => {
       throw error;
     }
   };
+
+  export const restartAttendCheck = async (sessionId, attendIdx) => {
+    try {
+      console.log(`Restarting attendance check for session ID: ${sessionId}, Attendance Index: ${attendIdx}`);
+      const response = await api.post(`/session/restartAttendCheck/${sessionId}/${attendIdx}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error restarting attendance check:', error);
+      throw error;
+    }
+  };  
   
   export const endAttendCheck = async () => {
     try {
@@ -176,8 +207,6 @@ const useCheckUserAttend = (userId, navigate) => {
 };
 
 //CreateCode.js
-
-
 const useCreateCode = (sessionId, navigate) => {
   const [code, setCode] = useState(sessionStorage.getItem("attendanceCode") || null);
   const [isStart, setIsStart] = useState(false);
@@ -204,7 +233,25 @@ const useCreateCode = (sessionId, navigate) => {
     }
   };
 
-  const endCode = async () => {
+  const restartCode = async (attendIdx) => {
+    try {
+      const response = await restartAttendCheck(sessionId, attendIdx);
+      console.log("Response from restartAttendCheck:", response);
+      if (response && response.code) {
+        setCode(response.code);
+        sessionStorage.setItem('attendanceCode', response.code);
+        alert(`Restarted Code: ${response.code}`);
+        setIsStart(true);
+      } else {
+        console.error("No code returned from restartAttendCheck");
+        alert(response.message)
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+ const endCode = async () => {
     try {
       await endAttendCheck();
       setCode(null);
@@ -215,9 +262,8 @@ const useCreateCode = (sessionId, navigate) => {
     }
   };
 
-  return { code, isStart, createCode, endCode };
+  return { code, isStart, createCode, restartCode, endCode};
 };
-
 
 
 const useSessionList = () => {
