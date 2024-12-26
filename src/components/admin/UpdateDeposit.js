@@ -8,7 +8,7 @@ import { Gap } from '../common/Gap';
 import { MainButton } from '../common/Button';
 import { useUserDepositDetails, DefendUse } from "../../viewModel/userHook";
 import { useLogin } from "../../viewModel/loginHook";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import {
   BalanceContainer,
   BalanceTitle,
@@ -27,8 +27,8 @@ const UpdateDepositPageContainer = styled(ContentContainer)`
 
 
 const UpdateDeposit = () => {
-  // const { details, loading, error } = useUserDepositDetails();
-  const userId = sessionStorage.getItem("id");
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { depositData, setDepositData,loading, error } = useUserDepositDetails(userId);
   const { onPressLogout } = useLogin();
   const navigate = useNavigate();
@@ -44,24 +44,18 @@ const UpdateDeposit = () => {
   if (loading) return <Container>Loading...</Container>;
   if (error) return <Container>Error: {error}</Container>;
 
-  const handleEdit = (deductionItem) => {
-    alert(`수정 clicked `);
-  };
-
-  const handleDelete = () => {
-    alert(`삭제 clicked`);
-  };
+  
 
   return (
     <Container backgroundColor={`${COLORS.bg_gray}`}>
-      <PageHeader text={`어드민님 반가워요!`} buttons={buttons} bgColor={`${COLORS.bg_gray}`} color={"black"} navigateOnClick="/admin" />
+      <PageHeader text={`${depositData.user && depositData.user.username}님 반가워요!`} buttons={buttons} bgColor={`${COLORS.bg_gray}`} color={"black"} navigateOnClick="/admin" />
       <UpdateDepositPageContainer backgroundColor={`${COLORS.bg_gray}`}>
         <InputContainer>
         <BalanceContainer>
           <BalanceTitle>{`${depositData.user && depositData.user.username}님의 보증금 현황`}</BalanceTitle>
           <BalanceAmount>{depositData.deposit && depositData.deposit.toLocaleString()}원</BalanceAmount>
         </BalanceContainer>
-        <MainButton content={"변경 완료"} onPress={() => alert('변경 완료 clicked')} marginBottom = "2.5"/>
+        <Gap></Gap>
         </InputContainer>
         <Gap />
         <TransactionList>
@@ -69,9 +63,7 @@ const UpdateDeposit = () => {
             <Transaction
               key={index}
               deductionItem={deductionItem}
-              showActions={true}
-              onEdit={() => handleEdit()}
-              onDelete={() => handleDelete()}
+              showActions={false}
             />
           ))}
         </TransactionList>
